@@ -3,7 +3,7 @@
 <mapper namespace="${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.${entityName?cap_first}Mapper" >
 
   <!-- 结果集映射 -->
-  <resultMap id="BaseResultMap" type="${packageName}.${moduleName}.${entityName}" >
+  <resultMap id="BaseResultMap" type="${packageName}.${moduleName}.entity.${entityName}" >
     <#list columns as column>
         <#if column.parmaryKey>
     <id column="${column.columnName}" property="${column.javaField}" jdbcType="${column.typeName}" />
