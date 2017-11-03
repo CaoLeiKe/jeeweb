@@ -15,7 +15,7 @@
 
   <!-- 字段 -->
   <sql id="Base_Column_List" >
-    <#list columns as column>t.${column.columnName}<#if !column.isBaseType> AS "${column.javaField}.id"</#if><#if column_has_next>, </#if></#list>
+    <#list columns as column>t.${column.columnName}<#if column_has_next>, </#if></#list>
   </sql>
 
   <!-- 根据主键逻辑删除，需传入实体，并包含主键和修改人，其中修改人可有可无 -->
