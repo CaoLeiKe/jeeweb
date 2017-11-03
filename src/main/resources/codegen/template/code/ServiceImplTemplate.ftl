@@ -1,4 +1,5 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.impl;
+<#macro id><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
 <#macro entityLowerName>${entityName?lower_case}</#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro entityLowerMapper>${entityName?lower_case}Mapper</#macro>
@@ -40,8 +41,8 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
 	}
 
 	@Override
-	public <@entityCapName/> selectByPrimaryKey(Long id) {
-		return <@entityLowerMapper/>.selectByPrimaryKey(id);
+	public <@entityCapName/> selectByPrimaryKey(Long <@id/>) {
+		return <@entityLowerMapper/>.selectByPrimaryKey(<@id/>);
 	}
 
 	@Override
