@@ -19,7 +19,7 @@
   </sql>
 
   <!-- 根据主键逻辑删除，需传入实体，并包含主键和修改人，其中修改人可有可无 -->
-  <update id="deleteByPrimaryKey" parameterType="${packageName}.${moduleName}.${entityName}" >
+  <update id="deleteByPrimaryKey" parameterType="${packageName}.${moduleName}.entity.${entityName}" >
     update ${tableName} t set t.is_delete = 1
   <#list columns as column>
     <#if column.columnName?lower_case?contains("update") && column.columnName?lower_case?contains("time")>
@@ -34,7 +34,7 @@
   </update>
 
   <!-- 插入数据 -->
-  <insert id="insertSelective" parameterType="${packageName}.${moduleName}.${entityName}" >
+  <insert id="insertSelective" parameterType="${packageName}.${moduleName}.entity.${entityName}" >
     insert into ${tableName}
     <trim prefix="(" suffix=")" suffixOverrides="," >
     <#list columns as column>
@@ -89,7 +89,7 @@
   </update>
 
   <!-- 根据实体中的条件更改数据，无法更改主键和创建者、创建时间的信息 -->
-  <update id="updateSelective" parameterType="${packageName}.${moduleName}.${entityName}">
+  <update id="updateSelective" parameterType="${packageName}.${moduleName}.entity.${entityName}">
       update ${tableName}
       <set>
       <#list columns as column>
@@ -128,4 +128,24 @@
       where <#list columns as column><#if column.parmaryKey>t.${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}</#if></#list>
   </select>
 
+  <!-- 根据条件查询 -->
+  <select id="selectSelective" resultMap="BaseResultMap" parameterType="${packageName}.${moduleName}.entity.${entityName}">
+	  select
+	  <include refid="Base_Column_List" />
+	  from ${tableName} t
+      <where>
+      <#list columns as column>
+        <#-- 如果是时间类型则匹配当天 -->
+        <#if column.columnName?lower_case?contains("time")>
+        <if test="${column.javaField} != null">
+          and UNIX_TIMESTAMP(Date(${column.columnName})) = UNIX_TIMESTAMP(Date('${r"#"}{${column.javaField}, jdbcType=${column.typeName}}'))
+        </if>
+        <#else>
+        <if test="${column.javaField} != null">
+          and ${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}
+        </if>
+      </#if>
+      </#list>
+      </where>
+  </select>
 </mapper>
