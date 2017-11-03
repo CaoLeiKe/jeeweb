@@ -18,8 +18,7 @@
 
 	<!-- 字段 -->
 	<sql id="Base_Column_List">
-		<#list columns as column>
-			<#if column_index%5 == 0 && column_index != 0>
+		<#list columns as column><#if column_index%5 == 0 && column_index != 0>
 
 		</#if><#if column_index == 0>		</#if>t.${column.columnName}<#if column_has_next>, </#if></#list>
 	</sql>
