@@ -1,22 +1,52 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.impl;
+<#macro entityLowerName>${entityName?lower_case}</#macro>
+<#macro entityCapName>${entityName?cap_first}</#macro>
+<#macro entityLowerMapper>${entityName?lower_case}Mapper</#macro>
 
-import cn.jeeweb.core.common.service.impl.CommonServiceImpl;
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.${entityName?cap_first}Mapper;
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.${entityName?cap_first};
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.I${entityName?cap_first}Service;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
+import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper;
+import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.<@entityCapName/>Service;
 
-/**   
+/**
  * @Title: ${functionName}
- * @Description: ${functionDesc}
+ * @Description: serviceImpl 实现类
  * @author ${functionAuthor}
  * @date ${time}
- * @version V1.0   
- *
  */
 @Transactional
-@Service("${entityName?uncap_first}Service")
-public class ${entityName?cap_first}ServiceImpl  extends CommonServiceImpl<${entityName?cap_first}Mapper,${entityName?cap_first}> implements  I${entityName?cap_first}Service {
+public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
+
+	@Autowired
+	private <@entityCapName/>Mapper <@entityLowerName/>Mapper;
+
+	@Override
+	public int deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
+		return <@entityLowerMapper/>.deleteByPrimaryKey(<@entityLowerName/>);
+	}
+
+	@Override
+	public int insertSelective(<@entityCapName/> <@entityLowerName/>) {
+		return <@entityLowerMapper/>.insertSelective(<@entityLowerName/>);
+	}
+
+	@Override
+	public int updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
+		return <@entityLowerMapper/>.updateByPrimaryKey(<@entityLowerName/>);
+	}
+
+	@Override
+	public int updateSelective(<@entityCapName/> <@entityLowerName/>) {
+		return <@entityLowerMapper/>.updateSelective(<@entityLowerName/>);
+	}
+
+	@Override
+	public <@entityCapName/> selectByPrimaryKey(Long id) {
+		return <@entityLowerMapper/>.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<<@entityCapName/>> selectSelective(<@entityCapName/> <@entityLowerName/>) {
+		return <@entityLowerMapper/>.selectSelective(<@entityLowerName/>);
+	}
 
 }
