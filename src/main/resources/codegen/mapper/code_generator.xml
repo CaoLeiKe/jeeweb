@@ -94,11 +94,11 @@
 			<!-- 注册关键字 -->
 			<key>xmlMapper</key>
 			<!-- 文件层级关系 -->
-			<layer></layer>
+			<layer>mapper</layer>
 			<!-- 模版名称 -->
 			<template-file>xmlMapperTemplate.ftl</template-file>
 			<!-- 是否JSP,1.JAVA,2.页面代码 -->
-			<code-type>3</code-type>
+			<code-type>1</code-type>
 			<!-- 关键字有,entityName -->
 			<name-format>[entityName]Mapper.xml</name-format>
 		</generator>
