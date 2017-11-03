@@ -18,7 +18,7 @@
 		<#list columns as column>
 			<#if column_index%5 == 0 && column_index != 0>
 
-		</#if><#if column_index == 0>		</#if>t.${column.columnName}<#if column_has_next>,</#if></#list>
+		</#if><#if column_index == 0>		</#if>t.${column.columnName}<#if column_has_next>, </#if></#list>
 	</sql>
 
 	<!-- 根据主键逻辑删除，需传入实体，并包含主键和修改人，其中修改人可有可无 -->
