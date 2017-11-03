@@ -12,11 +12,9 @@ import lombok.ToString;
 
 /**
  * @Title: ${functionName}
- * @Description: ${functionDesc}
- *
+ * @Description: PO实体
  * @author ${functionAuthor}
  * @date ${time}
- *
  */
 
 @Getter
