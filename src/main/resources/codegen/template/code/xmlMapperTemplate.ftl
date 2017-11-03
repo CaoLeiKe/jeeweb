@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.${entityName?cap_first}Mapper">
+<#macro id><#list columns as column><#if column.parmaryKey>t.${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}</#if></#list></#macro>
+<#macro entityCapName>${entityName?cap_first}</#macro>
+<#macro entityLowerName>${entityName?lower_case}</#macro>
+<mapper namespace="${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper">
 
 	<!-- 结果集映射 -->
 	<resultMap id="BaseResultMap" type="${packageName}.${moduleName}.entity.${entityName}">
@@ -33,7 +36,7 @@
 		</if>
 		</#if>
 	</#list>
-		where <#list columns as column><#if column.parmaryKey>t.${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}</#if></#list>
+		where <@id/>
 	</update>
 
 	<!-- 插入数据 -->
@@ -88,7 +91,7 @@
 			</#if>
 		</#list>
 		</set>
-		where <#list columns as column><#if column.parmaryKey>t.${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}</#if></#list>
+		where <@id/>
 	</update>
 
 	<!-- 根据实体中的条件更改数据，无法更改主键和创建者、创建时间的信息 -->
@@ -128,7 +131,7 @@
 		select
 		<include refid="Base_Column_List"/>
 		from ${tableName} t
-		where <#list columns as column><#if column.parmaryKey>t.${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}</#if></#list>
+		where <@id/>
 	</select>
 
 	<!-- 根据条件查询 -->
@@ -138,7 +141,7 @@
 		from ${tableName} t
 		<where>
 		<#list columns as column>
-		<#-- 如果是时间类型则匹配当天 -->
+			<#-- 如果是时间类型则匹配当天 -->
 			<#if column.columnName?lower_case?contains("time")>
 			<if test="${column.javaField} != null">
 				and UNIX_TIMESTAMP(Date(${column.columnName})) = UNIX_TIMESTAMP(Date('${r"#"}{${column.javaField}, jdbcType=${column.typeName}}'))

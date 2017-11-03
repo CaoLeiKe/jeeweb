@@ -23,11 +23,11 @@
 			<!-- 文件层 -->
 			<layer>service</layer>
 			<!-- 模版名称 -->
-			<template-file>IServiceTemplate.ftl</template-file>
+			<template-file>ServiceTemplate.ftl</template-file>
 			<!-- 是否JSP,1.JAVA,2.页面代码 -->
 			<code-type>1</code-type>
 			<!-- 关键字有,entityName -->
-			<name-format>I[entityName]Service.java</name-format>
+			<name-format>[entityName]Service.java</name-format>
 		</generator>
 		<generator>
 			<!-- 注册关键字 -->
