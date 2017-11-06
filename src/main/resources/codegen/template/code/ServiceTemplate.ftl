@@ -48,7 +48,7 @@ public interface <@entityCapName/>Service {
 	/**
 	 * 根据主键查询${functionName}
 	 *
-	 * @param <@id/> 主键
+	 * @param <@idJava/> ${functionName}主键
 	 * @return ${functionName}
 	 */
 	<@entityCapName/> selectByPrimaryKey(Long <@idJava/>);
