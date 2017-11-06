@@ -1,14 +1,20 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity;
+<#macro entityCapName>${entityName?cap_first}</#macro>
 
-<#list importTypes as importType>
-import ${importType};
-</#list>
-import java.io.Serializable;
+import ${packageName}.${moduleName}.valid.First;
+import ${packageName}.${moduleName}.valid.Second;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import javax.validation.constraints.NotNull;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+<#list importTypes as importType>
+import ${importType};
+</#list>
 
 /**
  * @Title: ${functionName}
@@ -20,19 +26,28 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ${entityName?cap_first} implements Serializable {
+@ApiModel(description = "${functionName}PO实体")
+public class <@entityCapName/> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	<#list attributeInfos as attributeInfo>
 	/**${attributeInfo.remarks}*/
 	<#if !attributeInfo.nullable && attributeInfo.columnDef?trim?length == 0>
-	@NotNull(message = "${attributeInfo.remarks}不能为空！")
+		<#if attributeInfo.parmaryKey>
+	@ApiModelProperty(value = "${attributeInfo.remarks}")
+	@NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Second.class})
+		<#else >
+	@ApiModelProperty(value = "${attributeInfo.remarks}", required = true)
+	@NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {First.class, Second.class})
+		</#if>
+	<#else>
+	@ApiModelProperty(value = "${attributeInfo.remarks}")
 	</#if>
 	<#if attributeInfo.type == "Date">
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8" )
 	</#if>
-	private <#if attributeInfo.type=='this'>${entityName?cap_first}<#else>${attributeInfo.type}</#if> ${attributeInfo.name};
+	private <#if attributeInfo.type=='this'><@entityCapName/><#else>${attributeInfo.type}</#if> ${attributeInfo.name};
 
 	</#list>
 }

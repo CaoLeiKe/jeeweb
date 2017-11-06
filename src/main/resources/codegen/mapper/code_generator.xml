@@ -11,7 +11,7 @@
 			<!-- 文件层 -->
 			<layer>controller</layer>
 			<!-- 模版名称 -->
-			<template-file>ControllerTemplate.ftl</template-file>
+			<template-file>ControllerSimpleTemplate.ftl</template-file>
 			<!-- 是否JSP,1.JAVA,2.页面代码 -->
 			<code-type>1</code-type>
 			<!-- 关键字有,entityName -->

@@ -133,7 +133,7 @@
 		where <@idJdbc/>
 	</select>
 
-	<!-- 根据条件查询 -->
+	<!-- 根据条件查询，如果是时间则查找的是当天的时间 -->
 	<select id="selectSelective" resultMap="BaseResultMap" parameterType="${packageName}.${moduleName}.entity.${entityName}">
 		select
 		<include refid="Base_Column_List"/>

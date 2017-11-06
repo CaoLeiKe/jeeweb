@@ -12,8 +12,6 @@ import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</
  * @Description: ${functionDesc}
  * @author ${functionAuthor}
  * @date ${time}
- * @version V1.0   
- *
  */
 @Controller
 @RequestMapping("${r'${admin.url.prefix}'}/${moduleName}/${entityName?lower_case}")
