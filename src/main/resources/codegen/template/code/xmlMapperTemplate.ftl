@@ -114,7 +114,7 @@
 		<#-- 如果是时间类型则匹配当天 -->
 			<#if column.columnName?lower_case?contains("time")>
 			<if test="${column.javaField} != null">
-				and UNIX_TIMESTAMP(Date(${column.columnName})) = UNIX_TIMESTAMP(Date('${r"#"}{${column.javaField}, jdbcType=${column.typeName}}'))
+				and UNIX_TIMESTAMP(Date(${column.columnName})) = UNIX_TIMESTAMP(Date(${r"#"}{${column.javaField}, jdbcType=${column.typeName}}))
 			</if>
 			<#else>
 			<if test="${column.javaField} != null">
@@ -143,7 +143,7 @@
 			<#-- 如果是时间类型则匹配当天 -->
 			<#if column.columnName?lower_case?contains("time")>
 			<if test="${column.javaField} != null">
-				and UNIX_TIMESTAMP(Date(${column.columnName})) = UNIX_TIMESTAMP(Date('${r"#"}{${column.javaField}, jdbcType=${column.typeName}}'))
+				and UNIX_TIMESTAMP(Date(${column.columnName})) = UNIX_TIMESTAMP(Date(${r"#"}{${column.javaField}, jdbcType=${column.typeName}}))
 			</if>
 			<#else>
 			<if test="${column.javaField} != null">
