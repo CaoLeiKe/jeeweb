@@ -5,6 +5,8 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
 
+import java.util.List;
+
 /**
  * @Title: ${functionName}
  * @Description: Service 接口
@@ -16,7 +18,7 @@ public interface <@entityCapName/>Service {
 	/**
 	 * 根据主键逻辑删除，需传入实体，并包含主键和修改人，其中修改人可有可无
 	 *
-	 * @param <@entityLowerName/> ${functionName}
+	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
 	int deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
@@ -24,7 +26,7 @@ public interface <@entityCapName/>Service {
 	/**
 	 * 新增${functionName}
 	 *
-	 * @param <@entityLowerName/> ${functionName}
+	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
 	int insertSelective(<@entityCapName/> <@entityLowerName/>);
@@ -32,7 +34,7 @@ public interface <@entityCapName/>Service {
 	/**
 	 * 根据主键更新${functionName}，无法更改主键和创建者、创建时间的信息
 	 *
-	 * @param <@entityLowerName/> ${functionName}
+	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
 	int updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
@@ -40,7 +42,7 @@ public interface <@entityCapName/>Service {
 	/**
 	 * 根据${functionName}实体中的条件更改数据，无法更改主键和创建者、创建时间的信息
 	 *
-	 * @param <@entityLowerName/> ${functionName}
+	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
 	int updateSelective(<@entityCapName/> <@entityLowerName/>);
@@ -56,7 +58,7 @@ public interface <@entityCapName/>Service {
 	/**
 	 * 根据${functionName}实体的条件查询数据
 	 *
-	 * @param <@entityLowerName/> ${functionName}
+	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return ${functionName}的集合
 	 */
 	List<<@entityCapName/>> selectSelective(<@entityCapName/> <@entityLowerName/>);
