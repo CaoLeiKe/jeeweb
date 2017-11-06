@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<#macro id><#list columns as column><#if column.parmaryKey>t.${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}</#if></#list></#macro>
+<#macro idJdbc><#list columns as column><#if column.parmaryKey>t.${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}</#if></#list></#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro entityLowerName>${entityName?lower_case}</#macro>
 <mapper namespace="${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper">
@@ -35,7 +35,7 @@
 		</if>
 		</#if>
 	</#list>
-		where <@id/>
+		where <@idJdbc/>
 	</update>
 
 	<!-- 插入数据 -->
@@ -90,7 +90,7 @@
 			</#if>
 		</#list>
 		</set>
-		where <@id/>
+		where <@idJdbc/>
 	</update>
 
 	<!-- 根据实体中的条件更改数据，无法更改主键和创建者、创建时间的信息 -->
@@ -130,7 +130,7 @@
 		select
 		<include refid="Base_Column_List"/>
 		from ${tableName} t
-		where <@id/>
+		where <@idJdbc/>
 	</select>
 
 	<!-- 根据条件查询 -->

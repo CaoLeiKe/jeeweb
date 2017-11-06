@@ -1,5 +1,5 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service;
-<#macro id><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
+<#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
 <#macro entityLowerName>${entityName?lower_case}</#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
 
@@ -51,7 +51,7 @@ public interface <@entityCapName/>Service {
 	 * @param <@id/> 主键
 	 * @return ${functionName}
 	 */
-	<@entityCapName/> selectByPrimaryKey(Long <@id/>);
+	<@entityCapName/> selectByPrimaryKey(Long <@idJava/>);
 
 	/**
 	 * 根据${functionName}实体的条件查询数据
