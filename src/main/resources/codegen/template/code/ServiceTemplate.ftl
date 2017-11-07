@@ -55,12 +55,12 @@ public interface <@entityCapName/>Service {
 	Pair<Boolean, Object> selectByPrimaryKey(Long <@idJava/>);
 
 	/**
-	 * 根据${functionName}实体的条件查询数据
+	 * 根据${functionName}实体的条件分页查询数据
 	 *
 	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 元组
 	 */
-	Pair<Boolean, Object> selectSelective(<@entityCapName/> <@entityLowerName/>);
+	Pair<Boolean, Object> selectSelective(<@entityCapName/> <@entityLowerName/>, int pageNum, int pageSize);
 
 }
 

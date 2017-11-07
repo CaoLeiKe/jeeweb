@@ -75,7 +75,7 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
 	}
 
 	@Override
-	public Pair<Boolean, Object> selectSelective(<@entityCapName/> <@entityLowerName/>) {
+	public Pair<Boolean, Object> selectSelective(<@entityCapName/> <@entityLowerName/>, int pageNum, int pageSize) {
 		List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerMapper/>.selectSelective(<@entityLowerName/>);
 		if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() > 0) {
 			return Pair.of(Boolean.TRUE, <@entityLowerName/>s);
