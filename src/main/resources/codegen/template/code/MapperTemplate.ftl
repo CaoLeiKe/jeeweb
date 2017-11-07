@@ -22,7 +22,7 @@ public interface <@entityCapName/>Mapper{
 	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
-	int deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
+	long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
 
 	/**
 	 * 新增${functionName}
@@ -38,7 +38,7 @@ public interface <@entityCapName/>Mapper{
 	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
-	int updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
+	long updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
 
 	/**
 	 * 根据${functionName}实体中的条件更改数据，无法更改主键和创建者、创建时间的信息
@@ -46,7 +46,7 @@ public interface <@entityCapName/>Mapper{
 	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
-	int updateSelective(<@entityCapName/> <@entityLowerName/>);
+	long updateSelective(<@entityCapName/> <@entityLowerName/>);
 
 	/**
 	 * 根据主键查询${functionName}

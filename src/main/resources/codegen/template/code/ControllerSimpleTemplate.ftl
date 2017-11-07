@@ -1,21 +1,25 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.controller;
+<#macro entityCapName>${entityName?cap_first}</#macro>
+<#macro entityLowerName>${entityName?lower_case}</#macro>
 
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import cn.jeeweb.core.common.controller.BaseCRUDController;
-import cn.jeeweb.core.security.shiro.authz.annotation.RequiresPathPermission;
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.${entityName?cap_first};
+import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
 
 /**   
  * @Title: ${functionName}
- * @Description: ${functionDesc}
+ * @Description: Controller层
  * @author ${functionAuthor}
  * @date ${time}
  */
 @Controller
-@RequestMapping("${r'${admin.url.prefix}'}/${moduleName}/${entityName?lower_case}")
-@RequiresPathPermission("${moduleName}:${entityName?lower_case}")
-public class ${entityName?cap_first}Controller extends BaseCRUDController<${entityName?cap_first}, String> {
+@RequestMapping("${moduleName}/<@entityLowerName/>")
+@Api(description = "${functionAuthor}api")
+@Slf4j
+public class <@entityCapName/>Controller {
 
 }
