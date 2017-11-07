@@ -22,7 +22,7 @@ public interface <@entityCapName/>Mapper{
 	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
-	int deleteByPrimaryKey(@Param("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>);
+	int deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
 
 	/**
 	 * 新增${functionName}
@@ -30,7 +30,7 @@ public interface <@entityCapName/>Mapper{
 	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
-	int insertSelective(@Param("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>);
+	int insertSelective(<@entityCapName/> <@entityLowerName/>);
 
 	/**
 	 * 根据主键更新${functionName}，无法更改主键和创建者、创建时间的信息
@@ -38,7 +38,7 @@ public interface <@entityCapName/>Mapper{
 	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
-	int updateByPrimaryKey(@Param("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>);
+	int updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
 
 	/**
 	 * 根据${functionName}实体中的条件更改数据，无法更改主键和创建者、创建时间的信息
@@ -46,7 +46,7 @@ public interface <@entityCapName/>Mapper{
 	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
-	int updateSelective(@Param("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>);
+	int updateSelective(<@entityCapName/> <@entityLowerName/>);
 
 	/**
 	 * 根据主键查询${functionName}
@@ -62,6 +62,6 @@ public interface <@entityCapName/>Mapper{
 	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return ${functionName}的集合
 	 */
-	List<<@entityCapName/>> selectSelective(@Param("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>);
+	List<<@entityCapName/>> selectSelective(<@entityCapName/> <@entityLowerName/>);
 
 }

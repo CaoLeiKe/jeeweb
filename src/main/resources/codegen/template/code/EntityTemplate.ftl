@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 <#list importTypes as importType>
 import ${importType};
@@ -33,14 +34,23 @@ public class <@entityCapName/> implements Serializable {
 
 	<#list attributeInfos as attributeInfo>
 	/**${attributeInfo.remarks}*/
-	<#if !attributeInfo.nullable && attributeInfo.columnDef?trim?length == 0>
+	<#-- 数据库为notNull，且没有默认值，且不是创建修改人和时间-->
+	<#if !attributeInfo.nullable && attributeInfo.columnDef?trim?length == 0 && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create"))>
+		<#-- 如果是主键-->
 		<#if attributeInfo.parmaryKey>
 	@ApiModelProperty(value = "${attributeInfo.remarks}")
 	@NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Second.class})
-		<#else >
+		<#elseif attributeInfo.type == "String">
+	@ApiModelProperty(value = "${attributeInfo.remarks}", required = true)
+	@NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {First.class, Second.class})
+	@Size(max = ${attributeInfo.length}, min = 1, message = "${attributeInfo.remarks}必填。最多${attributeInfo.length}个字符！")
+		<#else>
 	@ApiModelProperty(value = "${attributeInfo.remarks}", required = true)
 	@NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {First.class, Second.class})
 		</#if>
+	<#elseif attributeInfo.type == "String" && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create"))>
+	@Size(max = ${attributeInfo.length}, message = "${attributeInfo.remarks}最多${attributeInfo.length}个字符！")
+	@ApiModelProperty(value = "${attributeInfo.remarks}")
 	<#else>
 	@ApiModelProperty(value = "${attributeInfo.remarks}")
 	</#if>
