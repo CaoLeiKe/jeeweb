@@ -68,10 +68,10 @@ public class <@entityCapName/>Controller {
 	@RequestMapping(value = "/insertSelective", method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(httpMethod = "POST", value = "新增${functionName}")
-	public Map insertSelective(@Validated(First.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@idJava/>") <@entityCapName/> <@idJava/>) {
+	public Map insertSelective(@Validated(First.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
 		log.info("----------------${functionName}，新增${functionName}开始----------------");
-		log.info("parameters0:{}", <@idJava/>);
-		Pair<Boolean, Object> pair = <@entityLowerService/>.insertSelective(<@idJava/>);
+		log.info("parameters0:{}", <@entityLowerName/>);
+		Pair<Boolean, Object> pair = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
 		if (pair.getKey()) {
 			log.info("result:{}" + pair.getValue());
 			log.info("----------------${functionName}，新增${functionName}结束----------------");
@@ -102,10 +102,10 @@ public class <@entityCapName/>Controller {
 	@RequestMapping(value = "/updateSelective", method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(httpMethod = "POST", value = "根据条件修改${functionName}")
-	public Map updateSelective(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@idJava/>") <@entityCapName/> <@idJava/>) {
+	public Map updateSelective(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
 		log.info("----------------${functionName}，修改${functionName}开始----------------");
-		log.info("parameters0:{}", <@idJava/>);
-		Pair<Boolean, Object> pair = <@entityLowerService/>.updateSelective(<@idJava/>);
+		log.info("parameters0:{}", <@entityLowerName/>);
+		Pair<Boolean, Object> pair = <@entityLowerService/>.updateSelective(<@entityLowerName/>);
 		if (pair.getKey()) {
 			log.info("result:{}" + pair.getValue());
 			log.info("----------------${functionName}，修改${functionName}结束----------------");
