@@ -30,7 +30,7 @@ public interface <@entityCapName/>Mapper{
 	 * @param <@entityLowerName/> ${functionName}实体
 	 * @return 受影响的行数
 	 */
-	int insertSelective(<@entityCapName/> <@entityLowerName/>);
+	long insertSelective(<@entityCapName/> <@entityLowerName/>);
 
 	/**
 	 * 根据主键更新${functionName}，无法更改主键和创建者、创建时间的信息

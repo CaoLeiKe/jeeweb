@@ -24,22 +24,22 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
 	private <@entityCapName/>Mapper <@entityLowerName/>Mapper;
 
 	@Override
-	public int deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
+	public long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
 		return <@entityLowerMapper/>.deleteByPrimaryKey(<@entityLowerName/>);
 	}
 
 	@Override
-	public int insertSelective(<@entityCapName/> <@entityLowerName/>) {
+	public long insertSelective(<@entityCapName/> <@entityLowerName/>) {
 		return <@entityLowerMapper/>.insertSelective(<@entityLowerName/>);
 	}
 
 	@Override
-	public int updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
+	public long updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
 		return <@entityLowerMapper/>.updateByPrimaryKey(<@entityLowerName/>);
 	}
 
 	@Override
-	public int updateSelective(<@entityCapName/> <@entityLowerName/>) {
+	public long updateSelective(<@entityCapName/> <@entityLowerName/>) {
 		return <@entityLowerMapper/>.updateSelective(<@entityLowerName/>);
 	}
 
