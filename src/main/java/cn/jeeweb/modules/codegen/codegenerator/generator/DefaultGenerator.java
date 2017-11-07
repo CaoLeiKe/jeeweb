@@ -26,6 +26,7 @@ public class DefaultGenerator implements IGenerator {
 	public final static int CODE_TYPE_JAVA = 1;
 	public final static int CODE_TYPE_JSP = 2;
 	public final static int CODE_TYPE_MAPPER = 3;
+	public final static int CODE_TYPE_TEST = 4;
 	public static final String DEFAULT_CONFIG_FILE = "codegen.properties";
 	private String configname = DEFAULT_CONFIG_FILE;
 	private PropertiesUtil generatorProperties = new PropertiesUtil(configname);
@@ -46,6 +47,8 @@ public class DefaultGenerator implements IGenerator {
 			rootPackage = generatorProperties.getString("webroot.package", "/src/main/webapp/");
 		} else if (config.getCodeType() == CODE_TYPE_MAPPER) {
 			rootPackage = generatorProperties.getString("resources.root.package", "/src.main.resources/");
+		} else if (config.getCodeType() == CODE_TYPE_TEST) {
+			rootPackage = generatorProperties.getString("source.root.package", "/src/main/test/java");
 		} else {
 			rootPackage = generatorProperties.getString("source.root.package", "/src/main/java/");
 		}
