@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -149,8 +148,7 @@ public class <@entityCapName/>Controller {
 			log.info("result:{}" + pair.getValue());
 			log.info("----------------${functionName}，分页查询${functionName}结束----------------");
 			Map<String, Object> resultMap = Tool.resultMap(CodeConts.SUCCESS, "分页查询${functionName}成功！");
-			resultMap.put("data", pair.getValue());
-			resultMap.put("total", ((List) (pair.getValue())).size());
+			resultMap.putAll((Map) pair.getValue());
 			return resultMap;
 		}
 		log.info("result:{}" + pair.getValue());
