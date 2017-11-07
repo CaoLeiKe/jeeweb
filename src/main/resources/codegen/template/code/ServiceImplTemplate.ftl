@@ -7,6 +7,7 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.<@entityCapName/>Service;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -24,33 +25,63 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
 	private <@entityCapName/>Mapper <@entityLowerName/>Mapper;
 
 	@Override
-	public long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
-		return <@entityLowerMapper/>.deleteByPrimaryKey(<@entityLowerName/>);
+	public Pair<Boolean, Object> deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
+		long rowCount = <@entityLowerMapper/>.deleteByPrimaryKey(<@entityLowerName/>);
+		if (rowCount == 1) {
+			return Pair.of(Boolean.TRUE, rowCount);
+		} else {
+			return Pair.of(Boolean.FALSE, "删除${functionName}失败！");
+		}
 	}
 
 	@Override
-	public long insertSelective(<@entityCapName/> <@entityLowerName/>) {
-		return <@entityLowerMapper/>.insertSelective(<@entityLowerName/>);
+	public Pair<Boolean, Object> insertSelective(<@entityCapName/> <@entityLowerName/>) {
+		long rowCount = <@entityLowerMapper/>.insertSelective(<@entityLowerName/>);
+		if (rowCount == 1) {
+			return Pair.of(Boolean.TRUE, rowCount);
+		} else {
+			return Pair.of(Boolean.FALSE, "添加${functionName}失败！");
+		}
 	}
 
 	@Override
-	public long updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
-		return <@entityLowerMapper/>.updateByPrimaryKey(<@entityLowerName/>);
+	public Pair<Boolean, Object> updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
+		long rowCount = <@entityLowerMapper/>.updateByPrimaryKey(<@entityLowerName/>);
+		if (rowCount == 1) {
+			return Pair.of(Boolean.TRUE, rowCount);
+		} else {
+			return Pair.of(Boolean.FALSE, "修改${functionName}失败！");
+		}
 	}
 
 	@Override
-	public long updateSelective(<@entityCapName/> <@entityLowerName/>) {
-		return <@entityLowerMapper/>.updateSelective(<@entityLowerName/>);
+	public Pair<Boolean, Object> updateSelective(<@entityCapName/> <@entityLowerName/>) {
+		long rowCount = <@entityLowerMapper/>.updateSelective(<@entityLowerName/>);
+		if (rowCount == 1) {
+			return Pair.of(Boolean.TRUE, rowCount);
+		} else {
+			return Pair.of(Boolean.FALSE, "修改${functionName}失败！");
+		}
 	}
 
 	@Override
-	public <@entityCapName/> selectByPrimaryKey(Long <@idJava/>) {
-		return <@entityLowerMapper/>.selectByPrimaryKey(<@idJava/>);
+	public Pair<Boolean, Object> selectByPrimaryKey(Long <@idJava/>) {
+		<@entityCapName/> <@entityLowerName/> = <@entityLowerMapper/>.selectByPrimaryKey(<@idJava/>);
+		if (<@entityLowerName/> != null) {
+			return Pair.of(Boolean.TRUE, <@entityLowerName/>);
+		} else {
+			return Pair.of(Boolean.FALSE, "查询结果为空！");
+		}
 	}
 
 	@Override
-	public List<<@entityCapName/>> selectSelective(<@entityCapName/> <@entityLowerName/>) {
-		return <@entityLowerMapper/>.selectSelective(<@entityLowerName/>);
+	public Pair<Boolean, Object> selectSelective(<@entityCapName/> <@entityLowerName/>) {
+		List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerMapper/>.selectSelective(<@entityLowerName/>);
+		if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() > 0) {
+			return Pair.of(Boolean.TRUE, <@entityLowerName/>s);
+		} else {
+			return Pair.of(Boolean.FALSE, "查询结果为空！");
+		}
 	}
 
 }
