@@ -1,9 +1,9 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity;
 <#macro entityCapName>${entityName?cap_first}</#macro>
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import ${packageName}.${moduleName}.valid.First;
 import ${packageName}.${moduleName}.valid.Second;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
