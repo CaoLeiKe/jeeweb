@@ -6,13 +6,28 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 <#macro entityCapService>${entityName?cap_first}Service</#macro>
 <#macro entityLowerService>${entityName?lower_case}Service</#macro>
 
+import ${packageName}.${moduleName}.entity.<@entityCapName/>;
+import ${packageName}.${moduleName}.service.<@entityCapService/>;
+import ${packageName}.${moduleName}.valid.First;
+import ${packageName}.${moduleName}.valid.Second;
+import com.richgo.common.CodeConts;
+import com.richgo.util.Tool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Title: ${functionName}
@@ -37,10 +52,10 @@ public class <@entityCapName/>Controller {
 	@ApiOperation(httpMethod = "POST", value = "根据主键删除${functionName}")
 	public Map deleteByPrimaryKey(@ApiParam(value = "${functionName}主键", required = true) @RequestParam("<@idJava/>") Long <@idJava/>) {
 		log.info("----------------${functionName}，删除${functionName}开始----------------");
-		log.info("parameters0:{}", <@idJava/>Id);
+		log.info("parameters0:{}", <@idJava/>);
 		<@entityCapName/> <@entityLowerName/> = new <@entityCapName/>();
-		<@idJava/>.set<@capIdJava/>(<@idJava/>);
-		Pair<Boolean, Object> pair = <@entityLowerService/>.deleteByPrimaryKey(<@idJava/>);
+		<@entityLowerName/>.set<@capIdJava/>(<@idJava/>);
+		Pair<Boolean, Object> pair = <@entityLowerService/>.deleteByPrimaryKey(<@entityLowerName/>);
 		if (pair.getKey()) {
 			log.info("result:{}" + pair.getValue());
 			log.info("----------------${functionName}，删除${functionName}结束----------------");
@@ -105,10 +120,10 @@ public class <@entityCapName/>Controller {
 	@RequestMapping(value = "/selectByPrimaryKey", method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(httpMethod = "POST", value = "根据主键查询${functionName}")
-	public Map selectByPrimaryKey(@ApiParam(value = "${functionName}主键", required = true) @RequestParam Long <@idJava/>Id) {
+	public Map selectByPrimaryKey(@ApiParam(value = "${functionName}主键", required = true) @RequestParam Long <@idJava/>) {
 		log.info("----------------${functionName}，查询${functionName}开始----------------");
-		log.info("parameters0:{}", <@idJava/>Id);
-		Pair<Boolean, Object> pair = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>Id);
+		log.info("parameters0:{}", <@idJava/>);
+		Pair<Boolean, Object> pair = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>);
 		if (pair.getKey()) {
 			log.info("result:{}" + pair.getValue());
 			log.info("----------------${functionName}，查询${functionName}结束----------------");
@@ -131,9 +146,9 @@ public class <@entityCapName/>Controller {
 		log.info("parameters0:{}", <@idJava/>);
 		Pair<Boolean, Object> pair = <@entityLowerService/>.selectSelective(<@idJava/>, pageNum, pageSize);
 		if (pair.getKey()) {
-		log.info("result:{}" + pair.getValue());
-		log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-		Map<String, Object> resultMap = Tool.resultMap(CodeConts.SUCCESS, "分页查询${functionName}成功！");
+			log.info("result:{}" + pair.getValue());
+			log.info("----------------${functionName}，分页查询${functionName}结束----------------");
+			Map<String, Object> resultMap = Tool.resultMap(CodeConts.SUCCESS, "分页查询${functionName}成功！");
 			resultMap.put("data", pair.getValue());
 			resultMap.put("total", ((List) (pair.getValue())).size());
 			return resultMap;
