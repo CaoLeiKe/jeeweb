@@ -58,6 +58,8 @@ public interface <@entityCapName/>Service {
 	 * 根据${functionName}实体的条件分页查询数据
 	 *
 	 * @param <@entityLowerName/> ${functionName}实体
+	 * @param pageNum 第几页
+	 * @param pageSize 每页显示的数量
 	 * @return 元组
 	 */
 	Pair<Boolean, Object> selectSelective(<@entityCapName/> <@entityLowerName/>, int pageNum, int pageSize);
