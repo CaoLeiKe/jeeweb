@@ -148,6 +148,8 @@ public class <@entityCapName/>Controller {
                                @ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("parameters0:{}", <@idJava/>);
+        log.info("parameters1:{}", pageNum);
+        log.info("parameters2:{}", pageSize);
         Pair<Boolean, Object> pair = <@entityLowerService/>.selectSelective(<@idJava/>, pageNum, pageSize);
         if (pair.getKey()) {
             log.info("result:{}" + pair.getValue());
