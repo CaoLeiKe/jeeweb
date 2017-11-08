@@ -92,13 +92,14 @@
 		         </td>
 		         <td>
 		             <input type="checkbox" value="Controller" name="generatorKeys"  checked="checked">Controller</input>
-					 <input type="checkbox" value="IService" name="generatorKeys"   checked="checked">IService</input> 
+					 <input type="checkbox" value="Service" name="generatorKeys"   checked="checked">Service</input>
 					 <input type="checkbox" value="ServiceImpl" name="generatorKeys"  checked="checked">ServiceImpl</input>
 				 	 <input type="checkbox" value="Mapper" name="generatorKeys"  checked="checked">Mapper</input>
 				 	 <input type="checkbox" value="Entity" name="generatorKeys"  checked="checked">Entity</input>
 				 	 <input type="checkbox" value="xmlMapper" name="generatorKeys"  checked="checked">xmlMapper</input>
 				 	 <input type="checkbox" value="viewList" name="generatorKeys"  checked="checked">viewList</input>
 				 	 <input type="checkbox" value="viewForm" name="generatorKeys"  checked="checked">viewForm</input>   
+				 	 <input type="checkbox" value="testJava" name="generatorKeys"  checked="checked">testJava</input>
 		             <label class="Validform_checktip"></label>
 		         </td>
 		       </tr>

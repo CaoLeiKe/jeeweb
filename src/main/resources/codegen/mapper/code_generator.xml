@@ -12,21 +12,21 @@
 			<layer>controller</layer>
 			<!-- 模版名称 -->
 			<template-file>ControllerSimpleTemplate.ftl</template-file>
-			<!-- 是否JSP,1.JAVA,2.页面代码 -->
+			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>1</code-type>
-			<!-- 关键字有,entityName -->
+			<!-- 生成的文件名称，关键字[entityName] -->
 			<name-format>[entityName]Controller.java</name-format>
 		</generator>
 		<generator>
 			<!-- 注册关键字 -->
-			<key>IService</key>
+			<key>Service</key>
 			<!-- 文件层 -->
 			<layer>service</layer>
 			<!-- 模版名称 -->
 			<template-file>ServiceTemplate.ftl</template-file>
-			<!-- 是否JSP,1.JAVA,2.页面代码 -->
+			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>1</code-type>
-			<!-- 关键字有,entityName -->
+			<!-- 生成的文件名称，关键字[entityName] -->
 			<name-format>[entityName]Service.java</name-format>
 		</generator>
 		<generator>
@@ -36,9 +36,9 @@
 			<layer>service/impl</layer>
 			<!-- 模版名称 -->
 			<template-file>ServiceImplTemplate.ftl</template-file>
-			<!-- 是否JSP,1.JAVA,2.页面代码 -->
+			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>1</code-type>
-			<!-- 关键字有,entityName -->
+			<!-- 生成的文件名称，关键字[entityName] -->
 			<name-format>[entityName]ServiceImpl.java</name-format>
 		</generator>
 		<generator>
@@ -48,9 +48,9 @@
 			<layer>mapper</layer>
 			<!-- 模版名称 -->
 			<template-file>MapperTemplate.ftl</template-file>
-			<!-- 是否JSP,1.JAVA,2.页面代码 -->
+			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>1</code-type>
-			<!-- 关键字有,entityName -->
+			<!-- 生成的文件名称，关键字[entityName] -->
 			<name-format>[entityName]Mapper.java</name-format>
 		</generator>
 		<generator>
@@ -60,9 +60,9 @@
 			<layer>entity</layer>
 			<!-- 模版名称 -->
 			<template-file>EntityTemplate.ftl</template-file>
-			<!-- 是否JSP,1.JAVA,2.页面代码 -->
+			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>1</code-type>
-			<!-- 关键字有,entityName -->
+			<!-- 生成的文件名称，关键字[entityName] -->
 			<name-format>[entityName].java</name-format>
 		</generator>
 		<generator>
@@ -72,9 +72,9 @@
 			<layer>[entityName]</layer>
 			<!-- 模版名称 -->
 			<template-file>viewListTemplate.ftl</template-file>
-			<!-- 是否JSP,1.JAVA,2.页面代码 -->
+			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>2</code-type>
-			<!-- 关键字有,entityName -->
+			<!-- 生成的文件名称，关键字[entityName] -->
 			<name-format>list.jsp</name-format>
 		</generator>
 		<generator>
@@ -84,12 +84,12 @@
 			<layer>[entityName]</layer>
 			<!-- 模版名称 -->
 			<template-file>viewFormTemplate.ftl</template-file>
-			<!-- 是否JSP,1.JAVA,2.页面代码 -->
+			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>2</code-type>
-			<!-- 关键字有,entityName -->
+			<!-- 生成的文件名称，关键字[entityName] -->
 			<name-format>edit.jsp</name-format>
 		</generator>
-		
+
 		<generator>
 			<!-- 注册关键字 -->
 			<key>xmlMapper</key>
@@ -97,10 +97,23 @@
 			<layer></layer>
 			<!-- 模版名称 -->
 			<template-file>xmlMapperTemplate.ftl</template-file>
-			<!-- 是否JSP,1.JAVA,2.页面代码 -->
+			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>3</code-type>
-			<!-- 关键字有,entityName -->
+			<!-- 生成的文件名称，关键字[entityName] -->
 			<name-format>[entityName]Mapper.xml</name-format>
+		</generator>
+
+		<generator>
+			<!-- 注册关键字 -->
+			<key>testJava</key>
+			<!-- 文件层级关系 -->
+			<layer>test.service</layer>
+			<!-- 模版名称 -->
+			<template-file>javaTestTemplate.ftl</template-file>
+			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
+			<code-type>4</code-type>
+			<!-- 生成的文件名称，关键字[entityName] -->
+			<name-format>[entityName]ServiceTest.java</name-format>
 		</generator>
 	 
 	</generators>
