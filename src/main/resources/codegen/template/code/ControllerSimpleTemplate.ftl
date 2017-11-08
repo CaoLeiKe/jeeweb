@@ -10,6 +10,7 @@ import ${packageName}.${moduleName}.entity.<@entityCapName/>;
 import ${packageName}.${moduleName}.service.<@entityCapService/>;
 import ${packageName}.${moduleName}.valid.First;
 import ${packageName}.${moduleName}.valid.Second;
+import com.github.pagehelper.PageInfo;
 import com.richgo.common.CodeConts;
 import com.richgo.util.Tool;
 import io.swagger.annotations.Api;
@@ -152,7 +153,9 @@ public class <@entityCapName/>Controller {
             log.info("result:{}" + pair.getValue());
             log.info("----------------${functionName}，分页查询${functionName}结束----------------");
             Map<String, Object> resultMap = Tool.resultMap(CodeConts.SUCCESS, "分页查询${functionName}成功！");
-            resultMap.putAll((Map) pair.getValue());
+            PageInfo pageInfo = (PageInfo)pair.getValue();
+            resultMap.put("data", pageInfo.getList());
+            resultMap.put("total", pageInfo.getTotal());
             return resultMap;
         }
         log.info("result:{}" + pair.getValue());

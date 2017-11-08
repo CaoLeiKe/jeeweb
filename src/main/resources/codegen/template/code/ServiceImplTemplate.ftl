@@ -7,6 +7,8 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.<@entityCapName/>Service;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.richgo.common.CodeConts;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,9 +79,10 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
 
     @Override
     public Pair<Boolean, Object> selectSelective(<@entityCapName/> <@entityLowerName/>, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize, true);
         List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerMapper/>.selectSelective(<@entityLowerName/>);
         if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() > 0) {
-            return Pair.of(Boolean.TRUE, <@entityLowerName/>s);
+            return Pair.of(Boolean.TRUE, new PageInfo<>(<@entityLowerName/>s));
         } else {
             return Pair.of(Boolean.FALSE, CodeConts.DATA_IS_NUll);
         }
