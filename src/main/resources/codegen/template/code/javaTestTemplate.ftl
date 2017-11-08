@@ -7,8 +7,9 @@ package ${packageName}.${moduleName}.test.service;
 <#macro entityCapService>${entityName?cap_first}Service</#macro>
 <#macro entityLowerService>${entityName?lower_case}Service</#macro>
 
-import ${packageName}.${moduleName}.service.<@entityCapService/>;
+import ${packageName}.${moduleName}.entity.<@entityCapName/>;
 import ${packageName}.${moduleName}.core.TestSupport;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
