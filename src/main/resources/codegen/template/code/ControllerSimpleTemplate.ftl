@@ -153,7 +153,7 @@ public class <@entityCapName/>Controller {
             log.info("result:{}" + pair.getValue());
             log.info("----------------${functionName}，分页查询${functionName}结束----------------");
             Map<String, Object> resultMap = Tool.resultMap(CodeConts.SUCCESS, "分页查询${functionName}成功！");
-            PageInfo pageInfo = (PageInfo)pair.getValue();
+            PageInfo pageInfo = (PageInfo) pair.getValue();
             resultMap.put("data", pageInfo.getList());
             resultMap.put("total", pageInfo.getTotal());
             return resultMap;
