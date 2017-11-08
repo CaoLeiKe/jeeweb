@@ -62,24 +62,24 @@ public class <@entityCapName/>Controller {
         }
         log.warn("result:{}" + pair.getValue());
         log.info("----------------${functionName}，删除${functionName}结束----------------");
-        return Tool.resultMap(CodeConts.FAILURE, pair.getValue().toString());
+        return Tool.resultMap(CodeConts.FAILURE, "删除${functionName}失败！");
     }
 
     @RequestMapping(value = "/insertSelective", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation(httpMethod = "POST", value = "新增${functionName}")
+    @ApiOperation(httpMethod = "POST", value = "添加${functionName}")
     public Map insertSelective(@Validated(First.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
-        log.info("----------------${functionName}，新增${functionName}开始----------------");
+        log.info("----------------${functionName}，添加${functionName}开始----------------");
         log.info("parameters0:{}", <@entityLowerName/>);
         Pair<Boolean, Object> pair = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
         if (pair.getKey()) {
             log.info("result:{}" + pair.getValue());
-            log.info("----------------${functionName}，新增${functionName}结束----------------");
-            return Tool.resultMap(CodeConts.SUCCESS, "新增${functionName}成功！");
+            log.info("----------------${functionName}，添加${functionName}结束----------------");
+            return Tool.resultMap(CodeConts.SUCCESS, "添加${functionName}成功！");
         }
         log.info("result:{}" + pair.getValue());
-        log.info("----------------${functionName}，新增${functionName}结束----------------");
-        return Tool.resultMap(CodeConts.FAILURE, pair.getValue().toString());
+        log.info("----------------${functionName}，添加${functionName}结束----------------");
+        return Tool.resultMap(CodeConts.FAILURE, "添加${functionName}失败！");
     }
 
     @RequestMapping(value = "/updateByPrimaryKey", method = RequestMethod.POST)
@@ -96,7 +96,7 @@ public class <@entityCapName/>Controller {
         }
         log.info("result:{}" + pair.getValue());
         log.info("----------------${functionName}，修改${functionName}结束----------------");
-        return Tool.resultMap(CodeConts.FAILURE, pair.getValue().toString());
+        return Tool.resultMap(CodeConts.FAILURE, "修改${functionName}失败！");
     }
 
     @RequestMapping(value = "/updateSelective", method = RequestMethod.POST)
@@ -113,7 +113,7 @@ public class <@entityCapName/>Controller {
         }
         log.info("result:{}" + pair.getValue());
         log.info("----------------${functionName}，修改${functionName}结束----------------");
-        return Tool.resultMap(CodeConts.FAILURE, pair.getValue().toString());
+        return Tool.resultMap(CodeConts.FAILURE, "修改${functionName}失败！");
     }
 
     @RequestMapping(value = "/selectByPrimaryKey", method = RequestMethod.POST)
@@ -132,7 +132,11 @@ public class <@entityCapName/>Controller {
         }
         log.info("result:{}" + pair.getValue());
         log.info("----------------${functionName}，${functionName}结束----------------");
-        return Tool.resultMap(CodeConts.DATA_IS_NUll, pair.getValue().toString());
+        if (CodeConts.DATA_IS_NUll.equals(pair.getValue())) {
+            return Tool.resultMap(CodeConts.DATA_IS_NUll, "数据为空！");
+        } else {
+            return Tool.resultMap(CodeConts.FAILURE, "查询失败！");
+        }
     }
 
     @RequestMapping(value = "/selectSelective", method = RequestMethod.POST)
@@ -153,6 +157,10 @@ public class <@entityCapName/>Controller {
         }
         log.info("result:{}" + pair.getValue());
         log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-        return Tool.resultMap(CodeConts.DATA_IS_NUll, pair.getValue().toString());
+        if (CodeConts.DATA_IS_NUll.equals(pair.getValue())) {
+            return Tool.resultMap(CodeConts.DATA_IS_NUll, "数据为空！");
+        } else {
+            return Tool.resultMap(CodeConts.FAILURE, "查询失败！");
+        }
     }
 }

@@ -7,6 +7,7 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.<@entityCapName/>Service;
+import com.richgo.common.CodeConts;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,7 +31,7 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
         if (rowCount == 1) {
             return Pair.of(Boolean.TRUE, rowCount);
         } else {
-            return Pair.of(Boolean.FALSE, "删除${functionName}失败！");
+            return Pair.of(Boolean.FALSE, rowCount);
         }
     }
 
@@ -40,7 +41,7 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
         if (rowCount == 1) {
             return Pair.of(Boolean.TRUE, rowCount);
         } else {
-            return Pair.of(Boolean.FALSE, "添加${functionName}失败！");
+            return Pair.of(Boolean.FALSE, rowCount);
         }
     }
 
@@ -50,7 +51,7 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
         if (rowCount == 1) {
             return Pair.of(Boolean.TRUE, rowCount);
         } else {
-            return Pair.of(Boolean.FALSE, "修改${functionName}失败！");
+            return Pair.of(Boolean.FALSE, rowCount);
         }
     }
 
@@ -60,7 +61,7 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
         if (rowCount == 1) {
             return Pair.of(Boolean.TRUE, rowCount);
         } else {
-            return Pair.of(Boolean.FALSE, "修改${functionName}失败！");
+            return Pair.of(Boolean.FALSE, rowCount);
         }
     }
 
@@ -70,7 +71,7 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
         if (<@entityLowerName/> != null) {
             return Pair.of(Boolean.TRUE, <@entityLowerName/>);
         } else {
-            return Pair.of(Boolean.FALSE, "查询结果为空！");
+            return Pair.of(Boolean.FALSE, CodeConts.DATA_IS_NUll);
         }
     }
 
@@ -80,7 +81,7 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
         if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() > 0) {
             return Pair.of(Boolean.TRUE, <@entityLowerName/>s);
         } else {
-            return Pair.of(Boolean.FALSE, "查询结果为空！");
+            return Pair.of(Boolean.FALSE, CodeConts.DATA_IS_NUll);
         }
     }
 
