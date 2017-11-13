@@ -1,11 +1,11 @@
 package ${packageName}.${moduleName}.test.service;
 <#macro idCapJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
-<#macro idLowerJava><#list columns as column><#if column.parmaryKey>${column.javaField?lower_case}</#if></#list></#macro>
+<#macro idLowerJava><#list columns as column><#if column.parmaryKey>${column.javaField?uncap_first}</#if></#list></#macro>
 <#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
-<#macro entityLowerName>${entityName?lower_case}</#macro>
+<#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapService>${entityName?cap_first}Service</#macro>
-<#macro entityLowerService>${entityName?lower_case}Service</#macro>
+<#macro entityLowerService>${entityName?uncap_first}Service</#macro>
 
 import ${packageName}.${moduleName}.entity.<@entityCapName/>;
 import ${packageName}.${moduleName}.core.TestSupport;

@@ -2,14 +2,14 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 <#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
 <#macro capIdJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
-<#macro entityLowerName>${entityName?lower_case}</#macro>
+<#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapService>${entityName?cap_first}Service</#macro>
-<#macro entityLowerService>${entityName?lower_case}Service</#macro>
+<#macro entityLowerService>${entityName?uncap_first}Service</#macro>
 
 import ${packageName}.${moduleName}.entity.<@entityCapName/>;
 import ${packageName}.${moduleName}.service.<@entityCapService/>;
-import ${packageName}.${moduleName}.valid.First;
-import ${packageName}.${moduleName}.valid.Second;
+import ${packageName}.${moduleName}.valid.Insert;
+import ${packageName}.${moduleName}.valid.Update;
 import com.github.pagehelper.PageInfo;
 import com.richgo.common.CodeConts;
 import com.richgo.util.Tool;
@@ -69,7 +69,7 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/insertSelective", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "添加${functionName}")
-    public Map insertSelective(@Validated(First.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
+    public Map insertSelective(@Validated(Insert.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
         log.info("----------------${functionName}，添加${functionName}开始----------------");
         log.info("parameters0:{}", <@entityLowerName/>);
         Pair<Boolean, Object> pair = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
@@ -86,7 +86,7 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/updateByPrimaryKey", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键修改${functionName}")
-    public Map updateByPrimaryKey(@Validated(value = {Second.class}) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@idJava/>") <@entityCapName/> <@idJava/>) {
+    public Map updateByPrimaryKey(@Validated(value = {Update.class}) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@idJava/>") <@entityCapName/> <@idJava/>) {
         log.info("----------------${functionName}，修改${functionName}开始----------------");
         log.info("parameters0:{}", <@idJava/>);
         Pair<Boolean, Object> pair = <@entityLowerService/>.updateByPrimaryKey(<@idJava/>);

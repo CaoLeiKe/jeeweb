@@ -1,9 +1,9 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity;
 <#macro entityCapName>${entityName?cap_first}</#macro>
 
+import ${packageName}.${moduleName}.valid.Insert;
+import ${packageName}.${moduleName}.valid.Update;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import ${packageName}.${moduleName}.valid.First;
-import ${packageName}.${moduleName}.valid.Second;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -39,14 +39,14 @@ public class <@entityCapName/> implements Serializable {
         <#-- 如果是主键-->
         <#if attributeInfo.parmaryKey>
     @ApiModelProperty(value = "${attributeInfo.remarks}")
-    @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Second.class})
+    @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Update.class})
         <#elseif attributeInfo.type == "String">
     @ApiModelProperty(value = "${attributeInfo.remarks}", required = true)
     @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {First.class, Second.class})
-    @Size(max = ${attributeInfo.length}, min = 1, message = "${attributeInfo.remarks}必填。最多${attributeInfo.length}个字符！")
+    @Size(max = ${attributeInfo.length}, min = 1, message = "${attributeInfo.remarks}不能为空，且最多${attributeInfo.length}个字符！")
         <#else>
     @ApiModelProperty(value = "${attributeInfo.remarks}", required = true)
-    @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {First.class, Second.class})
+    @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Insert.class, Update.class})
         </#if>
     <#elseif attributeInfo.type == "String" && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create"))>
     @Size(max = ${attributeInfo.length}, message = "${attributeInfo.remarks}最多${attributeInfo.length}个字符！")

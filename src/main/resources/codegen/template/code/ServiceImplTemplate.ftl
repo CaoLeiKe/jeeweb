@@ -1,9 +1,9 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.impl;
-<#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
+<#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField?uncap_first}</#if></#list></#macro>
 <#macro idCapJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
-<#macro entityLowerName>${entityName?lower_case}</#macro>
+<#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
-<#macro entityLowerMapper>${entityName?lower_case}Mapper</#macro>
+<#macro entityLowerMapper>${entityName?uncap_first}Mapper</#macro>
 
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper;
