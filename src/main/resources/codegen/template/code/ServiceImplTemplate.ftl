@@ -1,5 +1,6 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.impl;
 <#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
+<#macro idCapJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro entityLowerName>${entityName?lower_case}</#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro entityLowerMapper>${entityName?lower_case}Mapper</#macro>
@@ -7,6 +8,7 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.<@entityCapName/>Service;
+import com.common.seq.sql.SqlSeqUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.richgo.common.CodeConts;
@@ -39,6 +41,8 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
 
     @Override
     public Pair<Boolean, Object> insertSelective(<@entityCapName/> <@entityLowerName/>) {
+        long <@idJava/> = SqlSeqUtil.get("${tableName}");
+        <@entityLowerName/>.set<@idCapJava/>(<@idJava/>);
         long rowCount = <@entityLowerMapper/>.insertSelective(<@entityLowerName/>);
         if (rowCount == 1) {
             return Pair.of(Boolean.TRUE, rowCount);
