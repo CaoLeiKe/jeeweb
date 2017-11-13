@@ -1,5 +1,6 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity;
 <#macro entityCapName>${entityName?cap_first}</#macro>
+<#list attributeInfos as attributeInfo><#if !attributeInfo.nullable && attributeInfo.columnDef?trim?length == 0 && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create")) && attributeInfo.type == "String"><#assign size="import javax.validation.constraints.Size;"/></#if></#list>
 
 import ${packageName}.${moduleName}.valid.Insert;
 import ${packageName}.${moduleName}.valid.Update;
@@ -11,7 +12,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+<#if size??>
+${size}
+</#if>
 import java.io.Serializable;
 <#list importTypes as importType>
 import ${importType};
@@ -42,7 +45,7 @@ public class <@entityCapName/> implements Serializable {
     @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Update.class})
         <#elseif attributeInfo.type == "String">
     @ApiModelProperty(value = "${attributeInfo.remarks}", required = true)
-    @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {First.class, Second.class})
+    @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Insert.class, Update.class})
     @Size(max = ${attributeInfo.length}, min = 1, message = "${attributeInfo.remarks}不能为空，且最多${attributeInfo.length}个字符！")
         <#else>
     @ApiModelProperty(value = "${attributeInfo.remarks}", required = true)
