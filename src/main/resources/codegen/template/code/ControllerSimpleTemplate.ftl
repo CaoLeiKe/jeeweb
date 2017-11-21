@@ -7,14 +7,12 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 <#macro entityCapService>${entityName?cap_first}Service</#macro>
 <#macro entityLowerService>${entityName?uncap_first}Service</#macro>
 
-import com.chtwm.insurance.agency.common.base.BaseResponse;
 import ${packageName}.${moduleName}.entity.<@entityCapName/>;
 import ${packageName}.${moduleName}.service.<@entityCapService/>;
 import ${packageName}.${moduleName}.valid.Insert;
 import ${packageName}.${moduleName}.valid.Update;
+import com.chtwm.insurance.agency.common.base.BaseResponse;
 import com.github.pagehelper.PageInfo;
-import com.richgo.common.CodeConts;
-import com.richgo.util.Tool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * @Title: ${functionName}
@@ -111,19 +109,19 @@ public class <@entityCapName/>Controller {
         if (<@entityLowerName/> != null) {
             log.info("result:{}" + <@entityLowerName/>);
             log.info("----------------${functionName}，查询${functionName}结束----------------");
-            return BaseResponse.successCustom("查询${functionName}成功！").setObj(<@entityLowerName/>).build();;
+            return BaseResponse.successCustom("查询${functionName}成功！").setObj(<@entityLowerName/>).build();
         }
         log.info("result:{}" + <@entityLowerName/>);
         log.info("----------------${functionName}，${functionName}结束----------------");
-        return BaseResponse.successCustom("查询${functionName}结果为空！").setObj(<@entityLowerName/>).build();;
+        return BaseResponse.successCustom("查询${functionName}结果为空！").setObj(<@entityLowerName/>).build();
     }
 
     @RequestMapping(value = "/selectList", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件分页查询${functionName}")
     public BaseResponse selectListByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>,
-                                @ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
-                                @ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
+                                         @ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
+                                         @ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("parameters0:{}", <@entityLowerName/>);
         log.info("parameters1:{}", pageNum);

@@ -5,6 +5,8 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
 
+import java.util.List;
+
 /**
  * @Title: ${functionName}
  * @Description: Service 接口
