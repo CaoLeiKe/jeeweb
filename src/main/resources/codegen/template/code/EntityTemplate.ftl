@@ -3,7 +3,6 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 <#list attributeInfos as attributeInfo><#if !attributeInfo.nullable && attributeInfo.columnDef?trim?length == 0 && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create")) && attributeInfo.type == "String"><#assign size="import javax.validation.constraints.Size;"/></#if></#list>
 
 import ${packageName}.${moduleName}.valid.Insert;
-import ${packageName}.${moduleName}.valid.Id;
 import ${packageName}.${moduleName}.valid.Update;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
@@ -43,7 +42,7 @@ public class <@entityCapName/> implements Serializable {
         <#-- 如果是主键-->
         <#if attributeInfo.parmaryKey>
     @ApiModelProperty(value = "${attributeInfo.remarks}")
-    @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Update.class, Id.class})
+    @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Update.class})
         <#elseif attributeInfo.type == "String">
     @ApiModelProperty(value = "${attributeInfo.remarks}", required = true)
     @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Insert.class, Update.class})

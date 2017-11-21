@@ -9,7 +9,6 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 import ${packageName}.${moduleName}.entity.<@entityCapName/>;
 import ${packageName}.${moduleName}.service.<@entityCapService/>;
 import ${packageName}.${moduleName}.valid.Insert;
-import ${packageName}.${moduleName}.valid.Id;
 import ${packageName}.${moduleName}.valid.Update;
 import com.github.pagehelper.PageInfo;
 import com.richgo.common.CodeConts;
@@ -51,7 +50,7 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键删除${functionName}")
-    public Map delete<@entityCapName/>(@Validated(Id.class) @ApiParam(value = "${functionName}主键", required = true) @RequestParam("<@idJava/>") Long <@idJava/>) {
+    public Map delete<@entityCapName/>(@ApiParam(value = "${functionName}主键", required = true) @RequestParam("<@idJava/>") Long <@idJava/>) {
         log.info("----------------${functionName}，删除${functionName}开始----------------");
         log.info("parameters0:{}", <@idJava/>);
         <@entityCapName/> <@entityLowerName/> = new <@entityCapName/>();
