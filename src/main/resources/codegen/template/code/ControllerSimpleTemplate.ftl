@@ -126,7 +126,7 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/selectList", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件分页查询${functionName}")
-    public Map selectListByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@idJava/>") <@entityCapName/> <@idJava/>,
+    public Map selectListByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>,
                                 @ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                 @ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
