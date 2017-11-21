@@ -10,9 +10,6 @@ import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.<@entityCapName/>Service;
 import com.common.seq.sql.SqlSeqUtil;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.richgo.common.CodeConts;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -30,56 +27,31 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
     private <@entityCapName/>Mapper <@entityLowerName/>Mapper;
 
     @Override
-    public Pair<Boolean, Object> deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
-        long rowCount = <@entityLowerMapper/>.deleteByPrimaryKey(<@entityLowerName/>);
-        if (rowCount == 1) {
-            return Pair.of(Boolean.TRUE, rowCount);
-        } else {
-            return Pair.of(Boolean.FALSE, rowCount);
-        }
+    public long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
+        return <@entityLowerMapper/>.deleteByPrimaryKey(<@entityLowerName/>);
     }
 
     @Override
-    public Pair<Boolean, Object> insertSelective(<@entityCapName/> <@entityLowerName/>) {
+    public long insertSelective(<@entityCapName/> <@entityLowerName/>) {
         long <@idJava/> = SqlSeqUtil.get("${tableName}");
         <@entityLowerName/>.set<@idCapJava/>(<@idJava/>);
-        long rowCount = <@entityLowerMapper/>.insertSelective(<@entityLowerName/>);
-        if (rowCount == 1) {
-            return Pair.of(Boolean.TRUE, rowCount);
-        } else {
-            return Pair.of(Boolean.FALSE, rowCount);
-        }
+        return <@entityLowerMapper/>.insertSelective(<@entityLowerName/>);
     }
 
     @Override
-    public Pair<Boolean, Object> updateSelective(<@entityCapName/> <@entityLowerName/>) {
-        long rowCount = <@entityLowerMapper/>.updateSelective(<@entityLowerName/>);
-        if (rowCount == 1) {
-            return Pair.of(Boolean.TRUE, rowCount);
-        } else {
-            return Pair.of(Boolean.FALSE, rowCount);
-        }
+    public long updateSelective(<@entityCapName/> <@entityLowerName/>) {
+        return <@entityLowerMapper/>.updateSelective(<@entityLowerName/>);
     }
 
     @Override
-    public Pair<Boolean, Object> selectByPrimaryKey(Long <@idJava/>) {
-        <@entityCapName/> <@entityLowerName/> = <@entityLowerMapper/>.selectByPrimaryKey(<@idJava/>);
-        if (<@entityLowerName/> != null) {
-            return Pair.of(Boolean.TRUE, <@entityLowerName/>);
-        } else {
-            return Pair.of(Boolean.FALSE, CodeConts.DATA_IS_NUll);
-        }
+    public <@entityCapName/> selectByPrimaryKey(Long <@idJava/>) {
+        return <@entityLowerMapper/>.selectByPrimaryKey(<@idJava/>);
     }
 
     @Override
-    public Pair<Boolean, Object> selectSelective(<@entityCapName/> <@entityLowerName/>, int pageNum, int pageSize) {
+    public List<<@entityCapName/>> selectSelective(<@entityCapName/> <@entityLowerName/>, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize, true);
-        List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerMapper/>.selectSelective(<@entityLowerName/>);
-        if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() > 0) {
-            return Pair.of(Boolean.TRUE, new PageInfo<>(<@entityLowerName/>s));
-        } else {
-            return Pair.of(Boolean.FALSE, CodeConts.DATA_IS_NUll);
-        }
+        return <@entityLowerMapper/>.selectSelective(<@entityLowerName/>);
     }
 
 }

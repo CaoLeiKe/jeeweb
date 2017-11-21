@@ -4,7 +4,6 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 <#macro entityCapName>${entityName?cap_first}</#macro>
 
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
-import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * @Title: ${functionName}
@@ -20,7 +19,7 @@ public interface <@entityCapName/>Service {
      * @param <@entityLowerName/> ${functionName}实体
      * @return 受影响的行数
      */
-    Pair<Boolean, Object> deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
+    long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
 
     /**
      * 新增${functionName}
@@ -28,23 +27,23 @@ public interface <@entityCapName/>Service {
      * @param <@entityLowerName/> ${functionName}实体
      * @return 受影响的行数
      */
-    Pair<Boolean, Object> insertSelective(<@entityCapName/> <@entityLowerName/>);
+    long insertSelective(<@entityCapName/> <@entityLowerName/>);
 
     /**
      * 根据${functionName}实体中的主键更改数据，无法更改主键和创建者、创建时间的信息
      *
      * @param <@entityLowerName/> ${functionName}实体
-     * @return 元组
+     * @return 受影响的行数
      */
-    Pair<Boolean, Object> updateSelective(<@entityCapName/> <@entityLowerName/>);
+    long updateSelective(<@entityCapName/> <@entityLowerName/>);
 
     /**
      * 根据主键查询${functionName}
      *
      * @param <@idJava/> ${functionName}主键
-     * @return 元组
+     * @return 查询的结果
      */
-    Pair<Boolean, Object> selectByPrimaryKey(Long <@idJava/>);
+    <@entityCapName/> selectByPrimaryKey(Long <@idJava/>);
 
     /**
      * 根据${functionName}实体的条件分页查询数据
@@ -52,9 +51,9 @@ public interface <@entityCapName/>Service {
      * @param <@entityLowerName/> ${functionName}实体
      * @param pageNum 第几页
      * @param pageSize 每页显示的数量
-     * @return 元组
+     * @return 分页查询的结果
      */
-    Pair<Boolean, Object> selectSelective(<@entityCapName/> <@entityLowerName/>, int pageNum, int pageSize);
+    List<<@entityCapName/>> selectSelective(<@entityCapName/> <@entityLowerName/>, int pageNum, int pageSize);
 
 }
 

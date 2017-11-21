@@ -1,5 +1,6 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.controller;
 <#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
+<#macro idCapJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro capIdJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro entityLowerName>${entityName?uncap_first}</#macro>
@@ -18,7 +19,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -56,15 +56,15 @@ public class <@entityCapName/>Controller {
         log.info("parameters0:{}", <@idJava/>);
         <@entityCapName/> <@entityLowerName/> = new <@entityCapName/>();
         <@entityLowerName/>.set<@capIdJava/>(<@idJava/>);
-        Pair<Boolean, Object> pair = <@entityLowerService/>.deleteByPrimaryKey(<@entityLowerName/>);
-        if (pair.getKey()) {
-            log.info("result:{}" + pair.getRight());
+        long rowCount = <@entityLowerService/>.deleteByPrimaryKey(<@entityLowerName/>);
+        if (rowCount == 1) {
+            log.info("result:{}" + rowCount);
             log.info("----------------${functionName}，删除${functionName}结束----------------");
-            return BaseResponse.successCustom("删除${functionName}成功！");
+            return BaseResponse.successCustom("删除${functionName}成功！").build();
         }
-        log.warn("result:{}" + pair.getRight());
+        log.warn("result:{}" + rowCount);
         log.info("----------------${functionName}，删除${functionName}结束----------------");
-        return BaseResponse.failedCustom("删除${functionName}失败！");
+        return BaseResponse.failedCustom("删除${functionName}失败！").build();
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
@@ -73,15 +73,15 @@ public class <@entityCapName/>Controller {
     public BaseResponse save<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") @Validated(Insert.class) <@entityCapName/> <@entityLowerName/>) {
         log.info("----------------${functionName}，添加${functionName}开始----------------");
         log.info("parameters0:{}", <@entityLowerName/>);
-        Pair<Boolean, Object> pair = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
-        if (pair.getKey()) {
-            log.info("result:{}" + pair.getRight());
+        long rowCount = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
+        if (rowCount == 1) {
+            log.info("result:{}" + rowCount);
             log.info("----------------${functionName}，添加${functionName}结束----------------");
-            return BaseResponse.successCustom("添加${functionName}成功！");
+            return BaseResponse.successCustom("添加${functionName}成功！").setObj(<@entityLowerName/>.get<@idCapJava/>).build();
         }
-        log.info("result:{}" + pair.getRight());
+        log.info("result:{}" + rowCount);
         log.info("----------------${functionName}，添加${functionName}结束----------------");
-        return BaseResponse.failedCustom("添加${functionName}失败！");
+        return BaseResponse.failedCustom("添加${functionName}失败！").build();
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -90,15 +90,15 @@ public class <@entityCapName/>Controller {
     public BaseResponse update<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") @Validated(Update.class) <@entityCapName/> <@entityLowerName/>) {
         log.info("----------------${functionName}，修改${functionName}开始----------------");
         log.info("parameters0:{}", <@entityLowerName/>);
-        Pair<Boolean, Object> pair = <@entityLowerService/>.updateSelective(<@entityLowerName/>);
-        if (pair.getKey()) {
-            log.info("result:{}" + pair.getRight());
+        long rowCount = <@entityLowerService/>.updateSelective(<@entityLowerName/>);
+        if (rowCount == 1) {
+            log.info("result:{}" + rowCount);
             log.info("----------------${functionName}，修改${functionName}结束----------------");
-            return BaseResponse.successCustom("删除${functionName}成功！");
+            return BaseResponse.successCustom("删除${functionName}成功！").build();
         }
-        log.info("result:{}" + pair.getRight());
+        log.info("result:{}" + rowCount);
         log.info("----------------${functionName}，修改${functionName}结束----------------");
-        return BaseResponse.failedCustom("修改${functionName}失败！");
+        return BaseResponse.failedCustom("修改${functionName}失败！").build();
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.POST)
@@ -107,21 +107,15 @@ public class <@entityCapName/>Controller {
     public BaseResponse get<@entityCapName/>(@ApiParam(value = "${functionName}主键", required = true) @RequestParam Long <@idJava/>) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("parameters0:{}", <@idJava/>);
-        Pair<Boolean, Object> pair = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>);
-        if (pair.getKey()) {
-            log.info("result:{}" + pair.getRight());
+        <@entityCapName/> <@entityLowerName/> = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>);
+        if (<@entityLowerName/> != null) {
+            log.info("result:{}" + <@entityLowerName/>);
             log.info("----------------${functionName}，查询${functionName}结束----------------");
-            Map<String, Object> resultMap = Tool.resultMap(CodeConts.SUCCESS, "查询${functionName}成功！");
-            resultMap.put("data", pair.getRight());
-            return resultMap;
+            return BaseResponse.successCustom("查询${functionName}成功！").setObj(<@entityLowerName/>).build();;
         }
-        log.info("result:{}" + pair.getRight());
+        log.info("result:{}" + <@entityLowerName/>);
         log.info("----------------${functionName}，${functionName}结束----------------");
-        if (CodeConts.DATA_IS_NUll.equals(pair.getRight())) {
-            return BaseResponse.successCustom("数据为空！");
-        } else {
-            return BaseResponse.failedCustom("查询失败！");
-        }
+        return BaseResponse.successCustom("查询${functionName}结果为空！").setObj(<@entityLowerName/>).build();;
     }
 
     @RequestMapping(value = "/selectList", method = RequestMethod.POST)
@@ -134,20 +128,17 @@ public class <@entityCapName/>Controller {
         log.info("parameters0:{}", <@entityLowerName/>);
         log.info("parameters1:{}", pageNum);
         log.info("parameters2:{}", pageSize);
-        Pair<Boolean, Object> pair = <@entityLowerService/>.selectSelective(<@entityLowerName/>, pageNum, pageSize);
-        if (pair.getKey()) {
-            log.info("result:{}" + pair.getRight());
+        List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerService/>.selectSelective(<@entityLowerName/>, pageNum, pageSize);
+        if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() != 0) {
+            log.info("result:{}" + <@entityLowerName/>s);
             log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-            PageInfo pageInfo = (PageInfo) pair.getRight();
+            PageInfo pageInfo = new PageInfo<>(<@entityLowerName/>s);
             BaseResponse result = BaseResponse.successCustom("分页查询${functionName}成功！").setObj(pageInfo.getList()).addParam("total", pageInfo.getTotal());
             return result.builder();
         }
-        log.info("result:{}" + pair.getRight());
+        log.info("result:{}" + <@entityLowerName/>s);
         log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-        if (CodeConts.DATA_IS_NUll.equals(pair.getRight())) {
-            return Tool.resultMap(CodeConts.DATA_IS_NUll, "数据为空！");
-        } else {
-            return BaseResponse.failedCustom("查询失败！");
-        }
+        BaseResponse result = BaseResponse.successCustom("分页查询${functionName}结果为空！").setObj(pageInfo.getList()).addParam("total", pageInfo.getTotal());
+        return result.builder();
     }
 }
