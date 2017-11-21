@@ -69,7 +69,7 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "添加${functionName}")
-    public Map save<@entityCapName/>(@Validated(Insert.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
+    public Map save<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") @Validated(Insert.class) <@entityCapName/> <@entityLowerName/>) {
         log.info("----------------${functionName}，添加${functionName}开始----------------");
         log.info("parameters0:{}", <@entityLowerName/>);
         Pair<Boolean, Object> pair = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
@@ -86,7 +86,7 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键修改${functionName}")
-    public Map update<@entityCapName/>(@Validated(Update.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
+    public Map update<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") @Validated(Update.class) <@entityCapName/> <@entityLowerName/>) {
         log.info("----------------${functionName}，修改${functionName}开始----------------");
         log.info("parameters0:{}", <@entityLowerName/>);
         Pair<Boolean, Object> pair = <@entityLowerService/>.updateSelective(<@entityLowerName/>);
@@ -130,10 +130,10 @@ public class <@entityCapName/>Controller {
                                 @ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                 @ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
-        log.info("parameters0:{}", <@idJava/>);
+        log.info("parameters0:{}", <@entityLowerName/>);
         log.info("parameters1:{}", pageNum);
         log.info("parameters2:{}", pageSize);
-        Pair<Boolean, Object> pair = <@entityLowerService/>.selectSelective(<@idJava/>, pageNum, pageSize);
+        Pair<Boolean, Object> pair = <@entityLowerService/>.selectSelective(<@entityLowerName/>, pageNum, pageSize);
         if (pair.getKey()) {
             log.info("result:{}" + pair.getValue());
             log.info("----------------${functionName}，分页查询${functionName}结束----------------");
