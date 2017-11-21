@@ -87,7 +87,7 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键修改${functionName}")
-    public Map update<@entityCapName/>(@Validated(Id.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
+    public Map update<@entityCapName/>(@Validated(Update.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
         log.info("----------------${functionName}，修改${functionName}开始----------------");
         log.info("parameters0:{}", <@entityLowerName/>);
         Pair<Boolean, Object> pair = <@entityLowerService/>.updateSelective(<@entityLowerName/>);
