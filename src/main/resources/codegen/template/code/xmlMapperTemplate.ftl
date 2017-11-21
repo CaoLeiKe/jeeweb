@@ -73,26 +73,7 @@
         </trim>
     </insert>
 
-    <!-- 根据主键更新数据，无法更改主键和创建者、创建时间的信息 -->
-    <update id="updateByPrimaryKey" parameterType="${packageName}.${moduleName}.${entityName}">
-        update ${tableName}
-        <set>
-        <#list columns as column>
-            <#if column.parmaryKey || column.columnName?lower_case?contains("create")>
-            <#-- 主键跳过,创建人跳过，创建时间跳过 -->
-            <#elseif column.columnName?lower_case?contains("update") && column.columnName?lower_case?contains("time")>
-            ${column.columnName} = now(),
-            <#else>
-            <if test="${column.javaField} != null">
-                ${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}},
-            </if>
-            </#if>
-        </#list>
-        </set>
-        where <@idJdbc/>
-    </update>
-
-    <!-- 根据实体中的条件更改数据，无法更改主键和创建者、创建时间的信息 -->
+    <!-- 根据实体中的主键条件更改数据，无法更改主键和创建者、创建时间的信息 -->
     <update id="updateSelective" parameterType="${packageName}.${moduleName}.entity.${entityName}">
         update ${tableName}
         <set>
@@ -109,18 +90,7 @@
         </#list>
         </set>
         <where>
-        <#list columns as column>
-        <#-- 如果是时间类型则匹配当天 -->
-            <#if column.columnName?lower_case?contains("time")>
-            <if test="${column.javaField} != null">
-                and UNIX_TIMESTAMP(Date(${column.columnName})) = UNIX_TIMESTAMP(Date(${r"#"}{${column.javaField}, jdbcType=${column.typeName}}))
-            </if>
-            <#else>
-            <if test="${column.javaField} != null">
-                and ${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}
-            </if>
-            </#if>
-        </#list>
+            <@idJdbc/>
         </where>
     </update>
 

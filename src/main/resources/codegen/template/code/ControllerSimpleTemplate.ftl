@@ -9,6 +9,7 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 import ${packageName}.${moduleName}.entity.<@entityCapName/>;
 import ${packageName}.${moduleName}.service.<@entityCapService/>;
 import ${packageName}.${moduleName}.valid.Insert;
+import ${packageName}.${moduleName}.valid.Id;
 import ${packageName}.${moduleName}.valid.Update;
 import com.github.pagehelper.PageInfo;
 import com.richgo.common.CodeConts;
@@ -36,7 +37,7 @@ import java.util.Map;
  * @date ${time}
  */
 @Controller
-@RequestMapping("${moduleName}/<@entityLowerName/>")
+@RequestMapping("<@entityLowerName/>")
 @Api(description = "${functionName}api")
 @Slf4j
 public class <@entityCapName/>Controller {
@@ -47,10 +48,10 @@ public class <@entityCapName/>Controller {
     @Autowired
     private <@entityCapService/> <@entityLowerService/>;
 
-    @RequestMapping(value = "/deleteByPrimaryKey", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键删除${functionName}")
-    public Map deleteByPrimaryKey(@ApiParam(value = "${functionName}主键", required = true) @RequestParam("<@idJava/>") Long <@idJava/>) {
+    public Map delete<@entityCapName/>(@Validated(Id.class) @ApiParam(value = "${functionName}主键", required = true) @RequestParam("<@idJava/>") Long <@idJava/>) {
         log.info("----------------${functionName}，删除${functionName}开始----------------");
         log.info("parameters0:{}", <@idJava/>);
         <@entityCapName/> <@entityLowerName/> = new <@entityCapName/>();
@@ -66,10 +67,10 @@ public class <@entityCapName/>Controller {
         return Tool.resultMap(CodeConts.FAILURE, "删除${functionName}失败！");
     }
 
-    @RequestMapping(value = "/insertSelective", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "添加${functionName}")
-    public Map insertSelective(@Validated(Insert.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
+    public Map save<@entityCapName/>(@Validated(Insert.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
         log.info("----------------${functionName}，添加${functionName}开始----------------");
         log.info("parameters0:{}", <@entityLowerName/>);
         Pair<Boolean, Object> pair = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
@@ -83,27 +84,10 @@ public class <@entityCapName/>Controller {
         return Tool.resultMap(CodeConts.FAILURE, "添加${functionName}失败！");
     }
 
-    @RequestMapping(value = "/updateByPrimaryKey", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键修改${functionName}")
-    public Map updateByPrimaryKey(@Validated(value = {Update.class}) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@idJava/>") <@entityCapName/> <@idJava/>) {
-        log.info("----------------${functionName}，修改${functionName}开始----------------");
-        log.info("parameters0:{}", <@idJava/>);
-        Pair<Boolean, Object> pair = <@entityLowerService/>.updateByPrimaryKey(<@idJava/>);
-        if (pair.getKey()) {
-            log.info("result:{}" + pair.getValue());
-            log.info("----------------${functionName}，修改${functionName}结束----------------");
-            return Tool.resultMap(CodeConts.SUCCESS, "删除${functionName}成功！");
-        }
-        log.info("result:{}" + pair.getValue());
-        log.info("----------------${functionName}，修改${functionName}结束----------------");
-        return Tool.resultMap(CodeConts.FAILURE, "修改${functionName}失败！");
-    }
-
-    @RequestMapping(value = "/updateSelective", method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(httpMethod = "POST", value = "根据条件修改${functionName}")
-    public Map updateSelective(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
+    public Map update<@entityCapName/>(@Validated(Id.class) @ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>) {
         log.info("----------------${functionName}，修改${functionName}开始----------------");
         log.info("parameters0:{}", <@entityLowerName/>);
         Pair<Boolean, Object> pair = <@entityLowerService/>.updateSelective(<@entityLowerName/>);
@@ -117,10 +101,10 @@ public class <@entityCapName/>Controller {
         return Tool.resultMap(CodeConts.FAILURE, "修改${functionName}失败！");
     }
 
-    @RequestMapping(value = "/selectByPrimaryKey", method = RequestMethod.POST)
+    @RequestMapping(value = "/get", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键查询${functionName}")
-    public Map selectByPrimaryKey(@ApiParam(value = "${functionName}主键", required = true) @RequestParam Long <@idJava/>) {
+    public Map get<@entityCapName/>(@ApiParam(value = "${functionName}主键", required = true) @RequestParam Long <@idJava/>) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("parameters0:{}", <@idJava/>);
         Pair<Boolean, Object> pair = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>);
@@ -140,10 +124,10 @@ public class <@entityCapName/>Controller {
         }
     }
 
-    @RequestMapping(value = "/selectSelective", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectList", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件分页查询${functionName}")
-    public Map selectSelective(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@idJava/>") <@entityCapName/> <@idJava/>,
+    public Map select<@entityCapName/>List(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@idJava/>") <@entityCapName/> <@idJava/>,
                                @ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                @ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");

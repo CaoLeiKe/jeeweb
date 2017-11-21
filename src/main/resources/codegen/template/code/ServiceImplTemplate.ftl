@@ -52,16 +52,6 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
     }
 
     @Override
-    public Pair<Boolean, Object> updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
-        long rowCount = <@entityLowerMapper/>.updateByPrimaryKey(<@entityLowerName/>);
-        if (rowCount == 1) {
-            return Pair.of(Boolean.TRUE, rowCount);
-        } else {
-            return Pair.of(Boolean.FALSE, rowCount);
-        }
-    }
-
-    @Override
     public Pair<Boolean, Object> updateSelective(<@entityCapName/> <@entityLowerName/>) {
         long rowCount = <@entityLowerMapper/>.updateSelective(<@entityLowerName/>);
         if (rowCount == 1) {

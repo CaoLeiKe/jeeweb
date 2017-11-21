@@ -33,14 +33,6 @@ public interface <@entityCapName/>Mapper{
     long insertSelective(<@entityCapName/> <@entityLowerName/>);
 
     /**
-     * 根据主键更新${functionName}，无法更改主键和创建者、创建时间的信息
-     *
-     * @param <@entityLowerName/> ${functionName}实体
-     * @return 受影响的行数
-     */
-    long updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
-
-    /**
      * 根据${functionName}实体中的条件更改数据，无法更改主键和创建者、创建时间的信息
      *
      * @param <@entityLowerName/> ${functionName}实体
