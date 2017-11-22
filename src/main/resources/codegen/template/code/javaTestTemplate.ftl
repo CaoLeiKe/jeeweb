@@ -31,7 +31,7 @@ public class <@entityCapService/>Test extends TestSupport {
     @Test
     public void insert<@entityCapName/>() throws Exception {
         <@entityCapName/> <@entityLowerName/> = new <@entityCapName/>();
-        SetProperties.setProperties(<@entityLowerName/>);
+        SetPropertiesUtil.setProperties(<@entityLowerName/>);
         long rowCount = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
         Assert.assertEquals(1, rowCount);
         update<@entityCapName/>(<@entityLowerName/>);
@@ -43,7 +43,7 @@ public class <@entityCapService/>Test extends TestSupport {
     @Test
     public void update<@entityCapName/>(<@entityCapName/> <@entityLowerName/>) throws Exception {
         <@idJavaType/> <@idLowerJava/> = <@entityLowerName/>.get<@idCapJava/>();
-        SetProperties.setRandomProperties(<@entityLowerName/>);
+        SetPropertiesUtil.setProperties(<@entityLowerName/>);
         <@entityLowerName/>.set<@idCapJava/>(<@idLowerJava/>);
         long rowCount = <@entityLowerService/>.updateSelective(<@entityLowerName/>);
         Assert.assertEquals(1, rowCount);
