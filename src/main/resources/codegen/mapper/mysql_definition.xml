@@ -137,10 +137,6 @@
 			<full-type>java.util.Date</full-type>
 		</type>
 		<type>
-			<java-type>User</java-type>
-			<full-type>cn.jeeweb.modules.sys.entity.User</full-type>
-		</type>
-		<type>
 			<java-type>BigDecimal</java-type>
 			<full-type>java.math.BigDecimal</full-type>
 		</type>

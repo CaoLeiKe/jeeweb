@@ -231,7 +231,7 @@
 			    					{ label: '小数点', name: 'decimalDigits', width: 50, editable: true,editrules: {
 										number: true,
 			                            minValue: 0,
-			                            maxValue: 2,
+			                            maxValue: 4,
 			                            required: false
 			                        }},
 			    					{ label: '默认值', name: 'columnDef', width: 50, editable: true},

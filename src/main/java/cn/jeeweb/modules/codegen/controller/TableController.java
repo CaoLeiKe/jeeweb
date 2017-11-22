@@ -66,8 +66,8 @@ public class TableController extends BaseCRUDController<Table, String> {
 	@Autowired
 	private IMenuService menuService;
 
-	private String[] types = { "String", "Double", "Text", "Date", "Blob", "Short", "Integer", "Boolean", "User",
-			"this" };
+	private String[] types = { "String", "Double", "Text", "Date", "Blob", "Short", "Integer", "Boolean",
+			"this","Long", "BigDecimal" };
 
 	@Override
 	public void preEdit(Table table, Model model, HttpServletRequest request, HttpServletResponse response) {
