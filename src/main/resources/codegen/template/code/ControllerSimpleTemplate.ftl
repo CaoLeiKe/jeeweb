@@ -127,10 +127,10 @@ public class <@entityCapName/>Controller {
         log.info("parameters1:{}", pageNum);
         log.info("parameters2:{}", pageSize);
         List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerService/>.selectSelective(<@entityLowerName/>, pageNum, pageSize);
+        PageInfo pageInfo = new PageInfo<>(<@entityLowerName/>s);
         if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() != 0) {
             log.info("result:{}" + <@entityLowerName/>s);
             log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-            PageInfo pageInfo = new PageInfo<>(<@entityLowerName/>s);
             BaseResponse result = BaseResponse.successCustom("分页查询${functionName}成功！").setObj(pageInfo.getList()).addParam("total", pageInfo.getTotal());
             return result.builder();
         }

@@ -97,7 +97,7 @@
 			<db-type>TINYINT UNSIGNED</db-type>
 		</type>
 		<type>
-			<java-type>Double</java-type>
+			<java-type>BigDecimal</java-type>
 			<db-type>DECIMAL</db-type>
 		</type>
 		<type>
@@ -114,7 +114,7 @@
 			<db-type>TINYINT</db-type>
 		</type>
 		<type>
-			<java-type>Double</java-type>
+			<java-type>BigDecimal</java-type>
 			<db-type>DECIMAL UNSIGNED</db-type>
 		</type>
 		<type>
@@ -139,6 +139,10 @@
 		<type>
 			<java-type>User</java-type>
 			<full-type>cn.jeeweb.modules.sys.entity.User</full-type>
+		</type>
+		<type>
+			<java-type>BigDecimal</java-type>
+			<full-type>java.math.BigDecimal</full-type>
 		</type>
 	</javatoclass-types>
 </definition>
