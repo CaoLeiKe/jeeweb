@@ -1,6 +1,5 @@
 package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity;
 <#macro entityCapName>${entityName?cap_first}</#macro>
-<#list attributeInfos as attributeInfo><#if !attributeInfo.nullable && attributeInfo.columnDef?trim?length == 0 && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create")) && attributeInfo.type == "String"><#assign size="import javax.validation.constraints.Size;"/></#if></#list>
 
 import ${packageName}.${moduleName}.valid.Insert;
 import ${packageName}.${moduleName}.valid.Update;
@@ -11,11 +10,24 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+<#list attributeInfos as attributeInfo>
+    <#if attributeInfo.type == "BigDecimal">
+import javax.validation.constraints.Digits;
+        <#break/>
+    </#if>
+</#list>
+<#list attributeInfos as attributeInfo>
+    <#if !attributeInfo.nullable && attributeInfo.columnDef?trim?length == 0 && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create"))>
 import javax.validation.constraints.NotNull;
-<#if size??>
-${size}
-</#if>
-import java.io.Serializable;
+        <#break/>
+    </#if>
+</#list>
+<#list attributeInfos as attributeInfo>
+    <#if !attributeInfo.nullable && attributeInfo.columnDef?trim?length == 0 && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create")) && attributeInfo.type == "String">
+import javax.validation.constraints.Size;
+        <#break/>
+    </#if>
+</#list>
 <#list importTypes as importType>
 import ${importType};
 </#list>
@@ -59,6 +71,8 @@ public class <@entityCapName/> implements Serializable {
     </#if>
     <#if attributeInfo.type == "Date">
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8" )
+    <#elseif attributeInfo.type == "BigDecimal">
+    @Digits(integer = ${attributeInfo.length?number - attributeInfo.decimalDigits?number}, fraction = ${attributeInfo.decimalDigits}, message = "${attributeInfo.remarks}小数不能超过${attributeInfo.decimalDigits}位，整数不能超过${attributeInfo.length?number - attributeInfo.decimalDigits?number}位！")
     </#if>
     private <#if attributeInfo.type=='this'><@entityCapName/><#else>${attributeInfo.type}</#if> ${attributeInfo.name};
 

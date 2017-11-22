@@ -140,5 +140,9 @@
 			<java-type>BigDecimal</java-type>
 			<full-type>java.math.BigDecimal</full-type>
 		</type>
+		<type>
+			<java-type>Long</java-type>
+			<full-type>java.io.Serializable</full-type>
+		</type>
 	</javatoclass-types>
 </definition>
