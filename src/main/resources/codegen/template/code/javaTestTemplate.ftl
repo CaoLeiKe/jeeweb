@@ -7,9 +7,9 @@ package ${packageName}.${moduleName}.test.service;
 <#macro entityCapService>${entityName?cap_first}Service</#macro>
 <#macro entityLowerService>${entityName?uncap_first}Service</#macro>
 
-import ${packageName}.${moduleName}.entity.<@entityCapName/>;
 import ${packageName}.${moduleName}.core.TestSupport;
-import org.apache.commons.lang3.tuple.Pair;
+import ${packageName}.${moduleName}.entity.<@entityCapName/>;
+import ${packageName}.${moduleName}.service.<@entityCapService/>;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,44 +29,45 @@ public class <@entityCapService/>Test extends TestSupport {
      * 添加
      */
     @Test
-    public void insertSelective() throws Exception {
+    public void insert<@entityCapName/>() throws Exception {
         <@entityCapName/> <@entityLowerName/> = new <@entityCapName/>();
         SetProperties.setProperties(<@entityLowerName/>);
-        Pair<Boolean, Object> pair = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
-        Assert.assertTrue(pair.getKey());
-        updateByPrimaryKey(<@entityLowerName/>);
+        long rowCount = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
+        Assert.assertEquals(1, rowCount);
+        update<@entityCapName/>(<@entityLowerName/>);
     }
 
     /**
      * 更新
      */
     @Test
-    public void updateByPrimaryKey(<@entityCapName/> <@entityLowerName/>) throws Exception {
+    public void update<@entityCapName/>(<@entityCapName/> <@entityLowerName/>) throws Exception {
         <@idJavaType/> <@idLowerJava/> = <@entityLowerName/>.get<@idCapJava/>();
         SetProperties.setRandomProperties(<@entityLowerName/>);
         <@entityLowerName/>.set<@idCapJava/>(<@idLowerJava/>);
-        Pair<Boolean, Object> pair = <@entityLowerService/>.updateByPrimaryKey(<@entityLowerName/>);
-        Assert.assertTrue(pair.getKey());
-        selectByPrimaryKey(<@idLowerJava/>);
+        long rowCount = <@entityLowerService/>.updateSelective(<@entityLowerName/>);
+        Assert.assertEquals(1, rowCount);
+        get<@entityCapName/>(<@idLowerJava/>);
     }
 
     /**
      * 查询
      */
     @Test
-    public void selectByPrimaryKey(<@idJavaType/> <@idLowerJava/>) throws Exception {
-        Pair<Boolean, Object> pair = <@entityLowerService/>.selectByPrimaryKey(<@idLowerJava/>);
-        Assert.assertTrue(pair.getKey());
+    public void get<@entityCapName/>(<@idJavaType/> <@idLowerJava/>) throws Exception {
+        <@entityCapName/> <@entityLowerName/> = <@entityLowerService/>.selectByPrimaryKey(<@idLowerJava/>);
+        Assert.assertNotNull(<@entityLowerName/>);
+        delete<@entityCapName/>(<@entityLowerName/>.get<@idCapJava/>());
     }
 
     /**
      * 删除
      */
     @Test
-    public void deleteByPrimaryKey(<@idJavaType/> <@idLowerJava/>) throws Exception {
+    public void delete<@entityCapName/>(<@idJavaType/> <@idLowerJava/>) throws Exception {
         <@entityCapName/> <@entityLowerName/> = new <@entityCapName/>();
         <@entityLowerName/>.set<@idCapJava/>(<@idLowerJava/>);
-        Pair<Boolean, Object> pair = <@entityLowerService/>.deleteByPrimaryKey(<@entityLowerName/>);
-        Assert.assertTrue(pair.getKey());
+        long rowCount = <@entityLowerService/>.deleteByPrimaryKey(<@entityLowerName/>);
+        Assert.assertEquals(1, rowCount);
     }
 }
