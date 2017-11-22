@@ -5,6 +5,7 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -14,15 +15,16 @@ import java.util.List;
  * @author ${functionAuthor}
  * @date ${time}
  */
+@Repository
 public interface <@entityCapName/>Mapper{
-
+<#--
     /**
      * 根据主键逻辑删除，需传入${functionName}实体，并包含主键和修改人，其中修改人可有可无
      *
      * @param <@entityLowerName/> ${functionName}实体
      * @return 受影响的行数
      */
-    long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
+    long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>); -->
 
     /**
      * 新增${functionName}

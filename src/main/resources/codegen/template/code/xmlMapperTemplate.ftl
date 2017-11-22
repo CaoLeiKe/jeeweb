@@ -21,8 +21,8 @@
 
         </#if><#if column_index == 0>        </#if>t.${column.columnName}<#if column_has_next>, </#if></#list>
     </sql>
-
-    <!-- 根据主键逻辑删除，需传入实体，并包含主键和修改人，其中修改人可有可无 -->
+<#--
+    <!-- 根据主键逻辑删除，需传入实体，并包含主键和修改人，其中修改人可有可无 --
     <update id="deleteByPrimaryKey" parameterType="${packageName}.${moduleName}.entity.${entityName}">
         update ${tableName} t set t.is_delete = 1
     <#list columns as column>
@@ -35,7 +35,7 @@
         </#if>
     </#list>
         where <@idJdbc/>
-    </update>
+    </update> -->
 
     <!-- 插入数据 -->
     <insert id="insertSelective" parameterType="${packageName}.${moduleName}.entity.${entityName}">

@@ -45,7 +45,7 @@ public class <@entityCapName/>Controller {
      */
     @Autowired
     private <@entityCapService/> <@entityLowerService/>;
-
+<#--
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键删除${functionName}")
@@ -63,7 +63,7 @@ public class <@entityCapName/>Controller {
         log.warn("result:{}" + rowCount);
         log.info("----------------${functionName}，删除${functionName}结束----------------");
         return BaseResponse.failedCustom("删除${functionName}失败！").build();
-    }
+    } -->
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody

@@ -57,9 +57,9 @@ public class <@entityCapService/>Test extends TestSupport {
     public void get<@entityCapName/>(<@idJavaType/> <@idLowerJava/>) throws Exception {
         <@entityCapName/> <@entityLowerName/> = <@entityLowerService/>.selectByPrimaryKey(<@idLowerJava/>);
         Assert.assertNotNull(<@entityLowerName/>);
-        delete<@entityCapName/>(<@entityLowerName/>.get<@idCapJava/>());
+        <#-- delete<@entityCapName/>(<@entityLowerName/>.get<@idCapJava/>()); -->
     }
-
+<#--
     /**
      * 删除
      */
@@ -69,5 +69,5 @@ public class <@entityCapService/>Test extends TestSupport {
         <@entityLowerName/>.set<@idCapJava/>(<@idLowerJava/>);
         long rowCount = <@entityLowerService/>.deleteByPrimaryKey(<@entityLowerName/>);
         Assert.assertEquals(1, rowCount);
-    }
+    } -->
 }

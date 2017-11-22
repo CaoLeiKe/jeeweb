@@ -14,14 +14,14 @@ import java.util.List;
  * @date ${time}
  */
 public interface <@entityCapName/>Service {
-
+<#--
     /**
      * 根据主键逻辑删除，需传入实体，并包含主键和修改人，其中修改人可有可无
      *
      * @param <@entityLowerName/> ${functionName}实体
      * @return 受影响的行数
      */
-    long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>);
+    long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>); -->
 
     /**
      * 新增${functionName}

@@ -25,11 +25,11 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
 
     @Autowired
     private <@entityCapName/>Mapper <@entityLowerName/>Mapper;
-
+<#--
     @Override
     public long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>) {
         return <@entityLowerMapper/>.deleteByPrimaryKey(<@entityLowerName/>);
-    }
+    } -->
 
     @Override
     public long insertSelective(<@entityCapName/> <@entityLowerName/>) {
