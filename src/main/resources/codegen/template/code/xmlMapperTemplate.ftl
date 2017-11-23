@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <#macro idJdbc><#list columns as column><#if column.parmaryKey>t.${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}</#if></#list></#macro>
+<#macro idJavaName><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
+<#macro idJdbcType><#list columns as column><#if column.parmaryKey>${column.typeName}</#if></#list></#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
+<#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
+<#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 <mapper namespace="${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper">
 
     <!-- 结果集映射 -->
@@ -38,14 +42,14 @@
     </update> -->
 
     <!-- 插入数据 -->
-    <insert id="insertSelective" parameterType="${packageName}.${moduleName}.entity.${entityName}">
+    <insert id="insertSelective">
         insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
         <#list columns as column>
-            <#if column.columnName?starts_with("is_")>
+            <#if column.columnName?lower_case?ends_with("time")>
             ${column.columnName},
             <#else>
-            <if test="${column.javaField} != null">
+            <if test="<@entityLowerNameParam/>.${column.javaField} != null">
                 ${column.columnName},
             </if>
             </#if>
@@ -55,18 +59,9 @@
         <#list columns as column>
             <#if column.columnName?lower_case?ends_with("time")>
             now(),
-            <#elseif column.columnName?starts_with("is_")>
-            <choose>
-                <when test="${column.javaField} != null">
-                    ${r'#{'}${column.javaField}, jdbcType=${column.typeName}},
-                </when>
-                <otherwise>
-                    0,
-                </otherwise>
-            </choose>
             <#else>
-            <if test="${column.javaField} != null">
-                ${r'#{'}${column.javaField}, jdbcType=${column.typeName}},
+            <if test="<@entityLowerNameParam/>.${column.javaField} != null">
+                ${r'#{'}<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}},
             </if>
             </#if>
         </#list>
@@ -74,7 +69,7 @@
     </insert>
 
     <!-- 根据实体中的主键条件更改数据，无法更改主键和创建者、创建时间的信息 -->
-    <update id="updateSelective" parameterType="${packageName}.${moduleName}.entity.${entityName}">
+    <update id="updateSelective">
         update ${tableName}
         <set>
         <#list columns as column>
@@ -83,27 +78,27 @@
             <#elseif column.columnName?lower_case?contains("update") && column.columnName?lower_case?contains("time")>
             ${column.columnName} = now(),
             <#else>
-            <if test="${column.javaField} != null">
-                ${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}},
+            <if test="<@entityLowerNameParam/>.${column.javaField} != null">
+                ${column.columnName} = ${r"#"}{<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}},
             </if>
             </#if>
         </#list>
         </set>
         <where>
-            <@idJdbc/>
+            ${r'#{'}<@entityLowerNameParam/>.<@idJavaName/>, jdbcType=<@idJdbcType/>}
         </where>
     </update>
 
     <!-- 根据主键查询 -->
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from ${tableName} t
-        where <@idJdbc/>
+        where <@idJdbc/> and is_delete = 0
     </select>
 
     <!-- 根据条件查询，如果是时间则查找的是当天的时间 -->
-    <select id="selectSelective" resultMap="BaseResultMap" parameterType="${packageName}.${moduleName}.entity.${entityName}">
+    <select id="selectSelective" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from ${tableName} t
@@ -111,12 +106,15 @@
         <#list columns as column>
             <#-- 如果是时间类型则匹配当天 -->
             <#if column.columnName?lower_case?contains("time")>
-            <if test="${column.javaField} != null">
-                and UNIX_TIMESTAMP(Date(${column.columnName})) = UNIX_TIMESTAMP(Date(${r"#"}{${column.javaField}, jdbcType=${column.typeName}}))
+            <if test="<@entityLowerNameParam/>.${column.javaField} != null">
+                and UNIX_TIMESTAMP(Date(<@entityLowerNameParam/>.${column.columnName})) = UNIX_TIMESTAMP(Date(${r"#"}{<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}}))
             </if>
+            <#-- 如果是is_delete则默认查找没有删除的 -->
+            <#elseif column.columnName?lower_case?contains("is") && column.columnName?lower_case?contains("delete")>
+            and ${column.columnName} = 0,
             <#else>
-            <if test="${column.javaField} != null">
-                and ${column.columnName} = ${r"#"}{${column.javaField}, jdbcType=${column.typeName}}
+            <if test="<@entityLowerNameParam/>.${column.javaField} != null">
+                and ${column.columnName} = ${r"#"}{<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}}
             </if>
             </#if>
         </#list>

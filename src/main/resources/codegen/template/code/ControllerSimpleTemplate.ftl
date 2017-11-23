@@ -6,8 +6,12 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 <#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapService>${entityName?cap_first}Service</#macro>
 <#macro entityLowerService>${entityName?uncap_first}Service</#macro>
+<#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
+<#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
+<#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
 import ${packageName}.${moduleName}.entity.<@entityCapName/>;
+import ${packageName}.${moduleName}.params.<@entityCapName/>Param;
 import ${packageName}.${moduleName}.service.<@entityCapService/>;
 import ${packageName}.${moduleName}.valid.Insert;
 import ${packageName}.${moduleName}.valid.Update;
@@ -68,14 +72,14 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "添加${functionName}")
-    public BaseResponse save<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") @Validated(Insert.class) <@entityCapName/> <@entityLowerName/>) {
+    public BaseResponse save<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Insert.class) <@entityCapNameParam/> <@entityLowerNameParam/>) {
         log.info("----------------${functionName}，添加${functionName}开始----------------");
-        log.info("parameters0:{}", <@entityLowerName/>);
-        long rowCount = <@entityLowerService/>.insertSelective(<@entityLowerName/>);
+        log.info("parameters0:{}", <@entityLowerNameParam/>);
+        long rowCount = <@entityLowerService/>.insertSelective(<@entityLowerNameParam/>);
         if (rowCount == 1) {
             log.info("result:{}" + rowCount);
             log.info("----------------${functionName}，添加${functionName}结束----------------");
-            return BaseResponse.successCustom("添加${functionName}成功！").setObj(<@entityLowerName/>.get<@idCapJava/>).build();
+            return BaseResponse.successCustom("添加${functionName}成功！").setObj(<@entityLowerNameParam/>.get<@idCapJava/>()).build();
         }
         log.info("result:{}" + rowCount);
         log.info("----------------${functionName}，添加${functionName}结束----------------");
@@ -85,10 +89,10 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键修改${functionName}")
-    public BaseResponse update<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") @Validated(Update.class) <@entityCapName/> <@entityLowerName/>) {
+    public BaseResponse update<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Update.class) <@entityCapNameParam/> <@entityLowerNameParam/>) {
         log.info("----------------${functionName}，修改${functionName}开始----------------");
-        log.info("parameters0:{}", <@entityLowerName/>);
-        long rowCount = <@entityLowerService/>.updateSelective(<@entityLowerName/>);
+        log.info("parameters0:{}", <@entityLowerNameParam/>);
+        long rowCount = <@entityLowerService/>.updateSelective(<@entityLowerNameParam/>);
         if (rowCount == 1) {
             log.info("result:{}" + rowCount);
             log.info("----------------${functionName}，修改${functionName}结束----------------");
@@ -102,7 +106,7 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键查询${functionName}")
-    public BaseResponse get<@entityCapName/>(@ApiParam(value = "${functionName}主键", required = true) @RequestParam Long <@idJava/>) {
+    public BaseResponse get<@entityCapName/>(@ApiParam(value = "${functionName}主键", required = true) @RequestParam <@idJavaType/> <@idJava/>) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("parameters0:{}", <@idJava/>);
         <@entityCapName/> <@entityLowerName/> = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>);
@@ -116,17 +120,32 @@ public class <@entityCapName/>Controller {
         return BaseResponse.successCustom("查询${functionName}结果为空！").setObj(<@entityLowerName/>).build();
     }
 
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(httpMethod = "POST", value = "根据条件查询${functionName}")
+    public BaseResponse select<@entityCapName/>List(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") <@entityCapNameParam/> <@entityLowerNameParam/>) {
+        log.info("----------------${functionName}，查询${functionName}开始----------------");
+        log.info("parameters0:{}", <@entityLowerNameParam/>);
+        List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerService/>.selectSelective(<@entityLowerNameParam/>);
+        if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() != 0) {
+            log.info("result:{}" + <@entityLowerName/>s);
+            log.info("----------------${functionName}，查询${functionName}结束----------------");
+            BaseResponse result = BaseResponse.successCustom("查询${functionName}成功！").setObj(<@entityLowerName/>s);
+            return result.builder();
+        }
+    }
+
     @RequestMapping(value = "/selectList", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件分页查询${functionName}")
-    public BaseResponse selectListByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerName/>") <@entityCapName/> <@entityLowerName/>,
+    public BaseResponse selectListByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") <@entityCapNameParam/> <@entityLowerNameParam/>,
                                          @ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                          @ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
-        log.info("parameters0:{}", <@entityLowerName/>);
+        log.info("parameters0:{}", <@entityLowerNameParam/>);
         log.info("parameters1:{}", pageNum);
         log.info("parameters2:{}", pageSize);
-        List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerService/>.selectSelective(<@entityLowerName/>, pageNum, pageSize);
+        List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerService/>.selectSelectiveByPage(<@entityLowerNameParam/>, pageNum, pageSize);
         PageInfo pageInfo = new PageInfo<>(<@entityLowerName/>s);
         if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() != 0) {
             log.info("result:{}" + <@entityLowerName/>s);

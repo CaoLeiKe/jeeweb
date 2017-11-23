@@ -71,7 +71,8 @@ public class DefaultGenerator implements IGenerator {
 		// 当前模块名
 		String moduleName = generatorInfo.getModuleName();
 		if (!"".endsWith(moduleName)) {
-			outPath += File.separator + moduleName;
+			if (!outPath.contains("mappings"))
+				outPath += File.separator + moduleName;
 		}
 		// 层级目录
 		String layerPackage = config.getLayer();

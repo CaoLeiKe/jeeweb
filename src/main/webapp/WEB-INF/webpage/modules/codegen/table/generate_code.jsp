@@ -100,6 +100,7 @@
 				 	 <input type="checkbox" value="viewList" name="generatorKeys"  checked="checked">viewList</input>
 				 	 <input type="checkbox" value="viewForm" name="generatorKeys"  checked="checked">viewForm</input>   
 				 	 <input type="checkbox" value="testJava" name="generatorKeys"  checked="checked">testJava</input>
+				 	 <input type="checkbox" value="EntityParam" name="generatorKeys"  checked="checked">EntityParam</input>
 		             <label class="Validform_checktip"></label>
 		         </td>
 		       </tr>

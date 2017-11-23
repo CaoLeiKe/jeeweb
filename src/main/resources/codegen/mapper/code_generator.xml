@@ -115,6 +115,18 @@
 			<!-- 生成的文件名称，关键字[entityName] -->
 			<name-format>[entityName]ServiceTest.java</name-format>
 		</generator>
+		<generator>
+			<!-- 注册关键字 -->
+			<key>EntityParam</key>
+			<!-- 文件层级关系 -->
+			<layer>params</layer>
+			<!-- 模版名称 -->
+			<template-file>EntityParamTemplate.ftl</template-file>
+			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
+			<code-type>1</code-type>
+			<!-- 生成的文件名称，关键字[entityName] -->
+			<name-format>[entityName]Param.java</name-format>
+		</generator>
 	 
 	</generators>
 </config>

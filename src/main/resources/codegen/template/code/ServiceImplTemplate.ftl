@@ -4,8 +4,12 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 <#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro entityLowerMapper>${entityName?uncap_first}Mapper</#macro>
+<#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
+<#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
+<#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
+import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.params.<@entityCapName/>Param;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper;
 import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.<@entityCapName/>Service;
 import com.common.seq.sql.SqlSeqUtil;
@@ -32,26 +36,31 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
     } -->
 
     @Override
-    public long insertSelective(<@entityCapName/> <@entityLowerName/>) {
-        long <@idJava/> = SqlSeqUtil.get("${tableName}");
-        <@entityLowerName/>.set<@idCapJava/>(<@idJava/>);
-        return <@entityLowerMapper/>.insertSelective(<@entityLowerName/>);
+    public long insertSelective(<@entityCapNameParam/> <@entityLowerNameParam/>) {
+        <@idJavaType/> <@idJava/> = SqlSeqUtil.get("${tableName}");
+        <@entityLowerNameParam/>.set<@idCapJava/>(<@idJava/>);
+        return <@entityLowerMapper/>.insertSelective(<@entityLowerNameParam/>);
     }
 
     @Override
-    public long updateSelective(<@entityCapName/> <@entityLowerName/>) {
-        return <@entityLowerMapper/>.updateSelective(<@entityLowerName/>);
+    public long updateSelective(<@entityCapNameParam/> <@entityLowerNameParam/>) {
+        return <@entityLowerMapper/>.updateSelective(<@entityLowerNameParam/>);
     }
 
     @Override
-    public <@entityCapName/> selectByPrimaryKey(Long <@idJava/>) {
+    public <@entityCapName/> selectByPrimaryKey(<@idJavaType/> <@idJava/>) {
         return <@entityLowerMapper/>.selectByPrimaryKey(<@idJava/>);
     }
 
     @Override
-    public List<<@entityCapName/>> selectSelective(<@entityCapName/> <@entityLowerName/>, int pageNum, int pageSize) {
+    public List<<@entityCapName/>> selectSelective(<@entityCapNameParam/> <@entityLowerNameParam/>) {
+        return <@entityLowerMapper/>.selectSelective(<@entityLowerNameParam/>);
+    }
+
+    @Override
+    public List<<@entityCapName/>> selectSelectiveByPage(<@entityCapNameParam/> <@entityLowerNameParam/>, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize, true);
-        return <@entityLowerMapper/>.selectSelective(<@entityLowerName/>);
+        return <@entityLowerMapper/>.selectSelective(<@entityLowerNameParam/>);
     }
 
 }
