@@ -11,4 +11,3 @@ import net.sf.ehcache.constructs.web.filter.SimplePageCachingFilter;
 public class PageCachingFilter extends SimplePageCachingFilter {
 	
 }
-// 测试
