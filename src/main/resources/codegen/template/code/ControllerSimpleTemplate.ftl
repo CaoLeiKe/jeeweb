@@ -130,13 +130,13 @@ public class <@entityCapName/>Controller {
         if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() != 0) {
             log.info("result:{}" + <@entityLowerName/>s);
             log.info("----------------${functionName}，查询${functionName}结束----------------");
-            BaseResponse result = BaseResponse.successCustom("查询${functionName}成功！").setObj(<@entityLowerName/>s);
-            return result.builder();
+            BaseResponse.Builder result = BaseResponse.successCustom("查询${functionName}成功！").setObj(<@entityLowerName/>s);
+            return result.build();
         }
         log.info("result:{}" + <@entityLowerName/>s);
         log.info("----------------${functionName}，查询${functionName}结束----------------");
-        BaseResponse result = BaseResponse.successCustom("查询${functionName}结果为空！");
-        return result.builder();
+        BaseResponse.Builder result = BaseResponse.successCustom("查询${functionName}结果为空！");
+        return result.build();
     }
 
     @RequestMapping(value = "/selectList", method = RequestMethod.POST)
@@ -154,12 +154,12 @@ public class <@entityCapName/>Controller {
         if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() != 0) {
             log.info("result:{}" + <@entityLowerName/>s);
             log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-            BaseResponse result = BaseResponse.successCustom("分页查询${functionName}成功！").setObj(pageInfo.getList()).addParam("total", pageInfo.getTotal());
-            return result.builder();
+            BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}成功！").setObj(pageInfo.getList()).addParam("total", pageInfo.getTotal() + "");
+            return result.build();
         }
         log.info("result:{}" + <@entityLowerName/>s);
         log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-        BaseResponse result = BaseResponse.successCustom("分页查询${functionName}结果为空！").setObj(pageInfo.getList()).addParam("total", pageInfo.getTotal());
-        return result.builder();
+        BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}结果为空！").setObj(pageInfo.getList()).addParam("total", pageInfo.getTotal() + "");
+        return result.build();
     }
 }
