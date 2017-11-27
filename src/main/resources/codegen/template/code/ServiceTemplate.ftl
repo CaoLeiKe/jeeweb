@@ -1,13 +1,15 @@
-package com.chtwm.insurance.natives.api.service;
+package ${packageName}.${moduleName}.natives.api.service;
 <#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField?uncap_first}</#if></#list></#macro>
 <#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
+<#macro entityCapNameEntity>${entityName?cap_first}Entity</#macro>
+<#macro entityLowerNameEntity>${entityName?uncap_first}Entity</#macro>
 <#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
-import com.chtwm.insurance.natives.api.entity.<@entityCapName/>;
-import com.chtwm.insurance.natives.api.params.<@entityCapNameParam/>;
+import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
+import ${packageName}.${moduleName}.natives.api.params.<@entityCapNameParam/>;
 
 import java.util.List;
 
@@ -49,7 +51,7 @@ public interface <@entityCapName/>Service {
      * @param <@idJava/> ${functionName}主键
      * @return 查询的结果
      */
-    <@entityCapName/> selectByPrimaryKey(<@idJavaType/> <@idJava/>);
+    <@entityCapNameEntity/> selectByPrimaryKey(<@idJavaType/> <@idJava/>);
 
     /**
      * 根据${functionName}实体的条件查询数据
@@ -57,7 +59,7 @@ public interface <@entityCapName/>Service {
      * @param <@entityLowerNameParam/> ${functionName}实体
      * @return 查询的结果
      */
-    List<<@entityCapName/>> selectSelective(<@entityCapNameParam/> <@entityLowerNameParam/>);
+    List<<@entityCapNameEntity/>> selectSelective(<@entityCapNameParam/> <@entityLowerNameParam/>);
 
     /**
      * 根据${functionName}实体的条件分页查询数据
@@ -67,7 +69,7 @@ public interface <@entityCapName/>Service {
      * @param pageSize 每页显示的数量
      * @return 分页查询的结果
      */
-    List<<@entityCapName/>> selectSelectiveByPage(<@entityCapNameParam/> <@entityLowerNameParam/>, int pageNum, int pageSize);
+    List<<@entityCapNameEntity/>> selectSelectiveByPage(<@entityCapNameParam/> <@entityLowerNameParam/>, int pageNum, int pageSize);
 
 }
 

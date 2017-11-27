@@ -1,13 +1,14 @@
-package com.chtwm.insurance.natives.provider.mapper;
+package ${packageName}.${moduleName}.natives.provider.mapper;
 <#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField?uncap_first}</#if></#list></#macro>
 <#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
+<#macro entityCapNameEntity>${entityName?cap_first}Entity</#macro>
 
-import com.chtwm.insurance.natives.api.entity.<@entityCapName/>;
-import com.chtwm.insurance.natives.api.params.<@entityCapNameParam/>;
+import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
+import ${packageName}.${moduleName}.natives.api.params.<@entityCapNameParam/>;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -52,7 +53,7 @@ public interface <@entityCapName/>Mapper {
      * @param <@idJava/> ${functionName}主键
      * @return ${functionName}
      */
-    <@entityCapName/> selectByPrimaryKey(@Param("<@idJava/>") <@idJavaType/> <@idJava/>);
+    <@entityCapNameEntity/> selectByPrimaryKey(@Param("<@idJava/>") <@idJavaType/> <@idJava/>);
 
     /**
      * 根据${functionName}实体的条件查询数据
@@ -60,6 +61,6 @@ public interface <@entityCapName/>Mapper {
      * @param <@entityLowerNameParam/> ${functionName}实体
      * @return ${functionName}的集合
      */
-    List<<@entityCapName/>> selectSelective(@Param("<@entityLowerNameParam/>") <@entityCapNameParam/> <@entityLowerNameParam/>);
+    List<<@entityCapNameEntity/>> selectSelective(@Param("<@entityLowerNameParam/>") <@entityCapNameParam/> <@entityLowerNameParam/>);
 
 }

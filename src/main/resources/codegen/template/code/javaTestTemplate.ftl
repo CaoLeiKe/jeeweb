@@ -1,19 +1,21 @@
-package com.chtwm.insurance.natives.provider;
+package ${packageName}.${moduleName}.natives.provider;
 <#macro idCapJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro idLowerJava><#list columns as column><#if column.parmaryKey>${column.javaField?uncap_first}</#if></#list></#macro>
 <#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
+<#macro entityCapNameEntity>${entityName?cap_first}Entity</#macro>
+<#macro entityLowerNameEntity>${entityName?uncap_first}Entity</#macro>
 <#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapService>${entityName?cap_first}Service</#macro>
 <#macro entityLowerService>${entityName?uncap_first}Service</#macro>
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
-import com.chtwm.insurance.core.TestSupport;
-import com.chtwm.insurance.natives.api.entity.<@entityCapName/>;
-import com.chtwm.insurance.natives.api.params.<@entityCapNameParam/>;
-import com.chtwm.insurance.natives.api.service.<@entityCapService/>;
-import com.chtwm.insurance.utils.SetPropertiesUtil;
+import ${packageName}.${moduleName}.core.TestSupport;
+import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
+import ${packageName}.${moduleName}.natives.api.params.<@entityCapNameParam/>;
+import ${packageName}.${moduleName}.natives.api.service.<@entityCapService/>;
+import ${packageName}.${moduleName}.utils.SetPropertiesUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +59,8 @@ public class <@entityCapService/>Test extends TestSupport {
      * 查询
      */
     public void get<@entityCapName/>(<@idJavaType/> <@idLowerJava/>) throws Exception {
-        <@entityCapName/> <@entityLowerName/> = <@entityLowerService/>.selectByPrimaryKey(<@idLowerJava/>);
-        Assert.assertNotNull(<@entityLowerName/>);
+        <@entityCapNameEntity/> <@entityLowerNameEntity/> = <@entityLowerService/>.selectByPrimaryKey(<@idLowerJava/>);
+        Assert.assertNotNull(<@entityLowerNameEntity/>);
         <#-- delete<@entityCapName/>(<@entityLowerName/>.get<@idCapJava/>()); -->
     }
 <#--

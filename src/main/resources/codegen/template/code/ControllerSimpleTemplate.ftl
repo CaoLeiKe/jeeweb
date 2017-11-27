@@ -1,21 +1,24 @@
-package com.chtwm.insurance.agency.controller;
+package ${packageName}.${moduleName}.agency.controller;
 <#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
 <#macro idCapJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro capIdJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro entityLowerName>${entityName?uncap_first}</#macro>
+<#macro entityCapNameEntity>${entityName?cap_first}Entity</#macro>
+<#macro entityLowerNameEntity>${entityName?uncap_first}Entity</#macro>
 <#macro entityCapService>${entityName?cap_first}Service</#macro>
 <#macro entityLowerService>${entityName?uncap_first}Service</#macro>
 <#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
-import com.chtwm.insurance.agency.common.base.BaseResponse;
-import com.chtwm.insurance.agency.common.valid.Insert;
-import com.chtwm.insurance.agency.common.valid.Update;
-import com.chtwm.insurance.natives.api.entity.<@entityCapName/>;
-import com.chtwm.insurance.natives.api.params.<@entityCapNameParam/>;
-import com.chtwm.insurance.natives.api.service.<@entityCapService/>;
+import ${packageName}.${moduleName}.agency.common.base.BaseResponse;
+import ${packageName}.${moduleName}.agency.common.valid.Insert;
+import ${packageName}.${moduleName}.agency.common.valid.Update;
+import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
+import ${packageName}.${moduleName}.natives.api.params.<@entityCapNameParam/>;
+import ${packageName}.${moduleName}.natives.api.service.<@entityCapService/>;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.groups.Default;
 import java.util.List;
 
 /**
@@ -73,12 +77,12 @@ public class <@entityCapName/>Controller {
     @ApiOperation(httpMethod = "POST", value = "添加${functionName}")
     public BaseResponse save<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Insert.class) <@entityCapNameParam/> <@entityLowerNameParam/>) {
         log.info("----------------${functionName}，添加${functionName}开始----------------");
-        log.info("parameters0:{}", <@entityLowerNameParam/>);
+        log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         long rowCount = <@entityLowerService/>.insertSelective(<@entityLowerNameParam/>);
         if (rowCount == 1) {
             log.info("result:{}" + rowCount);
             log.info("----------------${functionName}，添加${functionName}结束----------------");
-            return BaseResponse.successCustom("添加${functionName}成功！").setObj(<@entityLowerNameParam/>.get<@idCapJava/>()).build();
+            return BaseResponse.successCustom("添加${functionName}成功！").setData(<@entityLowerNameParam/>.get<@idCapJava/>()).build();
         }
         log.info("result:{}" + rowCount);
         log.info("----------------${functionName}，添加${functionName}结束----------------");
@@ -90,7 +94,7 @@ public class <@entityCapName/>Controller {
     @ApiOperation(httpMethod = "POST", value = "根据主键修改${functionName}")
     public BaseResponse update<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Update.class) <@entityCapNameParam/> <@entityLowerNameParam/>) {
         log.info("----------------${functionName}，修改${functionName}开始----------------");
-        log.info("parameters0:{}", <@entityLowerNameParam/>);
+        log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         long rowCount = <@entityLowerService/>.updateSelective(<@entityLowerNameParam/>);
         if (rowCount == 1) {
             log.info("result:{}" + rowCount);
@@ -107,12 +111,12 @@ public class <@entityCapName/>Controller {
     @ApiOperation(httpMethod = "POST", value = "根据主键查询${functionName}")
     public BaseResponse get<@entityCapName/>(@ApiParam(value = "${functionName}主键", required = true) @RequestParam <@idJavaType/> <@idJava/>) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
-        log.info("parameters0:{}", <@idJava/>);
-        <@entityCapName/> <@entityLowerName/> = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>);
-        if (<@entityLowerName/> != null) {
-            log.info("result:{}" + <@entityLowerName/>);
+        log.info("<@idJava/>:{}", <@idJava/>);
+        <@entityCapNameEntity/> <@entityLowerNameEntity/> = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>);
+        if (<@entityLowerNameEntity/> != null) {
+            log.info("result:{}" + <@entityLowerNameEntity/>);
             log.info("----------------${functionName}，查询${functionName}结束----------------");
-            return BaseResponse.successCustom("查询${functionName}成功！").setObj(<@entityLowerName/>).build();
+            return BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>).build();
         }
         log.info("----------------${functionName}，${functionName}结束----------------");
         return BaseResponse.successCustom("查询${functionName}结果为空！").build();
@@ -121,17 +125,17 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件查询${functionName}")
-    public BaseResponse select<@entityCapName/>List(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") <@entityCapNameParam/> <@entityLowerNameParam/>) {
+    public BaseResponse select<@entityCapName/>List(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
-        log.info("parameters0:{}", <@entityLowerNameParam/>);
-        List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerService/>.selectSelective(<@entityLowerNameParam/>);
-        if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() != 0) {
-            log.info("result:{}" + <@entityLowerName/>s);
+        log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
+        List<<@entityCapNameEntity/>> <@entityLowerNameEntity/>s = <@entityLowerService/>.selectSelective(<@entityLowerNameParam/>);
+        if (<@entityLowerNameEntity/>s != null && <@entityLowerNameEntity/>s.size() != 0) {
+            log.info("result:{}" + <@entityLowerNameEntity/>s);
             log.info("----------------${functionName}，查询${functionName}结束----------------");
-            BaseResponse.Builder result = BaseResponse.successCustom("查询${functionName}成功！").setObj(<@entityLowerName/>s);
+            BaseResponse.Builder result = BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>s);
             return result.build();
         }
-        log.info("result:{}" + <@entityLowerName/>s);
+        log.info("result:{}" + <@entityLowerNameEntity/>s);
         log.info("----------------${functionName}，查询${functionName}结束----------------");
         BaseResponse.Builder result = BaseResponse.successCustom("查询${functionName}结果为空！");
         return result.build();
@@ -140,23 +144,24 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/selectList", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件分页查询${functionName}")
-    public BaseResponse selectListByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") <@entityCapNameParam/> <@entityLowerNameParam/>,
+    public BaseResponse selectListByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>,
                                          @ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                          @ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
-        log.info("parameters0:{}", <@entityLowerNameParam/>);
-        log.info("parameters1:{}", pageNum);
-        log.info("parameters2:{}", pageSize);
-        List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerService/>.selectSelectiveByPage(<@entityLowerNameParam/>, pageNum, pageSize);
-        if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() != 0) {
-            log.info("result:{}" + <@entityLowerName/>s);
+        log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
+        log.info("pageNum:{}", pageNum);
+        log.info("pageSize:{}", pageSize);
+        List<<@entityCapNameEntity/>> <@entityLowerNameEntity/>s = <@entityLowerService/>.selectSelectiveByPage(<@entityLowerNameParam/>, pageNum, pageSize);
+        PageInfo pageInfo = new PageInfo<>(<@entityLowerNameEntity/>s);
+        if (<@entityLowerNameEntity/>s != null && <@entityLowerNameEntity/>s.size() != 0) {
+            log.info("result:{}" + <@entityLowerNameEntity/>s);
             log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-            BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}成功！").setObj(<@entityLowerName/>s);
+            BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}成功！").setData(pageInfo);
             return result.build();
         }
-        log.info("result:{}" + <@entityLowerName/>s);
+        log.info("result:{}" + <@entityLowerNameEntity/>s);
         log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-        BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}结果为空！").setObj(<@entityLowerName/>s);
+        BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}结果为空！").setData(pageInfo);
         return result.build();
     }
 }

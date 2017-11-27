@@ -63,7 +63,7 @@
 			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>1</code-type>
 			<!-- 生成的文件名称，关键字[entityName] -->
-			<name-format>[entityName].java</name-format>
+			<name-format>[entityName]Entity.java</name-format>
 		</generator>
 		<generator>
 			<!-- 注册关键字 -->

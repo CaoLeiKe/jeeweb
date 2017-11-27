@@ -1,4 +1,4 @@
-package com.chtwm.insurance.natives.api.entity;
+package ${packageName}.${moduleName}.natives.api.entity;
 <#macro entityCapName>${entityName?cap_first}</#macro>
 
 <#list attributeInfos as attributeInfo>
@@ -7,9 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
         <#break/>
     </#if>
 </#list>
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.io.Serializable;
 <#list importTypes as importType>
@@ -18,15 +16,13 @@ import ${importType};
 
 /**
  * @Title: ${functionName}
- * @Description: PO实体
+ * @Description: entity实体
  * @author ${functionAuthor}
  * @date ${time}
  */
 
-@Getter
-@Setter
-@ToString
-public class <@entityCapName/> implements Serializable {
+@Data
+public class <@entityCapName/>Entity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

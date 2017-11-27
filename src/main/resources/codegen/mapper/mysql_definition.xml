@@ -110,6 +110,11 @@
 			<db-type>TIMESTAMP</db-type>
 		</type>
 		<type>
+			<java-type>Date</java-type>
+			<full-type>java.util.Date</full-type>
+			<db-type>DATE</db-type>
+		</type>
+		<type>
 			<java-type>Short</java-type>
 			<db-type>TINYINT</db-type>
 		</type>

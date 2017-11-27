@@ -6,10 +6,10 @@
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
-<mapper namespace="com.chtwm.insurance.natives.provider.mapper.<@entityCapName/>Mapper">
+<mapper namespace="${packageName}.${moduleName}.natives.provider.mapper.<@entityCapName/>Mapper">
 
     <!-- 结果集映射 -->
-    <resultMap id="BaseResultMap" type="com.chtwm.insurance.natives.api.entity.${entityName}">
+    <resultMap id="BaseResultMap" type="${packageName}.${moduleName}.natives.api.entity.${entityName}Entity">
     <#list columns as column>
         <#if column.parmaryKey>
         <id column="${column.columnName}" property="${column.javaField}" jdbcType="${column.typeName}"/>
@@ -68,7 +68,7 @@
         </trim>
     </insert>
 
-    <!-- 根据实体中的主键条件更改数据，无法更改主键和创建者、创建时间的信息 -->
+    <!-- 根据实体中的主键更改数据，无法更改主键和创建者、创建时间的信息 -->
     <update id="updateSelective">
         update ${tableName}
         <set>
@@ -111,7 +111,7 @@
             </if>
             <#-- 如果是is_delete则默认查找没有删除的 -->
             <#elseif column.columnName?lower_case?contains("is") && column.columnName?lower_case?contains("delete")>
-            and ${column.columnName} = 0,
+            and ${column.columnName} = 0
             <#else>
             <if test="<@entityLowerNameParam/>.${column.javaField} != null">
                 and ${column.columnName} = ${r"#"}{<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}}
