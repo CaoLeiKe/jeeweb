@@ -150,16 +150,15 @@ public class <@entityCapName/>Controller {
         log.info("parameters1:{}", pageNum);
         log.info("parameters2:{}", pageSize);
         List<<@entityCapName/>> <@entityLowerName/>s = <@entityLowerService/>.selectSelectiveByPage(<@entityLowerNameParam/>, pageNum, pageSize);
-        PageInfo pageInfo = new PageInfo<>(<@entityLowerName/>s);
         if (<@entityLowerName/>s != null && <@entityLowerName/>s.size() != 0) {
             log.info("result:{}" + <@entityLowerName/>s);
             log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-            BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}成功！").setObj(pageInfo.getList()).addParam("total", pageInfo.getTotal() + "");
+            BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}成功！").setObj(<@entityLowerName/>s);
             return result.build();
         }
         log.info("result:{}" + <@entityLowerName/>s);
         log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-        BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}结果为空！").setObj(pageInfo.getList()).addParam("total", pageInfo.getTotal() + "");
+        BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}结果为空！").setObj(<@entityLowerName/>s);
         return result.build();
     }
 }
