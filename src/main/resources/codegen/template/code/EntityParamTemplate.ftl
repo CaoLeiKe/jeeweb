@@ -39,7 +39,7 @@ import ${importType};
  */
 
 @Data
-@ApiModel(description = "${functionName}PO实体")
+@ApiModel(description = "${functionName}Param实体")
 public class <@entityCapName/>Param implements Serializable {
 
     private static final long serialVersionUID = 1L;
