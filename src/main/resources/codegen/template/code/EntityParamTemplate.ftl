@@ -1,8 +1,8 @@
-package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.params;
+package com.chtwm.insurance.natives.api.params;
 <#macro entityCapName>${entityName?cap_first}</#macro>
 
-import ${packageName}.${moduleName}.valid.Insert;
-import ${packageName}.${moduleName}.valid.Update;
+import com.chtwm.insurance.agency.common.valid.Insert;
+import com.chtwm.insurance.agency.common.valid.Update;
 <#list attributeInfos as attributeInfo>
     <#if attributeInfo.type == "Date">
 import com.fasterxml.jackson.annotation.JsonFormat;

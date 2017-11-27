@@ -1,4 +1,4 @@
-package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service;
+package com.chtwm.insurance.natives.api.service;
 <#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField?uncap_first}</#if></#list></#macro>
 <#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
@@ -6,8 +6,8 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.params.<@entityCapName/>Param;
+import com.chtwm.insurance.natives.api.entity.<@entityCapName/>;
+import com.chtwm.insurance.natives.api.params.<@entityCapNameParam/>;
 
 import java.util.List;
 

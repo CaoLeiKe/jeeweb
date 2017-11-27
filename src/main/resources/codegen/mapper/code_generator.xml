@@ -107,7 +107,7 @@
 			<!-- 注册关键字 -->
 			<key>testJava</key>
 			<!-- 文件层级关系 -->
-			<layer>test.service</layer>
+			<layer></layer>
 			<!-- 模版名称 -->
 			<template-file>javaTestTemplate.ftl</template-file>
 			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->

@@ -62,7 +62,7 @@ public class DefaultGenerator implements IGenerator {
 		if (config.getCodeType() == CODE_TYPE_JSP) {
 			outPath = outPath += File.separator + "WEB-INF/webpage/modules";
 		} else if (config.getCodeType() == CODE_TYPE_MAPPER) {
-			outPath = outPath += File.separator + "/mappings/";
+			outPath = outPath += File.separator + "/mapper/";
 		} else {
 			if (!"".endsWith(packageName)) {
 				outPath += File.separator + packageName;

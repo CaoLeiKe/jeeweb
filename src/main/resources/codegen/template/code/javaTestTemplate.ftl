@@ -1,4 +1,4 @@
-package ${packageName}.${moduleName}.test.service;
+package com.chtwm.insurance.natives.provider;
 <#macro idCapJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro idLowerJava><#list columns as column><#if column.parmaryKey>${column.javaField?uncap_first}</#if></#list></#macro>
 <#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
@@ -9,10 +9,10 @@ package ${packageName}.${moduleName}.test.service;
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
-import ${packageName}.${moduleName}.core.TestSupport;
-import ${packageName}.${moduleName}.entity.<@entityCapName/>;
-import ${packageName}.${moduleName}.params.<@entityCapName/>Param;
-import ${packageName}.${moduleName}.service.<@entityCapService/>;
+import com.chtwm.insurance.natives.api.entity.<@entityCapName/>;
+import com.chtwm.insurance.natives.api.params.<@entityCapNameParam/>;
+import com.chtwm.insurance.natives.api.service.<@entityCapService/>;
+import com.chtwm.insurance.natives.core.TestSupport;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

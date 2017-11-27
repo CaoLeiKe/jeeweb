@@ -1,17 +1,18 @@
-package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.impl;
+package com.chtwm.insurance.natives.provider.service.impl;
 <#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField?uncap_first}</#if></#list></#macro>
 <#macro idCapJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro entityLowerMapper>${entityName?uncap_first}Mapper</#macro>
+<#macro entityCapService>${entityName?cap_first}Service</#macro>
 <#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity.<@entityCapName/>;
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.params.<@entityCapName/>Param;
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper;
-import ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.service.<@entityCapName/>Service;
+import com.chtwm.insurance.natives.api.entity.<@entityCapName/>;
+import com.chtwm.insurance.natives.api.params.<@entityCapNameParam/>;
+import com.chtwm.insurance.natives.api.service.<@entityCapService/>;
+import com.chtwm.insurance.natives.provider.mapper.<@entityCapName/>Mapper;
 import com.common.seq.sql.SqlSeqUtil;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

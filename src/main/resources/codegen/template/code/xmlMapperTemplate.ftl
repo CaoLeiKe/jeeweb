@@ -6,10 +6,10 @@
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
-<mapper namespace="${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.mapper.<@entityCapName/>Mapper">
+<mapper namespace="com.chtwm.insurance.natives.provider.mapper.<@entityCapName/>Mapper">
 
     <!-- 结果集映射 -->
-    <resultMap id="BaseResultMap" type="${packageName}.${moduleName}.entity.${entityName}">
+    <resultMap id="BaseResultMap" type="com.chtwm.insurance.natives.api.entity.${entityName}">
     <#list columns as column>
         <#if column.parmaryKey>
         <id column="${column.columnName}" property="${column.javaField}" jdbcType="${column.typeName}"/>

@@ -1,4 +1,4 @@
-package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.controller;
+package com.chtwm.insurance.agency.controller;
 <#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
 <#macro idCapJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro capIdJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
@@ -10,13 +10,12 @@ package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}<
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
-import ${packageName}.${moduleName}.entity.<@entityCapName/>;
-import ${packageName}.${moduleName}.params.<@entityCapName/>Param;
-import ${packageName}.${moduleName}.service.<@entityCapService/>;
-import ${packageName}.${moduleName}.valid.Insert;
-import ${packageName}.${moduleName}.valid.Update;
 import com.chtwm.insurance.agency.common.base.BaseResponse;
-import com.github.pagehelper.PageInfo;
+import com.chtwm.insurance.agency.common.valid.Insert;
+import com.chtwm.insurance.agency.common.valid.Update;
+import com.chtwm.insurance.natives.api.entity.<@entityCapName/>;
+import com.chtwm.insurance.natives.api.params.<@entityCapNameParam/>;
+import com.chtwm.insurance.natives.api.service.<@entityCapService/>;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -115,7 +114,6 @@ public class <@entityCapName/>Controller {
             log.info("----------------${functionName}，查询${functionName}结束----------------");
             return BaseResponse.successCustom("查询${functionName}成功！").setObj(<@entityLowerName/>).build();
         }
-        log.info("result:{}" + <@entityLowerName/>);
         log.info("----------------${functionName}，${functionName}结束----------------");
         return BaseResponse.successCustom("查询${functionName}结果为空！").build();
     }

@@ -1,4 +1,4 @@
-package ${packageName}<#if moduleName?exists><#if moduleName!=''>.${moduleName}</#if></#if>.entity;
+package com.chtwm.insurance.natives.api.entity;
 <#macro entityCapName>${entityName?cap_first}</#macro>
 
 <#list attributeInfos as attributeInfo>
