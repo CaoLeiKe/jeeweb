@@ -13,7 +13,7 @@ import com.chtwm.insurance.core.TestSupport;
 import com.chtwm.insurance.natives.api.entity.<@entityCapName/>;
 import com.chtwm.insurance.natives.api.params.<@entityCapNameParam/>;
 import com.chtwm.insurance.natives.api.service.<@entityCapService/>;
-import com.chtwm.insurance.natives.SetPropertiesUtil;
+import com.chtwm.insurance.utils.SetPropertiesUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
