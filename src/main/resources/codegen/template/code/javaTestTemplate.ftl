@@ -44,7 +44,6 @@ public class <@entityCapService/>Test extends TestSupport {
     /**
      * 更新
      */
-    @Test
     public void update<@entityCapName/>(<@entityCapNameParam/> <@entityLowerNameParam/>) throws Exception {
         <@idJavaType/> <@idLowerJava/> = <@entityLowerNameParam/>.get<@idCapJava/>();
         SetPropertiesUtil.setProperties(<@entityLowerNameParam/>);
@@ -57,7 +56,6 @@ public class <@entityCapService/>Test extends TestSupport {
     /**
      * 查询
      */
-    @Test
     public void get<@entityCapName/>(<@idJavaType/> <@idLowerJava/>) throws Exception {
         <@entityCapName/> <@entityLowerName/> = <@entityLowerService/>.selectByPrimaryKey(<@idLowerJava/>);
         Assert.assertNotNull(<@entityLowerName/>);
