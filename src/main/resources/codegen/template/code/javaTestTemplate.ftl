@@ -9,10 +9,11 @@ package com.chtwm.insurance.natives.provider;
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
+import com.chtwm.insurance.core.TestSupport;
 import com.chtwm.insurance.natives.api.entity.<@entityCapName/>;
 import com.chtwm.insurance.natives.api.params.<@entityCapNameParam/>;
 import com.chtwm.insurance.natives.api.service.<@entityCapService/>;
-import com.chtwm.insurance.natives.core.TestSupport;
+import com.chtwm.insurance.natives.SetPropertiesUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
