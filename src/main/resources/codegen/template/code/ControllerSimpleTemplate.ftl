@@ -145,7 +145,7 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/listByPage", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件分页查询${functionName}")
-    public BaseResponse list<@entityCapName/>ByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>,
+    public BaseResponse get<@entityCapName/>ListByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>,
                                   <@entityNameToSpace/>@ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
                                   <@entityNameToSpace/>@ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
