@@ -107,7 +107,7 @@
             <#-- 如果是时间类型则匹配当天 -->
             <#if column.typeName?lower_case == "date" || column.typeName?lower_case == "timestamp">
             <if test="<@entityLowerNameParam/>.${column.javaField} != null">
-                and UNIX_TIMESTAMP(Date(${column.columnName})) = UNIX_TIMESTAMP(Date(${r"#"}{<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}}))
+                and UNIX_TIMESTAMP(Date(t.${column.columnName})) = UNIX_TIMESTAMP(Date(${r"#"}{<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}}))
             </if>
             <#-- 如果是is_delete则默认查找没有删除的 -->
             <#elseif column.columnName?lower_case?contains("is") && column.columnName?lower_case?contains("delete")>
