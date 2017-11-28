@@ -7,6 +7,9 @@ package ${packageName}.${moduleName}.natives.api.service;
 <#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
+<#macro entityNameToSpace><#list 0..entityName?length as i> </#list></#macro>
+<#macro pageNumToSpace><#list 3..entityName?length as i> </#list></#macro>
+<#macro pageSizeToSpace><#list 4..entityName?length as i> </#list></#macro>
 
 import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
 import ${packageName}.${moduleName}.natives.api.params.<@entityCapNameParam/>;
@@ -65,8 +68,8 @@ public interface <@entityCapName/>Service {
      * 根据${functionName}实体的条件分页查询数据
      *
      * @param <@entityLowerNameParam/> ${functionName}实体
-     * @param pageNum 第几页
-     * @param pageSize 每页显示的数量
+     * @param pageNum <@pageNumToSpace/>第几页
+     * @param pageSize <@pageSizeToSpace/>每页显示的数量
      * @return 分页查询的结果
      */
     List<<@entityCapNameEntity/>> selectSelectiveByPage(<@entityCapNameParam/> <@entityLowerNameParam/>, int pageNum, int pageSize);

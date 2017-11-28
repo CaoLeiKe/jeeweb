@@ -11,6 +11,7 @@ package ${packageName}.${moduleName}.agency.controller;
 <#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
+<#macro entityNameToSpace><#list 0..entityName?length as i> </#list></#macro>
 
 import ${packageName}.${moduleName}.agency.common.base.BaseResponse;
 import ${packageName}.${moduleName}.agency.common.valid.Insert;
@@ -125,7 +126,7 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件查询${functionName}")
-    public BaseResponse select<@entityCapName/>List(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>) {
+    public BaseResponse get<@entityCapName/>List(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         List<<@entityCapNameEntity/>> <@entityLowerNameEntity/>s = <@entityLowerService/>.selectSelective(<@entityLowerNameParam/>);
@@ -141,12 +142,12 @@ public class <@entityCapName/>Controller {
         return result.build();
     }
 
-    @RequestMapping(value = "/selectList", method = RequestMethod.POST)
+    @RequestMapping(value = "/listByPage", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件分页查询${functionName}")
-    public BaseResponse selectListByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>,
-                                         @ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
-                                         @ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
+    public BaseResponse list<@entityCapName/>ByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>,
+                                  <@entityNameToSpace/>@ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
+                                  <@entityNameToSpace/>@ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         log.info("pageNum:{}", pageNum);
