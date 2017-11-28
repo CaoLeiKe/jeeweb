@@ -94,7 +94,7 @@
         select
         <include refid="Base_Column_List"/>
         from ${tableName} t
-        where <@idJdbc/> and is_delete = 0
+        where <@idJdbc/> and t.is_delete = 0
     </select>
 
     <!-- 根据条件查询，如果是时间则查找的是当天的时间 -->
@@ -111,10 +111,10 @@
             </if>
             <#-- 如果是is_delete则默认查找没有删除的 -->
             <#elseif column.columnName?lower_case?contains("is") && column.columnName?lower_case?contains("delete")>
-            and ${column.columnName} = 0
+            and t.${column.columnName} = 0
             <#else>
             <if test="<@entityLowerNameParam/>.${column.javaField} != null">
-                and ${column.columnName} = ${r"#"}{<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}}
+                and t.${column.columnName} = ${r"#"}{<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}}
             </if>
             </#if>
         </#list>
