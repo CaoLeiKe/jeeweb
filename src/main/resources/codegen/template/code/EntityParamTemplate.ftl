@@ -56,7 +56,7 @@ public class <@entityCapName/>Param implements Serializable {
         <#elseif attributeInfo.type == "String">
     @ApiModelProperty(value = "${attributeInfo.remarks}")
     @NotNull(message = "${attributeInfo.remarks}不能为空！", groups = {Insert.class})
-    @Size(max = ${attributeInfo.length}, groups = {Update.class, Default.class}, message = "${attributeInfo.remarks}最多${attributeInfo.length}个字符！")
+    @Size(max = ${attributeInfo.length}, groups = {Insert.class, Update.class, Default.class}, message = "${attributeInfo.remarks}最多${attributeInfo.length}个字符！")
         <#-- 其他 -->
         <#else>
     @ApiModelProperty(value = "${attributeInfo.remarks}")
@@ -64,7 +64,7 @@ public class <@entityCapName/>Param implements Serializable {
         </#if>
     <#-- 如果是String并且不是创建人、修改人 -->
     <#elseif attributeInfo.type == "String" && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create"))>
-    @Size(max = ${attributeInfo.length}, groups = {Update.class, Default.class}, message = "${attributeInfo.remarks}最多${attributeInfo.length}个字符！")
+    @Size(max = ${attributeInfo.length}, groups = {Insert.class, Update.class, Default.class}, message = "${attributeInfo.remarks}最多${attributeInfo.length}个字符！")
     @ApiModelProperty(value = "${attributeInfo.remarks}")
     <#-- 其他 -->
     <#else>

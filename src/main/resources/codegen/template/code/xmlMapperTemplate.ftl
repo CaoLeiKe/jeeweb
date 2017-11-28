@@ -105,7 +105,7 @@
         <where>
         <#list columns as column>
             <#-- 如果是时间类型则匹配当天 -->
-            <#if column.columnName?lower_case?contains("time")>
+            <#if column.typeName?lower_case == "date" || column.typeName?lower_case == "timestamp">
             <if test="<@entityLowerNameParam/>.${column.javaField} != null">
                 and UNIX_TIMESTAMP(Date(${column.columnName})) = UNIX_TIMESTAMP(Date(${r"#"}{<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}}))
             </if>
