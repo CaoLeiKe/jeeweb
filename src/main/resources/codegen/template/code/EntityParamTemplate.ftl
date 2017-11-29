@@ -3,7 +3,6 @@ package ${packageName}.${moduleName}.natives.api.params;
 
 import ${packageName}.${moduleName}.agency.common.valid.Insert;
 import ${packageName}.${moduleName}.agency.common.valid.Update;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -39,7 +38,6 @@ import ${importType};
  */
 
 @Data
-@ApiModel(description = "${functionName}Param实体")
 public class <@entityCapName/>Param implements Serializable {
 
     private static final long serialVersionUID = 1L;
