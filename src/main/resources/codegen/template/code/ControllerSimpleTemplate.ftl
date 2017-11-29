@@ -44,7 +44,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("<@entityLowerName/>")
-@Api(description = "${functionName}api")
+@Api(tags = "${functionName}api")
 @Slf4j
 public class <@entityCapName/>Controller {
 
