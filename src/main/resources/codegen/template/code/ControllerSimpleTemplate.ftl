@@ -43,7 +43,7 @@ import java.util.List;
  * @date ${time}
  */
 @Controller
-@RequestMapping("<@entityLowerName/>")
+@RequestMapping("api/<@entityLowerName/>")
 @Api(tags = "${functionName}api")
 @Slf4j
 public class <@entityCapName/>Controller {
@@ -110,17 +110,13 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键查询${functionName}")
-    public BaseResponse get<@entityCapName/>(@ApiParam(value = "${functionName}主键", required = true) @RequestParam <@idJavaType/> <@idJava/>) {
+    public BaseResponse get<@entityCapName/>(@ApiParam(value = "${functionName}主键") @RequestParam <@idJavaType/> <@idJava/>) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("<@idJava/>:{}", <@idJava/>);
         <@entityCapNameEntity/> <@entityLowerNameEntity/> = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>);
-        if (<@entityLowerNameEntity/> != null) {
-            log.info("result:{}" + <@entityLowerNameEntity/>);
-            log.info("----------------${functionName}，查询${functionName}结束----------------");
-            return BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>).build();
-        }
-        log.info("----------------${functionName}，${functionName}结束----------------");
-        return BaseResponse.successCustom("查询${functionName}结果为空！").build();
+        log.info("result:{}" + <@entityLowerNameEntity/>);
+        log.info("----------------${functionName}，查询${functionName}结束----------------");
+        return BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>).build();
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -130,16 +126,9 @@ public class <@entityCapName/>Controller {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         List<<@entityCapNameEntity/>> <@entityLowerNameEntity/>s = <@entityLowerService/>.selectSelective(<@entityLowerNameParam/>);
-        if (<@entityLowerNameEntity/>s != null && <@entityLowerNameEntity/>s.size() != 0) {
-            log.info("result:{}" + <@entityLowerNameEntity/>s);
-            log.info("----------------${functionName}，查询${functionName}结束----------------");
-            BaseResponse.Builder result = BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>s);
-            return result.build();
-        }
         log.info("result:{}" + <@entityLowerNameEntity/>s);
         log.info("----------------${functionName}，查询${functionName}结束----------------");
-        BaseResponse.Builder result = BaseResponse.successCustom("查询${functionName}结果为空！");
-        return result.build();
+        return BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>s).build();
     }
 
     @RequestMapping(value = "/listByPage", method = RequestMethod.POST)
@@ -153,16 +142,8 @@ public class <@entityCapName/>Controller {
         log.info("pageNum:{}", pageNum);
         log.info("pageSize:{}", pageSize);
         List<<@entityCapNameEntity/>> <@entityLowerNameEntity/>s = <@entityLowerService/>.selectSelectiveByPage(<@entityLowerNameParam/>, pageNum, pageSize);
-        PageInfo pageInfo = new PageInfo<>(<@entityLowerNameEntity/>s);
-        if (<@entityLowerNameEntity/>s != null && <@entityLowerNameEntity/>s.size() != 0) {
-            log.info("result:{}" + <@entityLowerNameEntity/>s);
-            log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-            BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}成功！").setData(pageInfo);
-            return result.build();
-        }
         log.info("result:{}" + <@entityLowerNameEntity/>s);
         log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-        BaseResponse.Builder result = BaseResponse.successCustom("分页查询${functionName}结果为空！").setData(pageInfo);
-        return result.build();
+        return BaseResponse.successCustom("分页查询${functionName}成功！").setData(new PageInfo<>(<@entityLowerNameEntity/>s)).build();
     }
 }
