@@ -48,9 +48,7 @@ import java.util.List;
 @Slf4j
 public class <@entityCapName/>Controller {
 
-    /**
-     * ${functionName}Service
-     */
+    /** ${functionName}Service */
     @Autowired
     private <@entityCapService/> <@entityLowerService/>;
 <#--

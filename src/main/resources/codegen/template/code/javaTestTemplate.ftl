@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class <@entityCapService/>Test extends TestSupport {
 
+    /** ${functionName}Service */
     @Autowired
     <@entityCapService/> <@entityLowerService/>;
 

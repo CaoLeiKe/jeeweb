@@ -77,7 +77,7 @@
         </#list>
         </trim>
         <trim prefix="values">
-            <foreach collection="<@entityLowerNameParam/>" item="item" index="index" separator=",">
+            <foreach collection="<@entityLowerNameParam/>s" item="item" separator=",">
                 <trim prefix="(" suffix=")">
                 <#list columns as column>
                     <#if column.columnName?lower_case?ends_with("time")>

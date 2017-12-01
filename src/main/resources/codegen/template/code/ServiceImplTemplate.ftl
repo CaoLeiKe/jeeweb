@@ -29,6 +29,7 @@ import java.util.List;
 @Transactional
 public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
 
+    /** ${functionName}Mapper */
     @Autowired
     private <@entityCapName/>Mapper <@entityLowerName/>Mapper;
 <#--
