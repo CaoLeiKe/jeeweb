@@ -68,6 +68,29 @@
         </trim>
     </insert>
 
+    <!-- 批量插入数据 -->
+    <insert id="batchInsert">
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <#list columns as column>
+            ${column.columnName},
+        </#list>
+        </trim>
+        <trim prefix="values">
+            <foreach collection="<@entityLowerNameParam/>" item="item" index="index" separator=",">
+                <trim prefix="(" suffix=")">
+                <#list columns as column>
+                    <#if column.columnName?lower_case?ends_with("time")>
+                    now(),
+                    <#else>
+                    ${r'#{'}item.${column.javaField}, jdbcType=${column.typeName}},
+                    </#if>
+                </#list>
+                </trim>
+            </foreach>
+        </trim>
+    </insert>
+
     <!-- 根据实体中的主键更改数据，无法更改主键和创建者、创建时间的信息 -->
     <update id="updateSelective">
         update ${tableName}
