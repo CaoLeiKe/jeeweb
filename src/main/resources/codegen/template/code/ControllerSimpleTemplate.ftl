@@ -79,7 +79,7 @@ public class <@entityCapName/>Controller {
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         long rowCount = <@entityLowerService/>.insertSelective(<@entityLowerNameParam/>);
         if (rowCount == 1) {
-            log.info("result:{}" + rowCount);
+            log.info("rowCount:{}" + rowCount);
             log.info("----------------${functionName}，添加${functionName}结束----------------");
             return BaseResponse.successCustom("添加${functionName}成功！").setData(<@entityLowerNameParam/>.get<@idCapJava/>()).build();
         }
@@ -96,7 +96,7 @@ public class <@entityCapName/>Controller {
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         long rowCount = <@entityLowerService/>.updateSelective(<@entityLowerNameParam/>);
         if (rowCount == 1) {
-            log.info("result:{}" + rowCount);
+            log.info("rowCount:{}" + rowCount);
             log.info("----------------${functionName}，修改${functionName}结束----------------");
             return BaseResponse.successCustom("删除${functionName}成功！").build();
         }
@@ -112,7 +112,7 @@ public class <@entityCapName/>Controller {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("<@idJava/>:{}", <@idJava/>);
         <@entityCapNameEntity/> <@entityLowerNameEntity/> = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>);
-        log.info("result:{}" + <@entityLowerNameEntity/>);
+        log.info("rowCount:{}" + <@entityLowerNameEntity/>);
         log.info("----------------${functionName}，查询${functionName}结束----------------");
         return BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>).build();
     }
@@ -124,7 +124,7 @@ public class <@entityCapName/>Controller {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         List<<@entityCapNameEntity/>> <@entityLowerNameEntity/>s = <@entityLowerService/>.selectSelective(<@entityLowerNameParam/>);
-        log.info("result:{}" + <@entityLowerNameEntity/>s);
+        log.info("rowCount:{}" + <@entityLowerNameEntity/>s);
         log.info("----------------${functionName}，查询${functionName}结束----------------");
         return BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>s).build();
     }
