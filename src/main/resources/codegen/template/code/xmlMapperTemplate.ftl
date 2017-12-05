@@ -76,19 +76,18 @@
             ${column.columnName},
         </#list>
         </trim>
-        <trim prefix="values">
-            <foreach collection="<@entityLowerNameParam/>s" item="item" separator=",">
-                <trim prefix="(" suffix=")" suffixOverrides=",">
-                <#list columns as column>
-                    <#if column.columnName?lower_case?ends_with("time")>
-                    now(),
-                    <#else>
-                    ${r'#{'}item.${column.javaField}, jdbcType=${column.typeName}},
-                    </#if>
-                </#list>
-                </trim>
-            </foreach>
-        </trim>
+        VALUES
+        <foreach collection="<@entityLowerNameParam/>s" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+            <#list columns as column>
+                <#if column.columnName?lower_case?ends_with("time")>
+                now(),
+                <#else>
+                ${r'#{'}item.${column.javaField}, jdbcType=${column.typeName}},
+                </#if>
+            </#list>
+            </trim>
+        </foreach>
     </insert>
 
     <!-- 根据实体中的主键更改数据，无法更改主键和创建者、创建时间的信息 -->
