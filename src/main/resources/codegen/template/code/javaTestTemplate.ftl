@@ -11,14 +11,17 @@ package ${packageName}.${moduleName}.natives.provider;
 <#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
 <#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
 
-import ${packageName}.${moduleName}.core.TestSupport;
 import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
 import ${packageName}.${moduleName}.natives.api.params.<@entityCapNameParam/>;
 import ${packageName}.${moduleName}.natives.api.service.<@entityCapService/>;
+import ${packageName}.${moduleName}.natives.core.TestSupport;
 import ${packageName}.${moduleName}.utils.SetPropertiesUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Title: ${functionName}
@@ -65,20 +68,20 @@ public class <@entityCapService/>Test extends TestSupport {
         batchInsert<@entityCapName/>();
     }
 
-
-
    /**
     * 批量新增
     */
     public void batchInsert<@entityCapName/>() throws Exception {
-        List<<@entityCapName/>> <@entityLowerName/>s = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            <@entityCapName/> <@entityLowerName/> = new <@entityCapName/>();
-            SetPropertiesUtil.setProperties(<@entityLowerName/>);
-            <@entityLowerName/>s.add(<@entityLowerName/>);
+        List<<@entityCapNameParam/>> <@entityLowerNameParam/>s = new ArrayList<>();
+        // 新增的数量
+        int length = 5;
+        for (int i = 0; i < length; i++) {
+            <@entityCapNameParam/> <@entityLowerNameParam/> = new <@entityCapNameParam/>();
+            SetPropertiesUtil.setProperties(<@entityLowerNameParam/>);
+            <@entityLowerNameParam/>s.add(<@entityLowerNameParam/>);
         }
-        long rowCount = <@entityLowerService/>.batchInsert(<@entityLowerName/>s);
-        Assert.assertEquals(5, rowCount);
+        long rowCount = <@entityLowerService/>.batchInsert(<@entityLowerNameParam/>s);
+        Assert.assertEquals(length, rowCount);
     }
 <#--
     /**
