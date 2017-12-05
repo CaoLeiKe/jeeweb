@@ -14,6 +14,7 @@ import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
 import ${packageName}.${moduleName}.natives.api.params.<@entityCapNameParam/>;
 import ${packageName}.${moduleName}.natives.api.service.<@entityCapService/>;
 import ${packageName}.${moduleName}.natives.provider.mapper.<@entityCapName/>Mapper;
+import com.common.exception.MyException;
 import com.common.seq.sql.SqlSeqUtil;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,7 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
         if (rowCount != length) {
             throw new MyException("${functionName}新增数量不匹配");
         }
+        return rowCount;
     }
 
     @Override
