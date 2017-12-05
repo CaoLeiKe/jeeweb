@@ -44,10 +44,10 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
     } -->
 
     @Override
-    public long insertSelective(<@entityCapNameParam/> <@entityLowerNameParam/>) {
+    public long insert(<@entityCapNameParam/> <@entityLowerNameParam/>) {
         <@idJavaType/> <@idJava/> = SqlSeqUtil.get("${tableName}");
         <@entityLowerNameParam/>.set<@idCapJava/>(<@idJava/>);
-        return <@entityLowerMapper/>.insertSelective(<@entityLowerNameParam/>);
+        return <@entityLowerMapper/>.insert(<@entityLowerNameParam/>);
     }
 
     @Override

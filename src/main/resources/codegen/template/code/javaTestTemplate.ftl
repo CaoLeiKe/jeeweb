@@ -42,7 +42,7 @@ public class <@entityCapService/>Test extends TestSupport {
     public void insert<@entityCapName/>() throws Exception {
         <@entityCapNameParam/> <@entityLowerNameParam/> = new <@entityCapNameParam/>();
         SetPropertiesUtil.setProperties(<@entityLowerNameParam/>);
-        long rowCount = <@entityLowerService/>.insertSelective(<@entityLowerNameParam/>);
+        long rowCount = <@entityLowerService/>.insert(<@entityLowerNameParam/>);
         Assert.assertEquals(1, rowCount);
         update<@entityCapName/>(<@entityLowerNameParam/>);
     }

@@ -100,7 +100,7 @@ public class <@entityCapName/>Controller {
         <@entityLowerNameParam/>.set${updateId?cap_first}(empCode);
         <@entityLowerNameParam/>.set${updateName?cap_first}(empName);
 
-        long rowCount = <@entityLowerService/>.insertSelective(<@entityLowerNameParam/>);
+        long rowCount = <@entityLowerService/>.insert(<@entityLowerNameParam/>);
         if (rowCount == 1) {
             log.info("rowCount:{}" + rowCount);
             log.info("----------------${functionName}，添加${functionName}结束----------------");

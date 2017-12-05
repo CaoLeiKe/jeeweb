@@ -39,7 +39,7 @@ public interface <@entityCapName/>Service {
      * @param <@entityLowerNameParam/> ${functionName}实体
      * @return 受影响的行数
      */
-    long insertSelective(<@entityCapNameParam/> <@entityLowerNameParam/>);
+    long insert(<@entityCapNameParam/> <@entityLowerNameParam/>);
 
     /**
      * 批量新增${functionName}

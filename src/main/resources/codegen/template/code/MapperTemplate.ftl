@@ -37,7 +37,7 @@ public interface <@entityCapName/>Mapper {
      * @param <@entityLowerNameParam/> ${functionName}实体
      * @return 受影响的行数
      */
-    long insertSelective(@Param("<@entityLowerNameParam/>") <@entityCapNameParam/> <@entityLowerNameParam/>);
+    long insert(@Param("<@entityLowerNameParam/>") <@entityCapNameParam/> <@entityLowerNameParam/>);
 
     /**
      * 批量新增${functionName}

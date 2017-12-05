@@ -42,17 +42,11 @@
     </update> -->
 
     <!-- 插入数据 -->
-    <insert id="insertSelective">
+    <insert id="insert">
         insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
         <#list columns as column>
-            <#if column.columnName?lower_case?ends_with("time")>
             ${column.columnName},
-            <#else>
-            <if test="<@entityLowerNameParam/>.${column.javaField} != null">
-                ${column.columnName},
-            </if>
-            </#if>
         </#list>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -60,9 +54,7 @@
             <#if column.columnName?lower_case?ends_with("time")>
             now(),
             <#else>
-            <if test="<@entityLowerNameParam/>.${column.javaField} != null">
-                ${r'#{'}<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}},
-            </if>
+            ${r'#{'}<@entityLowerNameParam/>.${column.javaField}, jdbcType=${column.typeName}},
             </#if>
         </#list>
         </trim>
