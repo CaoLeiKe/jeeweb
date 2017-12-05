@@ -2,6 +2,12 @@ package ${packageName}.${moduleName}.agency.controller;
 <#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField}</#if></#list></#macro>
 <#macro idCapJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
 <#macro capIdJava><#list columns as column><#if column.parmaryKey>${column.javaField?cap_first}</#if></#list></#macro>
+<#list columns as column>
+    <#if column.javaField?lower_case?contains("createname")><#assign createName=column.javaField/></#if>
+    <#if column.javaField?lower_case?contains("createid")><#assign createId=column.javaField/></#if>
+    <#if column.javaField?lower_case?contains("updatename")><#assign updateName=column.javaField/></#if>
+    <#if column.javaField?lower_case?contains("updateid")><#assign updateId=column.javaField/></#if>
+</#list>
 <#macro entityCapName>${entityName?cap_first}</#macro>
 <#macro entityLowerName>${entityName?uncap_first}</#macro>
 <#macro entityCapNameEntity>${entityName?cap_first}Entity</#macro>
@@ -15,13 +21,17 @@ package ${packageName}.${moduleName}.agency.controller;
 
 import ${packageName}.${moduleName}.agency.common.base.BaseResponse;
 import ${packageName}.${moduleName}.agency.common.base.ListBean;
+import ${packageName}.${moduleName}.agency.common.constant.InsuranceConstant;
 import ${packageName}.${moduleName}.agency.common.valid.Insert;
 import ${packageName}.${moduleName}.agency.common.valid.Update;
 import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
 import ${packageName}.${moduleName}.natives.api.params.<@entityCapNameParam/>;
 import ${packageName}.${moduleName}.natives.api.service.<@entityCapService/>;
 import com.github.pagehelper.PageInfo;
+import com.user.entity.emp.Emp;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -76,9 +87,19 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "添加${functionName}")
-    public BaseResponse add<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Insert.class) <@entityCapNameParam/> <@entityLowerNameParam/>) {
+    public BaseResponse add<@entityCapName/>(@ApiParam(name = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Insert.class) <@entityCapNameParam/> <@entityLowerNameParam/>,
+                           <@entityNameToSpace/>@RequestAttribute(InsuranceConstant.REQUEST_EMP_INFO) Emp emp) {
         log.info("----------------${functionName}，添加${functionName}开始----------------");
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
+
+        // 新建人信息
+        String empCode = emp.getCode();
+        String empName = emp.getName();
+        <@entityLowerNameParam/>.set${createId?cap_first}(empCode);
+        <@entityLowerNameParam/>.set${createName?cap_first}(empName);
+        <@entityLowerNameParam/>.set${updateId?cap_first}(empCode);
+        <@entityLowerNameParam/>.set${updateName?cap_first}(empName);
+
         long rowCount = <@entityLowerService/>.insertSelective(<@entityLowerNameParam/>);
         if (rowCount == 1) {
             log.info("rowCount:{}" + rowCount);
@@ -93,9 +114,21 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/addList", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "批量添加${functionName}")
-    public BaseResponse add<@entityCapName/>s(@ApiParam(name = "${functionName}实体") @RequestBody @Validated(Insert.class) ListBean<<@entityCapNameParam/>> <@entityLowerNameParam/>List) {
+    public BaseResponse add<@entityCapName/>s(@ApiParam(name = "${functionName}实体") @RequestBody @Validated(Insert.class) ListBean<<@entityCapNameParam/>> <@entityLowerNameParam/>List,
+                            <@entityNameToSpace/>@RequestAttribute(InsuranceConstant.REQUEST_EMP_INFO) Emp emp) {
         log.info("----------------${functionName}，添加${functionName}开始----------------");
         List<<@entityCapNameParam/>> <@entityLowerNameParam/>s = <@entityLowerNameParam/>List.getParams();
+
+        // 新建人信息
+        String empCode = emp.getCode();
+        String empName = emp.getName();
+        for (<@entityCapNameParam/> <@entityLowerNameParam/> : <@entityLowerNameParam/>s) {
+            <@entityLowerNameParam/>.set${createId?cap_first}(empCode);
+            <@entityLowerNameParam/>.set${createName?cap_first}(empName);
+            <@entityLowerNameParam/>.set${updateId?cap_first}(empCode);
+            <@entityLowerNameParam/>.set${updateName?cap_first}(empName);
+        }
+
         log.info("<@entityLowerNameParam/>s:{}", <@entityLowerNameParam/>s);
         long rowCount = <@entityLowerService/>.batchInsert(<@entityLowerNameParam/>s);
         if (rowCount == <@entityLowerNameParam/>s.size()) {
@@ -152,9 +185,14 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/searchByPage", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件分页查询${functionName}")
-    public BaseResponse search<@entityCapName/>ByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>,
-                                    <@entityNameToSpace/>@ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
-                                    <@entityNameToSpace/>@ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "字段描述", name = "字段名", dataType = "string | long", paramType = "query"),
+            @ApiImplicitParam(value = "分页页码", name = "pageNum", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(value = "每页条目数", name = "pageSize", dataType = "int", paramType = "query")
+    })
+    public BaseResponse search<@entityCapName/>ByPage(@Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>,
+                                    <@entityNameToSpace/>@RequestParam(defaultValue = "1") Integer pageNum,
+                                    <@entityNameToSpace/>@RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         log.info("pageNum:{}", pageNum);
