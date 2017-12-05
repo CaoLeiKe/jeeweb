@@ -158,9 +158,9 @@ public class <@entityCapName/>Controller {
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         log.info("pageNum:{}", pageNum);
         log.info("pageSize:{}", pageSize);
-        List<<@entityCapNameEntity/>> <@entityLowerNameEntity/>s = <@entityLowerService/>.selectSelectiveByPage(<@entityLowerNameParam/>, pageNum, pageSize);
-        log.info("result:{}" + <@entityLowerNameEntity/>s);
+        PageInfo<PerformanceYearEntity> result = <@entityLowerService/>.selectSelectiveByPage(<@entityLowerNameParam/>, pageNum, pageSize);
+        log.info("result:{}" + result);
         log.info("----------------${functionName}，分页查询${functionName}结束----------------");
-        return BaseResponse.successCustom("分页查询${functionName}成功！").setData(new PageInfo<>(<@entityLowerNameEntity/>s)).build();
+        return BaseResponse.successCustom("分页查询${functionName}成功！").setData(result).build();
     }
 }

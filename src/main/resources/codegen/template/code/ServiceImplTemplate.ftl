@@ -17,6 +17,7 @@ import ${packageName}.${moduleName}.natives.provider.mapper.<@entityCapName/>Map
 import com.common.exception.MyException;
 import com.common.seq.sql.SqlSeqUtil;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -82,9 +83,9 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
     }
 
     @Override
-    public List<<@entityCapNameEntity/>> selectSelectiveByPage(<@entityCapNameParam/> <@entityLowerNameParam/>, int pageNum, int pageSize) {
+    public PageInfo<<@entityCapNameEntity/>> selectSelectiveByPage(<@entityCapNameParam/> <@entityLowerNameParam/>, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize, true);
-        return <@entityLowerMapper/>.selectSelective(<@entityLowerNameParam/>);
+        return new PageInfo<<@entityCapNameEntity/>>(<@entityLowerMapper/>.selectSelective(<@entityLowerNameParam/>));
     }
 
 }

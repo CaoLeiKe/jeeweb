@@ -13,6 +13,7 @@ package ${packageName}.${moduleName}.natives.api.service;
 
 import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
 import ${packageName}.${moduleName}.natives.api.params.<@entityCapNameParam/>;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -80,7 +81,7 @@ public interface <@entityCapName/>Service {
      * @param pageSize <@pageSizeToSpace/>每页显示的数量
      * @return 分页查询的结果
      */
-    List<<@entityCapNameEntity/>> selectSelectiveByPage(<@entityCapNameParam/> <@entityLowerNameParam/>, int pageNum, int pageSize);
+    PageInfo<<@entityCapNameEntity/>> selectSelectiveByPage(<@entityCapNameParam/> <@entityLowerNameParam/>, int pageNum, int pageSize);
 
 }
 
