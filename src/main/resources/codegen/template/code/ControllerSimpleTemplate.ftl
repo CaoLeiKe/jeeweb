@@ -14,6 +14,7 @@ package ${packageName}.${moduleName}.agency.controller;
 <#macro entityNameToSpace><#list 0..entityName?length as i> </#list></#macro>
 
 import ${packageName}.${moduleName}.agency.common.base.BaseResponse;
+import ${packageName}.${moduleName}.agency.common.base.ListBean;
 import ${packageName}.${moduleName}.agency.common.valid.Insert;
 import ${packageName}.${moduleName}.agency.common.valid.Update;
 import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
@@ -158,7 +159,7 @@ public class <@entityCapName/>Controller {
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         log.info("pageNum:{}", pageNum);
         log.info("pageSize:{}", pageSize);
-        PageInfo<PerformanceYearEntity> result = <@entityLowerService/>.selectSelectiveByPage(<@entityLowerNameParam/>, pageNum, pageSize);
+        PageInfo<<@entityCapNameEntity/>> result = <@entityLowerService/>.selectSelectiveByPage(<@entityLowerNameParam/>, pageNum, pageSize);
         log.info("result:{}" + result);
         log.info("----------------${functionName}，分页查询${functionName}结束----------------");
         return BaseResponse.successCustom("分页查询${functionName}成功！").setData(result).build();
