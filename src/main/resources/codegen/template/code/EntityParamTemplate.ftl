@@ -75,7 +75,7 @@ public class <@entityCapName/>Param implements Serializable {
     </#if>
     <#-- bigDecimal类型 -->
     <#if attributeInfo.type == "BigDecimal">
-    @Digits(integer = ${attributeInfo.length?number - attributeInfo.decimalDigits?number}, fraction = ${attributeInfo.decimalDigits}, message = "${attributeInfo.remarks}小数不能超过${attributeInfo.decimalDigits}位，整数不能超过${attributeInfo.length?number - attributeInfo.decimalDigits?number}位！")
+    @Digits(integer = ${attributeInfo.length?number - attributeInfo.decimalDigits?number}, fraction = ${attributeInfo.decimalDigits}, message = "${attributeInfo.remarks}小数不能超过${attributeInfo.decimalDigits}位，整数不能超过${attributeInfo.length?number - attributeInfo.decimalDigits?number}位！", groups = {Insert.class, Update.class, Default.class})
     </#if>
     private <#if attributeInfo.type=='this'><@entityCapName/><#else>${attributeInfo.type}</#if> ${attributeInfo.name};
 
