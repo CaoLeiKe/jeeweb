@@ -119,7 +119,7 @@ public class <@entityCapName/>Controller {
             log.info("----------------${functionName}，修改${functionName}结束----------------");
             return BaseResponse.successCustom("删除${functionName}成功！").build();
         }
-        log.info("result:{}" + rowCount);
+        log.info("rowCount:{}" + rowCount);
         log.info("----------------${functionName}，修改${functionName}结束----------------");
         return BaseResponse.failedCustom("修改${functionName}失败！").build();
     }
@@ -131,7 +131,7 @@ public class <@entityCapName/>Controller {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("<@idJava/>:{}", <@idJava/>);
         <@entityCapNameEntity/> <@entityLowerNameEntity/> = <@entityLowerService/>.selectByPrimaryKey(<@idJava/>);
-        log.info("rowCount:{}" + <@entityLowerNameEntity/>);
+        log.info("<@entityLowerNameEntity/>:{}" + <@entityLowerNameEntity/>);
         log.info("----------------${functionName}，查询${functionName}结束----------------");
         return BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>).build();
     }
@@ -143,7 +143,7 @@ public class <@entityCapName/>Controller {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         List<<@entityCapNameEntity/>> <@entityLowerNameEntity/>s = <@entityLowerService/>.selectSelective(<@entityLowerNameParam/>);
-        log.info("rowCount:{}" + <@entityLowerNameEntity/>s);
+        log.info("<@entityLowerNameEntity/>s:{}" + <@entityLowerNameEntity/>s);
         log.info("----------------${functionName}，查询${functionName}结束----------------");
         return BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>s).build();
     }
