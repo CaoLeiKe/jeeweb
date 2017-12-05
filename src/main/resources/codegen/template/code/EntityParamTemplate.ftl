@@ -24,7 +24,12 @@ import javax.validation.constraints.Size;
         <#break/>
     </#if>
 </#list>
+<#list attributeInfos as attributeInfo>
+    <#if attributeInfo.type == "String" && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create"))>
 import javax.validation.groups.Default;
+        <#break/>
+    </#if>
+</#list>
 import java.io.Serializable;
 <#list importTypes as importType>
 import ${importType};
