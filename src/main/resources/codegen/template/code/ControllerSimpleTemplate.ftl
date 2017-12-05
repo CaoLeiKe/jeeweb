@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,7 +84,7 @@ public class <@entityCapName/>Controller {
             log.info("----------------${functionName}，添加${functionName}结束----------------");
             return BaseResponse.successCustom("添加${functionName}成功！").setData(<@entityLowerNameParam/>.get<@idCapJava/>()).build();
         }
-        log.info("result:{}" + rowCount);
+        log.info("rowCount:{}" + rowCount);
         log.info("----------------${functionName}，添加${functionName}结束----------------");
         return BaseResponse.failedCustom("添加${functionName}失败！").build();
     }
@@ -91,14 +92,15 @@ public class <@entityCapName/>Controller {
     @RequestMapping(value = "/addList", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "批量添加${functionName}")
-    public BaseResponse add<@entityCapName/>s(@ApiParam(name = "${functionName}实体") @RequestBody @Validated(Insert.class) ListBean<<@entityCapNameParam/>> <@entityLowerNameParam/>s) {
+    public BaseResponse add<@entityCapName/>s(@ApiParam(name = "${functionName}实体") @RequestBody @Validated(Insert.class) ListBean<<@entityCapNameParam/>> <@entityLowerNameParam/>List) {
         log.info("----------------${functionName}，添加${functionName}开始----------------");
+        List<<@entityCapNameParam/>> <@entityLowerNameParam/>s = <@entityLowerNameParam/>List.getParams();
         log.info("<@entityLowerNameParam/>s:{}", <@entityLowerNameParam/>s);
         long rowCount = <@entityLowerService/>.batchInsert(<@entityLowerNameParam/>s);
-        if (rowCount == <@entityLowerNameParam/>s.getParams().size()) {
+        if (rowCount == <@entityLowerNameParam/>s.size()) {
             log.info("rowCount:{}" + rowCount);
             log.info("----------------${functionName}，添加${functionName}结束----------------");
-            return BaseResponse.successCustom("添加${functionName}成功！").setData(<@entityLowerNameParam/>.get<@idCapJava/>()).build();
+            return BaseResponse.successCustom("共添加" + rowCount + "个${functionName}！").build();
         }
         log.info("rowCount:{}" + rowCount);
         log.info("----------------${functionName}，添加${functionName}结束----------------");
@@ -150,8 +152,8 @@ public class <@entityCapName/>Controller {
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件分页查询${functionName}")
     public BaseResponse search<@entityCapName/>ByPage(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>,
-                                     <@entityNameToSpace/>@ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
-                                     <@entityNameToSpace/>@ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
+                                    <@entityNameToSpace/>@ApiParam(value = "分页页码") @RequestParam(defaultValue = "1") Integer pageNum,
+                                    <@entityNameToSpace/>@ApiParam(value = "每页条目数") @RequestParam(defaultValue = "10") Integer pageSize) {
         log.info("----------------${functionName}，查询${functionName}开始----------------");
         log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
         log.info("pageNum:{}", pageNum);
