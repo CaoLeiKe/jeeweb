@@ -43,7 +43,7 @@ public class <@entityCapName/>Param implements Serializable {
     private static final long serialVersionUID = 1L;
 
     <#list attributeInfos as attributeInfo>
-    /**${attributeInfo.remarks}*/
+    /** ${attributeInfo.remarks} */
     <#-- 数据库为notNull，且没有默认值，并且不是创建修改人和时间-->
     <#if !attributeInfo.nullable && attributeInfo.columnDef?trim?length == 0 && !(attributeInfo.name?lower_case?contains("update") || attributeInfo.name?lower_case?contains("create"))>
         <#-- 如果是主键-->
