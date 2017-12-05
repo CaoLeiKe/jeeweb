@@ -26,6 +26,7 @@ import java.util.List;
  * @author ${functionAuthor}
  * @date ${time}
  */
+@Slf4j
 @Transactional
 public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
 
@@ -43,6 +44,24 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
         <@idJavaType/> <@idJava/> = SqlSeqUtil.get("${tableName}");
         <@entityLowerNameParam/>.set<@idCapJava/>(<@idJava/>);
         return <@entityLowerMapper/>.insertSelective(<@entityLowerNameParam/>);
+    }
+
+    @Override
+    public long batchInsert(List<<@entityCapNameParam/>> <@entityLowerNameParam/>s) {
+        log.info("----------插入${functionName}开始----------");
+        int index = 0;
+        int length = <@entityLowerNameParam/>s.size();
+        for (; index < length; index++) {
+            <@idJavaType/> <@idJava/> = SqlSeqUtil.get("${tableName}");
+            <@entityLowerNameParam/>s.get(index).set<@idCapJava/>(<@idJava/>);
+            log.info("第{}个主键值：{}", index + 1, id);
+        }
+        long rowCount = <@entityLowerMapper/>.batchInsert(<@entityLowerNameParam/>s);
+        log.info("----------插入${functionName}结束----------");
+
+        if (rowCount != length) {
+            throw new MyException("${functionName}新增数量不匹配");
+        }
     }
 
     @Override

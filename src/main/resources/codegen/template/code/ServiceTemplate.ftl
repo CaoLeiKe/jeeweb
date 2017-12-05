@@ -41,6 +41,14 @@ public interface <@entityCapName/>Service {
     long insertSelective(<@entityCapNameParam/> <@entityLowerNameParam/>);
 
     /**
+     * 批量新增${functionName}
+     *
+     * @param <@entityLowerNameParam/>s ${functionName}集合实体
+     * @return 受影响的行数
+     */
+    long batchInsert(List<<@entityCapNameParam/>> <@entityLowerNameParam/>s);
+
+    /**
      * 根据${functionName}实体中的主键更改数据，无法更改主键和创建者、创建时间的信息
      *
      * @param <@entityLowerNameParam/> ${functionName}实体

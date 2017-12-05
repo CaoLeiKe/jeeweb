@@ -62,7 +62,23 @@ public class <@entityCapService/>Test extends TestSupport {
     public void get<@entityCapName/>(<@idJavaType/> <@idLowerJava/>) throws Exception {
         <@entityCapNameEntity/> <@entityLowerNameEntity/> = <@entityLowerService/>.selectByPrimaryKey(<@idLowerJava/>);
         Assert.assertNotNull(<@entityLowerNameEntity/>);
-        <#-- delete<@entityCapName/>(<@entityLowerName/>.get<@idCapJava/>()); -->
+        batchInsert<@entityCapName/>();
+    }
+
+
+
+   /**
+    * 批量新增
+    */
+    public void batchInsert<@entityCapName/>() throws Exception {
+        List<<@entityCapName/>> <@entityLowerName/>s = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            <@entityCapName/> <@entityLowerName/> = new <@entityCapName/>();
+            SetPropertiesUtil.setProperties(<@entityLowerName/>);
+            <@entityLowerName/>s.add(<@entityLowerName/>);
+        }
+        long rowCount = <@entityLowerService/>.batchInsert(<@entityLowerName/>s);
+        Assert.assertEquals(5, rowCount);
     }
 <#--
     /**

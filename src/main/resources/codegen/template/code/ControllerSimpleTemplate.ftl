@@ -88,6 +88,23 @@ public class <@entityCapName/>Controller {
         return BaseResponse.failedCustom("添加${functionName}失败！").build();
     }
 
+    @RequestMapping(value = "/addList", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(httpMethod = "POST", value = "批量添加${functionName}")
+    public BaseResponse add<@entityCapName/>s(@ApiParam(name = "${functionName}实体") @RequestBody @Validated(Insert.class) ListBean<<@entityCapNameParam/>> <@entityLowerNameParam/>s) {
+        log.info("----------------${functionName}，添加${functionName}开始----------------");
+        log.info("<@entityLowerNameParam/>s:{}", <@entityLowerNameParam/>s);
+        long rowCount = <@entityLowerService/>.batchInsert(<@entityLowerNameParam/>s);
+        if (rowCount == <@entityLowerNameParam/>s.getParams().size()) {
+            log.info("rowCount:{}" + rowCount);
+            log.info("----------------${functionName}，添加${functionName}结束----------------");
+            return BaseResponse.successCustom("添加${functionName}成功！").setData(<@entityLowerNameParam/>.get<@idCapJava/>()).build();
+        }
+        log.info("rowCount:{}" + rowCount);
+        log.info("----------------${functionName}，添加${functionName}结束----------------");
+        return BaseResponse.failedCustom("添加${functionName}数量不匹配！").build();
+    }
+
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据主键修改${functionName}")
