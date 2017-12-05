@@ -80,11 +80,6 @@ public class <@entityCapName/>ServiceImpl implements <@entityCapName/>Service {
     }
 
     @Override
-    public List<<@entityCapNameEntity/>> selectSelective(<@entityCapNameParam/> <@entityLowerNameParam/>) {
-        return <@entityLowerMapper/>.selectSelective(<@entityLowerNameParam/>);
-    }
-
-    @Override
     public PageInfo<<@entityCapNameEntity/>> selectSelectiveByPage(<@entityCapNameParam/> <@entityLowerNameParam/>, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize, true);
         return new PageInfo<<@entityCapNameEntity/>>(<@entityLowerMapper/>.selectSelective(<@entityLowerNameParam/>));

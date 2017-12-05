@@ -170,18 +170,6 @@ public class <@entityCapName/>Controller {
         return BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>).build();
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(httpMethod = "POST", value = "根据条件查询${functionName}")
-    public BaseResponse search<@entityCapName/>(@ApiParam(value = "${functionName}实体") @ModelAttribute("<@entityLowerNameParam/>") @Validated(Default.class) <@entityCapNameParam/> <@entityLowerNameParam/>) {
-        log.info("----------------${functionName}，查询${functionName}开始----------------");
-        log.info("<@entityLowerNameParam/>:{}", <@entityLowerNameParam/>);
-        List<<@entityCapNameEntity/>> <@entityLowerNameEntity/>s = <@entityLowerService/>.selectSelective(<@entityLowerNameParam/>);
-        log.info("<@entityLowerNameEntity/>s:{}" + <@entityLowerNameEntity/>s);
-        log.info("----------------${functionName}，查询${functionName}结束----------------");
-        return BaseResponse.successCustom("查询${functionName}成功！").setData(<@entityLowerNameEntity/>s).build();
-    }
-
     @RequestMapping(value = "/searchByPage", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(httpMethod = "POST", value = "根据条件分页查询${functionName}")

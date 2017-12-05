@@ -66,14 +66,6 @@ public interface <@entityCapName/>Service {
     <@entityCapNameEntity/> selectByPrimaryKey(<@idJavaType/> <@idJava/>);
 
     /**
-     * 根据${functionName}实体的条件查询数据
-     *
-     * @param <@entityLowerNameParam/> ${functionName}实体
-     * @return 查询的结果
-     */
-    List<<@entityCapNameEntity/>> selectSelective(<@entityCapNameParam/> <@entityLowerNameParam/>);
-
-    /**
      * 根据${functionName}实体的条件分页查询数据
      *
      * @param <@entityLowerNameParam/> ${functionName}实体
