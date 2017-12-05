@@ -40,8 +40,8 @@ import java.util.List;
 /**
  * @Title: ${functionName}
  * @Description: Controller层
- * @author ${functionAuthor}
- * @date ${time}
+ * @Author ${functionAuthor}
+ * @Date ${time}
  */
 @Controller
 @RequestMapping("api/<@entityLowerName/>")

@@ -26,8 +26,8 @@ import java.util.List;
 /**
  * @Title: ${functionName}
  * @Description: TestServiceImpl
- * @author ${functionAuthor}
- * @date ${time}
+ * @Author ${functionAuthor}
+ * @Date ${time}
  */
 public class <@entityCapService/>Test extends TestSupport {
 

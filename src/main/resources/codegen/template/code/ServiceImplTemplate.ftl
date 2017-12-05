@@ -25,8 +25,8 @@ import java.util.List;
 /**
  * @Title: ${functionName}
  * @Description: serviceImpl 实现类
- * @author ${functionAuthor}
- * @date ${time}
+ * @Author ${functionAuthor}
+ * @Date ${time}
  */
 @Slf4j
 @Transactional

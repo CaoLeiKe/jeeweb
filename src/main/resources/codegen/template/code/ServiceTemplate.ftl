@@ -20,8 +20,8 @@ import java.util.List;
 /**
  * @Title: ${functionName}
  * @Description: Service 接口
- * @author ${functionAuthor}
- * @date ${time}
+ * @Author ${functionAuthor}
+ * @Date ${time}
  */
 public interface <@entityCapName/>Service {
 <#--

@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * @Title: ${functionName}
  * @Description: mapper SQL层
- * @author ${functionAuthor}
- * @date ${time}
+ * @Author ${functionAuthor}
+ * @Date ${time}
  */
 @Repository
 public interface <@entityCapName/>Mapper {

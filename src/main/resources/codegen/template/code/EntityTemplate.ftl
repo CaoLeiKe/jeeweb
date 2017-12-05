@@ -17,8 +17,8 @@ import ${importType};
 /**
  * @Title: ${functionName}
  * @Description: entity实体
- * @author ${functionAuthor}
- * @date ${time}
+ * @Author ${functionAuthor}
+ * @Date ${time}
  */
 
 @Data

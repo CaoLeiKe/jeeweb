@@ -33,8 +33,8 @@ import ${importType};
 /**
  * @Title: ${functionName}
  * @Description: param实体
- * @author ${functionAuthor}
- * @date ${time}
+ * @Author ${functionAuthor}
+ * @Date ${time}
  */
 
 @Data
