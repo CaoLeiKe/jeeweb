@@ -68,9 +68,9 @@ public class <@entityCapService/>Test extends TestSupport {
         batchInsert<@entityCapName/>();
     }
 
-   /**
-    * 批量新增
-    */
+    /**
+     * 批量新增
+     */
     public void batchInsert<@entityCapName/>() throws Exception {
         List<<@entityCapNameParam/>> <@entityLowerNameParam/>s = new ArrayList<>();
         // 新增的数量
