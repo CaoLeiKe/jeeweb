@@ -42,7 +42,7 @@ public interface <@entityCapName/>Mapper {
     /**
      * 批量新增${functionName}
      *
-     * @param <@entityLowerNameParam/> ${functionName}实体
+     * @param <@entityLowerNameParam/>s ${functionName}实体
      * @return 受影响的行数
      */
     long batchInsert(@Param("<@entityLowerNameParam/>s") List<<@entityCapNameParam/>> <@entityLowerNameParam/>s);
