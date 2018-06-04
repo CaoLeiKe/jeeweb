@@ -76,6 +76,14 @@
 			<db-type>BIGINT</db-type>
 		</type>
 		<type>
+			<java-type>double</java-type>
+			<db-type>DOUBLE</db-type>
+		</type>
+		<type>
+			<java-type>String</java-type>
+			<db-type>ENUM</db-type>
+		</type>
+		<type>
 			<java-type>Date</java-type>
 			<full-type>java.util.Date</full-type>
 			<db-type>DATETIME</db-type>
