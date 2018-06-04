@@ -31,27 +31,15 @@
 		</generator>
 		<generator>
 			<!-- 注册关键字 -->
-			<key>ServiceImpl</key>
-			<!-- 文件层级关系 -->
-			<layer>service/impl</layer>
+			<key>Dao</key>
+			<!-- 文件层 -->
+			<layer>dao</layer>
 			<!-- 模版名称 -->
-			<template-file>ServiceImplTemplate.ftl</template-file>
+			<template-file>DaoTemplate.ftl</template-file>
 			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>1</code-type>
 			<!-- 生成的文件名称，关键字[entityName] -->
-			<name-format>[entityName]ServiceImpl.java</name-format>
-		</generator>
-		<generator>
-			<!-- 注册关键字 -->
-			<key>Mapper</key>
-			<!-- 文件层级关系 -->
-			<layer>mapper</layer>
-			<!-- 模版名称 -->
-			<template-file>MapperTemplate.ftl</template-file>
-			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
-			<code-type>1</code-type>
-			<!-- 生成的文件名称，关键字[entityName] -->
-			<name-format>[entityName]Mapper.java</name-format>
+			<name-format>[entityName]Dao.java</name-format>
 		</generator>
 		<generator>
 			<!-- 注册关键字 -->
@@ -63,70 +51,8 @@
 			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
 			<code-type>1</code-type>
 			<!-- 生成的文件名称，关键字[entityName] -->
-			<name-format>[entityName]Entity.java</name-format>
-		</generator>
-		<generator>
-			<!-- 注册关键字 -->
-			<key>viewList</key>
-			<!-- 文件层级关系 -->
-			<layer>[entityName]</layer>
-			<!-- 模版名称 -->
-			<template-file>viewListTemplate.ftl</template-file>
-			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
-			<code-type>2</code-type>
-			<!-- 生成的文件名称，关键字[entityName] -->
-			<name-format>list.jsp</name-format>
-		</generator>
-		<generator>
-			<!-- 注册关键字 -->
-			<key>viewForm</key>
-			<!-- 文件层级关系 -->
-			<layer>[entityName]</layer>
-			<!-- 模版名称 -->
-			<template-file>viewFormTemplate.ftl</template-file>
-			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
-			<code-type>2</code-type>
-			<!-- 生成的文件名称，关键字[entityName] -->
-			<name-format>edit.jsp</name-format>
+			<name-format>[entityName].java</name-format>
 		</generator>
 
-		<generator>
-			<!-- 注册关键字 -->
-			<key>xmlMapper</key>
-			<!-- 文件层级关系 -->
-			<layer></layer>
-			<!-- 模版名称 -->
-			<template-file>xmlMapperTemplate.ftl</template-file>
-			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
-			<code-type>3</code-type>
-			<!-- 生成的文件名称，关键字[entityName] -->
-			<name-format>[entityName]Mapper.xml</name-format>
-		</generator>
-
-		<generator>
-			<!-- 注册关键字 -->
-			<key>testJava</key>
-			<!-- 文件层级关系 -->
-			<layer></layer>
-			<!-- 模版名称 -->
-			<template-file>javaTestTemplate.ftl</template-file>
-			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
-			<code-type>4</code-type>
-			<!-- 生成的文件名称，关键字[entityName] -->
-			<name-format>[entityName]ServiceTest.java</name-format>
-		</generator>
-		<generator>
-			<!-- 注册关键字 -->
-			<key>EntityParam</key>
-			<!-- 文件层级关系 -->
-			<layer>params</layer>
-			<!-- 模版名称 -->
-			<template-file>EntityParamTemplate.ftl</template-file>
-			<!-- 1.JAVA,2.JSP 3.MAPPER 4.Test代码 -->
-			<code-type>1</code-type>
-			<!-- 生成的文件名称，关键字[entityName] -->
-			<name-format>[entityName]Param.java</name-format>
-		</generator>
-	 
 	</generators>
 </config>
