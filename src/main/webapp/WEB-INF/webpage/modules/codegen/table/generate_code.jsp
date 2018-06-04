@@ -93,7 +93,6 @@
 		         <td>
 					 <c:forEach var="map" items="${generatorList}">
 						 <input type="checkbox" value="<c:out value="${map[\"key\"]}"/>" name="generatorKeys"   checked="checked"><c:out value="${map[\"key\"]}"/></input>
-						 <input type="checkbox" value="EntityParam" name="generatorKeys"  checked="checked">EntityParam</input>
 					 </c:forEach>
 		             <label class="Validform_checktip"></label>
 		         </td>
