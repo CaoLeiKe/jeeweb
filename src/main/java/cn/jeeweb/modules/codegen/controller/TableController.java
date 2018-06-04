@@ -1,21 +1,5 @@
 package cn.jeeweb.modules.codegen.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import cn.jeeweb.modules.codegen.codegenerator.utils.CodeGenUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.alibaba.fastjson.JSONObject;
 import cn.jeeweb.core.common.controller.BaseCRUDController;
 import cn.jeeweb.core.mapper.JsonMapper;
 import cn.jeeweb.core.model.AjaxJson;
@@ -27,8 +11,10 @@ import cn.jeeweb.core.utils.ObjectUtils;
 import cn.jeeweb.core.utils.PropertiesUtil;
 import cn.jeeweb.core.utils.ServletUtils;
 import cn.jeeweb.core.utils.StringUtils;
+import cn.jeeweb.modules.codegen.codegenerator.GeneratorManagor;
 import cn.jeeweb.modules.codegen.codegenerator.data.DbTableInfo;
 import cn.jeeweb.modules.codegen.codegenerator.data.GeneratorInfo;
+import cn.jeeweb.modules.codegen.codegenerator.utils.CodeGenUtils;
 import cn.jeeweb.modules.codegen.codegenerator.utils.DefinitionUtils;
 import cn.jeeweb.modules.codegen.entity.Column;
 import cn.jeeweb.modules.codegen.entity.Scheme;
@@ -38,6 +24,21 @@ import cn.jeeweb.modules.codegen.service.ISchemeService;
 import cn.jeeweb.modules.codegen.service.ITableService;
 import cn.jeeweb.modules.sys.entity.Menu;
 import cn.jeeweb.modules.sys.service.IMenuService;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 
@@ -177,6 +178,7 @@ public class TableController extends BaseCRUDController<Table, String> {
 		}
 		request.setAttribute("scheme", scheme);
 		request.setAttribute("tableid", id);
+		request.setAttribute("generatorList", GeneratorManagor.generatorMap);
 		return display("generate_code");
 	}
 
