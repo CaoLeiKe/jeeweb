@@ -3,6 +3,7 @@ package ${packageName}.${moduleName}.service;
 <#assign entityCapName=entityName?cap_first/>
 <#-- 小写类名 -->
 <#assign entityLowerName=entityName?uncap_first/>
+import com.zoomdu.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,7 @@ public class ${entityCapName}Service extends BaseService {
 		};
 	}
 
+	// ${functionName}
 	private List<Predicate> build${entityCapName}PredicateList(Map<String, ?> searchMap, Root<${entityCapName}> root, CriteriaBuilder builder) {
 
 	<#list attributeInfos as attributeInfo>
@@ -53,13 +55,47 @@ public class ${entityCapName}Service extends BaseService {
 		}
 		<#elseif attributeInfo.type?lower_case?contains("date")>
 		if (CheckParam.isDate(${attributeInfo.name})) {
-			predicate.add(builder.equal(root.get("${attributeInfo.name}"), BaseUtil.strToDate(${attributeInfo.name})));
+			predicate.add(builder.equal(root.greaterThanOrEqualTo("${attributeInfo.name}"), BaseUtil.strToDate(${attributeInfo.name})));
 		}
 		<#else >
 		</#if>
 	</#list>
 
 		return predicateList;
+	}
+
+	/**
+	 * 保存${functionName}
+	 */
+	public BaseResponse save${entityCapName}(HttpRequest request) {
+
+		GuideAccount guideAccount = getGuideAccountByToken(request);
+
+		String ${entityLowerName}Json = request.getParameter("${entityLowerName}Json");
+
+		RequestMap<String, Object> requestMap = fromJsonToMap(${entityLowerName}Json);
+
+		if (!"暂无".equals(guideAccount.getName())) {
+			throw new ERPExceptionUtil("请先完善个人信息！");
+		}
+		if (blogTypeId == null) {
+			throw new ERPExceptionUtil("请选择博客类型！");
+		}
+		if (!guideBlogTypeDao.exists(blogTypeId)) {
+			throw new ERPExceptionUtil("博客类型错误！");
+		}
+		if (CheckParam.isNull(blogContent)) {
+			throw new ERPExceptionUtil("内容不能为空！");
+		}
+		if (CheckParam.isNull(blogImages)) {
+			throw new ERPExceptionUtil("图片不能为空！");
+		}
+
+		${entityCapName} ${entityLowerName} = new ${entityCapName}();
+
+		${entityLowerName}Dao.save(${entityLowerName});
+
+		return BaseResponse.success().setData(${entityLowerName}).build();
 	}
 
 }
