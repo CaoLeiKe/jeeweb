@@ -3,8 +3,16 @@ package ${packageName}.${moduleName}.service;
 <#assign entityCapName=entityName?cap_first/>
 <#-- 小写类名 -->
 <#assign entityLowerName=entityName?uncap_first/>
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @title: ${functionName}
