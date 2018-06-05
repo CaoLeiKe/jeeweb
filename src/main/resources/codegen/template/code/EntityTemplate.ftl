@@ -23,6 +23,7 @@ import ${importType};
 
 /**
  * @title: ${functionName}
+ * @description: ${functionDesc}
  * @author: ${functionAuthor}
  * @date: ${time}
  */
