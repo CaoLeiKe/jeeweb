@@ -1,4 +1,4 @@
-package ${packageName}.${moduleName}.natives.api.entity;
+package ${packageName}.${moduleName}.entity;
 <#-- 大写类名 -->
 <#assign entityCapName=entityName?cap_first/>
 <#-- 小写类名 -->
@@ -9,12 +9,12 @@ package ${packageName}.${moduleName}.natives.api.entity;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import javax.persistence.Entity;
-
+import javax.persistence.Table;
 <#-- 下面是自动导入 -->
 import java.io.Serializable;
 <#list importTypes as importType>
@@ -34,10 +34,14 @@ import ${importType};
 @Table(name = "${tableName}")
 public class ${entityCapName} implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 <#list attributeInfos as attributeInfo>
-    private <#if attributeInfo.type=='this'>${entityCapName}<#else>${attributeInfo.type}</#if> ${attributeInfo.name};// ${attributeInfo.remarks}
+	<#if attributeInfo.parmaryKey>
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	</#if>
+	private <#if attributeInfo.type=='this'>${entityCapName}<#else>${attributeInfo.type}</#if> ${attributeInfo.name};// ${attributeInfo.remarks}
 
 </#list>
 }
