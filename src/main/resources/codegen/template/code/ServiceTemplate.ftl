@@ -37,7 +37,8 @@ public class ${entityCapName}Service extends BaseService {
 	private List<Predicate> build${entityCapName}PredicateList(Map<String, ?> searchMap, Root<${entityCapName}> root, CriteriaBuilder builder) {
 
 	<#list attributeInfos as attributeInfo>
-		<#if attributeInfo.type?lower_case?contains("long") || attributeInfo.type?lower_case?contains("string") || attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("date")  || attributeInfo.type?lower_case?contains("int")>
+		<#if attributeInfo.parmaryKey>
+		<#elseif attributeInfo.type?lower_case?contains("long") || attributeInfo.type?lower_case?contains("string") || attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("date")  || attributeInfo.type?lower_case?contains("int")>
 		Object ${attributeInfo.name} = searchMap.get("${attributeInfo.name}");// ${attributeInfo.remarks}
 		</#if>
 	</#list>
@@ -45,7 +46,8 @@ public class ${entityCapName}Service extends BaseService {
 		List<Predicate> predicateList = new ArrayList<>();
 
 	<#list attributeInfos as attributeInfo>
-		<#if attributeInfo.type?lower_case?contains("long") || attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")>
+		<#if attributeInfo.parmaryKey>
+		<#elseif attributeInfo.type?lower_case?contains("long") || attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")>
 		if (CheckParam.isInteger(${attributeInfo.name})) {
 			predicateList.add(builder.equal(root.get("${attributeInfo.name}"), toLong(${attributeInfo.name})));
 		}
@@ -73,29 +75,110 @@ public class ${entityCapName}Service extends BaseService {
 
 		String ${entityLowerName}Json = request.getParameter("${entityLowerName}Json");
 
-		RequestMap<String, Object> requestMap = fromJsonToMap(${entityLowerName}Json);
+		<#-- 转换成Map -->
+		RequestMap<String, Object> ${entityLowerName}Map = fromJsonToMap(${entityLowerName}Json);
 
-		if (!"暂无".equals(guideAccount.getName())) {
-			throw new ERPExceptionUtil("请先完善个人信息！");
+	<#-- 把数据获取出来 -->
+	<#list attributeInfos as attributeInfo>
+		<#if attributeInfo.parmaryKey>
+		<#-- 如果是主键则跳过 -->
+		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int") || attributeInfo.type?lower_case?contains("long")>
+		<#-- 基本类型 -->
+		Long ${attributeInfo.name} = ${entityLowerName}Map.getAsLong("${attributeInfo.name}");// ${attributeInfo.remarks}
+		<#elseif attributeInfo.type?lower_case?contains("string")>
+		<#-- 字符串 -->
+		String ${attributeInfo.name} = ${entityLowerName}Map.getAsString("${attributeInfo.name}");// ${attributeInfo.remarks}
+		<#elseif attributeInfo.type?lower_case?contains("date")>
+		<#-- 日期 -->
+		Date ${attributeInfo.name} = ${entityLowerName}Map.getAsDate("${attributeInfo.name}");// ${attributeInfo.remarks}
+		<#elseif attributeInfo.type?lower_case?contains("double")>
+		<#-- double -->
+		Double ${attributeInfo.name} = ${entityLowerName}Map.getDouble("${attributeInfo.name}");// ${attributeInfo.remarks}
+		<#else >
+		</#if>
+	</#list>
+
+	<#-- 数据库不为空判断 -->
+	<#list attributeInfos as attributeInfo>
+		<#if attributeInfo.parmaryKey>
+		<#-- 如果是主键则跳过 -->
+		<#elseif (attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")) && attributeInfo.nullable>
+		<#-- 基本类型 -->
+		if (${attributeInfo.name} == null) {
+			throw new ERPExceptionUtil("${attributeInfo.remarks}必填项，不能为空！");
 		}
-		if (blogTypeId == null) {
-			throw new ERPExceptionUtil("请选择博客类型！");
+		<#elseif attributeInfo.type?lower_case?contains("string") && attributeInfo.nullable>
+		<#-- 字符串 -->
+		if (CheckParam.isNull(${attributeInfo.name}) == null) {
+			throw new ERPExceptionUtil("${attributeInfo.remarks}必填项，不能为空！");
 		}
-		if (!guideBlogTypeDao.exists(blogTypeId)) {
-			throw new ERPExceptionUtil("博客类型错误！");
+		<#elseif attributeInfo.type?lower_case?contains("date")>
+		<#-- 日期 -->
+		if (${attributeInfo.name} == null) {
+			throw new ERPExceptionUtil("${attributeInfo.remarks}必填项，不能为空！");
 		}
-		if (CheckParam.isNull(blogContent)) {
-			throw new ERPExceptionUtil("内容不能为空！");
+		<#elseif attributeInfo.type?lower_case?contains("double")>
+		<#-- double -->
+		if (${attributeInfo.name} == null) {
+			throw new ERPExceptionUtil("${attributeInfo.remarks}必填项，不能为空！");
 		}
-		if (CheckParam.isNull(blogImages)) {
-			throw new ERPExceptionUtil("图片不能为空！");
-		}
+		<#else >
+		</#if>
+	</#list>
+
 
 		${entityCapName} ${entityLowerName} = new ${entityCapName}();
-
+	<#list attributeInfos as attributeInfo>
+		<#if attributeInfo.parmaryKey>
+		<#-- 如果是主键则跳过 -->
+		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int") || attributeInfo.type?lower_case?contains("long")>
+		<#-- 基本类型 -->
+		${entityLowerName}.set${attributeInfo.name?cap_first}(${entityLowerName});
+		<#elseif attributeInfo.type?lower_case?contains("string")>
+		<#-- 字符串 -->
+		${entityLowerName}.set${attributeInfo.name?cap_first}(${entityLowerName});
+		<#elseif attributeInfo.type?lower_case?contains("date")>
+		<#-- 日期 -->
+		${entityLowerName}.set${attributeInfo.name?cap_first}(${entityLowerName});
+		<#elseif attributeInfo.type?lower_case?contains("double")>
+		<#-- double -->
+		${entityLowerName}.set${attributeInfo.name?cap_first}(${entityLowerName});
+		</#if>
+	</#list>
 		${entityLowerName}Dao.save(${entityLowerName});
 
 		return BaseResponse.success().setData(${entityLowerName}).build();
+	}
+
+	/**
+	 * 根据主键查询${functionName}
+	 */
+	public BaseResponse find${entityLowerName}ById(HttpServletRequest request) {
+
+		String id = request.getParameter("id");
+
+		if (!CheckParam.isInteger(id)) {
+			throw new ERPExceptionUtil("请传入正确的id！");
+		}
+		${entityCapName} ${entityLowerName} = ${entityLowerName}Dao.findOne(toLong(id));
+		if (${entityLowerName} == null) {
+			throw new ERPExceptionUtil("${functionName}不存在！");
+		}
+
+		return BaseResponse.success().setData(${entityLowerName}).build();
+	}
+
+	/**
+	 * 根据条件分页查询${functionName}
+	 */
+	public BaseResponse find${entityCapName}PageBySearchMap(HttpServletRequest request) {
+
+		String searchMap = request.getParameter("searchMap");
+		String pageNo = request.getParameter("pageNo");
+
+		Page<${entityCapName}> page = ${entityLowerName}Dao.findAll(build${entityCapName}Specification(searchMap), buildPageRequest(toInteger(pageNo), Sort.Direction.DESC, "id"));
+
+		return BaseResponse.success().setData(page).build();
 	}
 
 }
