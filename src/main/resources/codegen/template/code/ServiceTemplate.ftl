@@ -1,79 +1,57 @@
-package ${packageName}.${moduleName}.natives.api.service;
-<#macro idJava><#list columns as column><#if column.parmaryKey>${column.javaField?uncap_first}</#if></#list></#macro>
-<#macro entityLowerName>${entityName?uncap_first}</#macro>
-<#macro entityCapName>${entityName?cap_first}</#macro>
-<#macro entityCapNameEntity>${entityName?cap_first}Entity</#macro>
-<#macro entityLowerNameEntity>${entityName?uncap_first}Entity</#macro>
-<#macro idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#macro>
-<#macro entityCapNameParam>${entityName?cap_first}Param</#macro>
-<#macro entityLowerNameParam>${entityName?uncap_first}Param</#macro>
-<#macro entityNameToSpace><#list 0..entityName?length as i> </#list></#macro>
-<#macro pageNumToSpace><#list 3..entityName?length as i> </#list></#macro>
-<#macro pageSizeToSpace><#list 4..entityName?length as i> </#list></#macro>
-
-import ${packageName}.${moduleName}.natives.api.entity.<@entityCapNameEntity/>;
-import ${packageName}.${moduleName}.natives.api.params.<@entityCapNameParam/>;
-import com.github.pagehelper.PageInfo;
+package ${packageName}.${moduleName}.service;
+<#-- 大写类名 -->
+<#assign entityCapName=entityName?cap_first/>
+<#-- 小写类名 -->
+<#assign entityLowerName=entityName?uncap_first/>
 
 import java.util.List;
 
 /**
- * @Title: ${functionName}
- * @Description: Service 接口
- * @Author ${functionAuthor}
- * @Date ${time}
+ * @title: ${functionName}
+ * @author: ${functionAuthor}
+ * @date: ${time}
  */
-public interface <@entityCapName/>Service {
-<#--
-    /**
-     * 根据主键逻辑删除，需传入实体，并包含主键和修改人，其中修改人可有可无
-     *
-     * @param <@entityLowerName/> ${functionName}实体
-     * @return 受影响的行数
-     */
-    long deleteByPrimaryKey(<@entityCapName/> <@entityLowerName/>); -->
+@Component
+public class ${entityCapName}Service extends BaseService {
 
-    /**
-     * 新增${functionName}
-     *
-     * @param <@entityLowerNameParam/> ${functionName}实体
-     * @return 受影响的行数
-     */
-    long insert(<@entityCapNameParam/> <@entityLowerNameParam/>);
+	@Autowired
+	private ${entityCapName}Dao ${entityLowerName}Dao;
 
-    /**
-     * 批量新增${functionName}
-     *
-     * @param <@entityLowerNameParam/>s ${functionName}集合实体
-     * @return 受影响的行数
-     */
-    long batchInsert(List<<@entityCapNameParam/>> <@entityLowerNameParam/>s);
+	private Specification<${entityCapName}> build${entityCapName}Specification(Map<String , ?> searchMap) {
+		return (root, query, builder) -> {
+			List<Predicate> predicate = buildGuideBlogPredicateList(searchMap, root, builder);
+			return query.where(predicate.toArray(new Predicate[0])).getRestriction();
+		};
+	}
 
-    /**
-     * 根据${functionName}实体中的主键更改数据，无法更改主键和创建者、创建时间的信息
-     *
-     * @param <@entityLowerNameParam/> ${functionName}实体
-     * @return 受影响的行数
-     */
-    long updateSelective(<@entityCapNameParam/> <@entityLowerNameParam/>);
+	private List<Predicate> build${entityCapName}PredicateList(Map<String, ?> searchMap, Root<${entityCapName}> root, CriteriaBuilder builder) {
 
-    /**
-     * 根据主键查询${functionName}
-     *
-     * @param <@idJava/> ${functionName}主键
-     * @return 查询的结果
-     */
-    <@entityCapNameEntity/> selectByPrimaryKey(<@idJavaType/> <@idJava/>);
+	<#list attributeInfos as attributeInfo>
+		<#if attributeInfo.type?lower_case?contains("long") || attributeInfo.type?lower_case?contains("string") || attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("date")  || attributeInfo.type?lower_case?contains("int")>
+		Object ${attributeInfo.name} = searchMap.get("${attributeInfo.name}");// ${attributeInfo.remarks}
+		</#if>
+	</#list>
 
-    /**
-     * 根据${functionName}实体的条件分页查询数据
-     *
-     * @param <@entityLowerNameParam/> ${functionName}实体
-     * @param pageNum <@pageNumToSpace/>第几页
-     * @param pageSize <@pageSizeToSpace/>每页显示的数量
-     * @return 分页查询的结果
-     */
-    PageInfo<<@entityCapNameEntity/>> selectSelectiveByPage(<@entityCapNameParam/> <@entityLowerNameParam/>, int pageNum, int pageSize);
+		List<Predicate> predicateList = new ArrayList<>();
+
+	<#list attributeInfos as attributeInfo>
+		<#if attributeInfo.type?lower_case?contains("long") || attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")>
+		if (CheckParam.isInteger(${attributeInfo.name})) {
+			predicateList.add(builder.equal(root.get("${attributeInfo.name}"), toLong(${attributeInfo.name})));
+		}
+		<#elseif attributeInfo.type?lower_case?contains("string")>
+		if (!CheckParam.isNull(${attributeInfo.name})) {
+			predicateList.add(builder.equal(root.get("${attributeInfo.name}"), ${attributeInfo.name}.toString()));
+		}
+		<#elseif attributeInfo.type?lower_case?contains("date")>
+		if (CheckParam.isDate(${attributeInfo.name})) {
+			predicate.add(builder.equal(root.get("${attributeInfo.name}"), BaseUtil.strToDate(${attributeInfo.name})));
+		}
+		<#else >
+		</#if>
+	</#list>
+
+		return predicateList;
+	}
 
 }
-

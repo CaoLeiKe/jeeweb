@@ -2,7 +2,7 @@ package ${packageName}.${moduleName}.entity;
 <#-- 大写类名 -->
 <#assign entityCapName=entityName?cap_first/>
 <#-- 小写类名 -->
-<#assign entityCapName=entityName?uncap_first/>
+<#assign entityLowerName=entityName?uncap_first/>
 <#-- 主键类型 -->
 <#assign idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#assign>
 
