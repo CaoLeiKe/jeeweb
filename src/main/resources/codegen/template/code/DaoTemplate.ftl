@@ -7,5 +7,10 @@ package ${packageName}.${moduleName}.dao;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 
+/**
+ * @title: ${functionName}
+ * @author: ${functionAuthor}
+ * @date: ${time}
+ */
 public interface ${entityCapName}Dao extends CrudRepository<${entityCapName}, ${idJavaType}>, JpaSpecificationExecutor<${entityCapName}> {
 }
