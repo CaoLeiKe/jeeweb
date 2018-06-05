@@ -72,6 +72,14 @@
 			<db-type>VARCHAR</db-type>
 		</type>
 		<type>
+			<java-type>Integer</java-type>
+			<db-type>TINYINT</db-type>
+		</type>
+		<type>
+			<java-type>Long</java-type>
+			<db-type>INT</db-type>
+		</type>
+		<type>
 			<java-type>Long</java-type>
 			<db-type>BIGINT</db-type>
 		</type>
@@ -89,11 +97,7 @@
 			<db-type>DATETIME</db-type>
 		</type>
 		<type>
-			<java-type>Integer</java-type>
-			<db-type>INT</db-type>
-		</type>
-		<type>
-			<java-type>Integer</java-type>
+			<java-type>Long</java-type>
 			<db-type>INT UNSIGNED</db-type>
 		</type>
 		<type>
@@ -121,10 +125,6 @@
 			<java-type>Date</java-type>
 			<full-type>java.util.Date</full-type>
 			<db-type>DATE</db-type>
-		</type>
-		<type>
-			<java-type>Short</java-type>
-			<db-type>TINYINT</db-type>
 		</type>
 		<type>
 			<java-type>BigDecimal</java-type>
