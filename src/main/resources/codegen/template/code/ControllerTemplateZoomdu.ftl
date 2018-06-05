@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("${tableName?replace("_", ".")}")
+@RequestMapping("${tableName?replace("_", "/")}.do")
 public class ${entityCapName}Controller {
 
 	@Autowired

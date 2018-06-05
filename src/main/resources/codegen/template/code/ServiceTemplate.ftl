@@ -126,7 +126,6 @@ public class ${entityCapName}Service extends BaseService {
 		</#if>
 	</#list>
 
-
 		${entityCapName} ${entityLowerName} = new ${entityCapName}();
 	<#list attributeInfos as attributeInfo>
 		<#if attributeInfo.parmaryKey>
