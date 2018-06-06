@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 /**
  * @title: ${functionName}
+ * @description: ${functionDesc}
  * @author: ${functionAuthor}
  * @date: ${time}
  */

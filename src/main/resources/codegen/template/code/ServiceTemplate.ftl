@@ -3,6 +3,7 @@ package ${packageName}.${moduleName}.service;
 <#assign entityCapName=entityName?cap_first/>
 <#-- 小写类名 -->
 <#assign entityLowerName=entityName?uncap_first/>
+import com.zoomdu.exception.ERPExceptionUtil;
 import com.zoomdu.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.Map;
 
 /**
  * @title: ${functionName}
+ * @description: ${functionDesc}
  * @author: ${functionAuthor}
  * @date: ${time}
  */
@@ -28,7 +31,7 @@ public class ${entityCapName}Service extends BaseService {
 
 	private Specification<${entityCapName}> build${entityCapName}Specification(Map<String , ?> searchMap) {
 		return (root, query, builder) -> {
-			List<Predicate> predicate = buildGuideBlogPredicateList(searchMap, root, builder);
+			List<Predicate> predicate = build${entityCapName}PredicateList(searchMap, root, builder);
 			return query.where(predicate.toArray(new Predicate[0])).getRestriction();
 		};
 	}
@@ -39,7 +42,7 @@ public class ${entityCapName}Service extends BaseService {
 	<#list attributeInfos as attributeInfo>
 		<#if attributeInfo.parmaryKey>
 		<#elseif attributeInfo.type?lower_case?contains("long") || attributeInfo.type?lower_case?contains("string") || attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("date")  || attributeInfo.type?lower_case?contains("int")>
-		Object ${attributeInfo.name} = searchMap.get("${attributeInfo.name}");// ${attributeInfo.remarks}
+		Object ${attributeInfo.dbName} = searchMap.get("${attributeInfo.dbName}");// ${attributeInfo.remarks}
 		</#if>
 	</#list>
 
@@ -48,16 +51,16 @@ public class ${entityCapName}Service extends BaseService {
 	<#list attributeInfos as attributeInfo>
 		<#if attributeInfo.parmaryKey>
 		<#elseif attributeInfo.type?lower_case?contains("long") || attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")>
-		if (CheckParam.isInteger(${attributeInfo.name})) {
-			predicateList.add(builder.equal(root.get("${attributeInfo.name}"), toLong(${attributeInfo.name})));
+		if (CheckParam.isInteger(${attributeInfo.dbName})) {
+			predicateList.add(builder.equal(root.get("${attributeInfo.dbName}"), toLong(${attributeInfo.dbName})));
 		}
 		<#elseif attributeInfo.type?lower_case?contains("string")>
-		if (!CheckParam.isNull(${attributeInfo.name})) {
-			predicateList.add(builder.equal(root.get("${attributeInfo.name}"), ${attributeInfo.name}.toString()));
+		if (!CheckParam.isNull(${attributeInfo.dbName})) {
+			predicateList.add(builder.equal(root.get("${attributeInfo.dbName}"), ${attributeInfo.dbName}.toString()));
 		}
 		<#elseif attributeInfo.type?lower_case?contains("date")>
-		if (CheckParam.isDate(${attributeInfo.name})) {
-			predicate.add(builder.equal(root.greaterThanOrEqualTo("${attributeInfo.name}"), BaseUtil.strToDate(${attributeInfo.name})));
+		if (${attributeInfo.dbName} != null && CheckParam.isDate(${attributeInfo.dbName}.toString())) {
+			predicateList.add(builder.greaterThanOrEqualTo(root.get("${attributeInfo.dbName}"), BaseUtil.strToDate(${attributeInfo.dbName}.toString())));
 		}
 		<#else >
 		</#if>
@@ -69,7 +72,7 @@ public class ${entityCapName}Service extends BaseService {
 	/**
 	 * 保存${functionName}
 	 */
-	public BaseResponse save${entityCapName}(HttpRequest request) {
+	public BaseResponse save${entityCapName}(HttpServletRequest request) {
 
 		GuideAccount guideAccount = getGuideAccountByToken(request);
 
@@ -84,16 +87,16 @@ public class ${entityCapName}Service extends BaseService {
 		<#-- 如果是主键则跳过 -->
 		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int") || attributeInfo.type?lower_case?contains("long")>
 		<#-- 基本类型 -->
-		Long ${attributeInfo.name} = ${entityLowerName}Map.getAsLong("${attributeInfo.name}");// ${attributeInfo.remarks}
+		Long ${attributeInfo.dbName} = ${entityLowerName}Map.getAsLong("${attributeInfo.dbName}");// ${attributeInfo.remarks}
 		<#elseif attributeInfo.type?lower_case?contains("string")>
 		<#-- 字符串 -->
-		String ${attributeInfo.name} = ${entityLowerName}Map.getAsString("${attributeInfo.name}");// ${attributeInfo.remarks}
+		String ${attributeInfo.dbName} = ${entityLowerName}Map.getAsString("${attributeInfo.dbName}");// ${attributeInfo.remarks}
 		<#elseif attributeInfo.type?lower_case?contains("date")>
 		<#-- 日期 -->
-		Date ${attributeInfo.name} = ${entityLowerName}Map.getAsDate("${attributeInfo.name}");// ${attributeInfo.remarks}
+		Date ${attributeInfo.dbName} = ${entityLowerName}Map.getAsDate("${attributeInfo.dbName}");// ${attributeInfo.remarks}
 		<#elseif attributeInfo.type?lower_case?contains("double")>
 		<#-- double -->
-		Double ${attributeInfo.name} = ${entityLowerName}Map.getDouble("${attributeInfo.name}");// ${attributeInfo.remarks}
+		Double ${attributeInfo.dbName} = ${entityLowerName}Map.getDouble("${attributeInfo.dbName}");// ${attributeInfo.remarks}
 		<#else >
 		</#if>
 	</#list>
@@ -104,22 +107,22 @@ public class ${entityCapName}Service extends BaseService {
 		<#-- 如果是主键则跳过 -->
 		<#elseif (attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")) && attributeInfo.nullable>
 		<#-- 基本类型 -->
-		if (${attributeInfo.name} == null) {
+		if (${attributeInfo.dbName} == null) {
 			throw new ERPExceptionUtil("${attributeInfo.remarks}必填项，不能为空！");
 		}
 		<#elseif attributeInfo.type?lower_case?contains("string") && attributeInfo.nullable>
 		<#-- 字符串 -->
-		if (CheckParam.isNull(${attributeInfo.name}) == null) {
+		if (CheckParam.isNull(${attributeInfo.dbName})) {
 			throw new ERPExceptionUtil("${attributeInfo.remarks}必填项，不能为空！");
 		}
 		<#elseif attributeInfo.type?lower_case?contains("date")>
 		<#-- 日期 -->
-		if (${attributeInfo.name} == null) {
+		if (${attributeInfo.dbName} == null) {
 			throw new ERPExceptionUtil("${attributeInfo.remarks}必填项，不能为空！");
 		}
 		<#elseif attributeInfo.type?lower_case?contains("double")>
 		<#-- double -->
-		if (${attributeInfo.name} == null) {
+		if (${attributeInfo.dbName} == null) {
 			throw new ERPExceptionUtil("${attributeInfo.remarks}必填项，不能为空！");
 		}
 		<#else >
@@ -132,16 +135,16 @@ public class ${entityCapName}Service extends BaseService {
 		<#-- 如果是主键则跳过 -->
 		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int") || attributeInfo.type?lower_case?contains("long")>
 		<#-- 基本类型 -->
-		${entityLowerName}.set${attributeInfo.name?cap_first}(${entityLowerName});
+		${entityLowerName}.set${attributeInfo.dbName?cap_first}(${attributeInfo.dbName});
 		<#elseif attributeInfo.type?lower_case?contains("string")>
 		<#-- 字符串 -->
-		${entityLowerName}.set${attributeInfo.name?cap_first}(${entityLowerName});
+		${entityLowerName}.set${attributeInfo.dbName?cap_first}(${attributeInfo.dbName});
 		<#elseif attributeInfo.type?lower_case?contains("date")>
 		<#-- 日期 -->
-		${entityLowerName}.set${attributeInfo.name?cap_first}(${entityLowerName});
+		${entityLowerName}.set${attributeInfo.dbName?cap_first}(${attributeInfo.dbName});
 		<#elseif attributeInfo.type?lower_case?contains("double")>
 		<#-- double -->
-		${entityLowerName}.set${attributeInfo.name?cap_first}(${entityLowerName});
+		${entityLowerName}.set${attributeInfo.dbName?cap_first}(${attributeInfo.dbName});
 		</#if>
 	</#list>
 		${entityLowerName}Dao.save(${entityLowerName});
@@ -172,9 +175,10 @@ public class ${entityCapName}Service extends BaseService {
 	 */
 	public BaseResponse find${entityCapName}PageBySearchMap(HttpServletRequest request) {
 
-		String searchMap = request.getParameter("searchMap");
+		String searchMapStr = request.getParameter("searchMap");
 		String pageNo = request.getParameter("pageNo");
 
+		RequestMap<String, Object> searchMap = fromJsonToMap(searchMapStr);
 		Page<${entityCapName}> page = ${entityLowerName}Dao.findAll(build${entityCapName}Specification(searchMap), buildPageRequest(toInteger(pageNo), Sort.Direction.DESC, "id"));
 
 		return BaseResponse.success().setData(page).build();

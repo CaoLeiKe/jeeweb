@@ -27,7 +27,6 @@ import ${importType};
  * @author: ${functionAuthor}
  * @date: ${time}
  */
-
 @Data
 @DynamicInsert
 @DynamicUpdate
@@ -42,7 +41,7 @@ public class ${entityCapName} implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	</#if>
-	private <#if attributeInfo.type=='this'>${entityCapName}<#else>${attributeInfo.type}</#if> ${attributeInfo.name};// ${attributeInfo.remarks}
+	private <#if attributeInfo.type=='this'>${entityCapName}<#else>${attributeInfo.type}</#if> ${attributeInfo.dbName};// ${attributeInfo.remarks}
 
 </#list>
 }

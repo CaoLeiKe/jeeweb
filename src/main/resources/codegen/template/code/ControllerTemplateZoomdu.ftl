@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @title: ${functionName}
+ * @description: ${functionDesc}
+ * @author: ${functionAuthor}
+ * @date: ${time}
+ */
 @RestController
 @RequestMapping("${tableName?replace("_", "/")}.do")
 public class ${entityCapName}Controller {
