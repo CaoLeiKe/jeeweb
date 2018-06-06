@@ -91,7 +91,7 @@ public class ${entityCapName}Service extends BaseService {
 
 	<#-- 把数据获取出来 -->
 	<#list attributeInfos as attributeInfo>
-		<#if attributeInfo.parmaryKey || attributeInfo.type?lower_case?contains("create")>
+		<#if attributeInfo.parmaryKey || attributeInfo.dbName?lower_case?contains("create")>
 		<#-- 如果是主键则跳过 -->
 		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int") || attributeInfo.type?lower_case?contains("long")>
 		<#-- 基本类型 -->
@@ -141,10 +141,10 @@ public class ${entityCapName}Service extends BaseService {
 	<#list attributeInfos as attributeInfo>
 		<#if attributeInfo.parmaryKey>
 		<#-- 如果是主键则跳过 -->
-		<#elseif attributeInfo.type?lower_case?csontains("createtime")>
+		<#elseif attributeInfo.dbName?lower_case?contains("createtime")>
 		<#-- 创建时间 -->
 		${entityLowerName}.set${attributeInfo.dbName?cap_first}(new Date());
-		<#elseif attributeInfo.type?lower_case?csontains("createuserid")>
+		<#elseif attributeInfo.dbName?lower_case?contains("createuserid")>
 		<#-- 创建人 -->
 		${entityLowerName}.set${attributeInfo.dbName?cap_first}(guideAccount.getId());
 		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int") || attributeInfo.type?lower_case?contains("long")>
