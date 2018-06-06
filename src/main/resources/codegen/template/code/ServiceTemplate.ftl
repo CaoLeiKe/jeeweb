@@ -93,7 +93,10 @@ public class ${entityCapName}Service extends BaseService {
 	<#list attributeInfos as attributeInfo>
 		<#if attributeInfo.parmaryKey || attributeInfo.dbName?lower_case?contains("create")>
 		<#-- 如果是主键则跳过 -->
-		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int") || attributeInfo.type?lower_case?contains("long")>
+		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")>
+		<#-- 基本类型 -->
+		long ${attributeInfo.dbName} = ${entityLowerName}Map.getAsInt("${attributeInfo.dbName}");// ${attributeInfo.remarks}
+		<#elseif attributeInfo.type?lower_case?contains("long")>
 		<#-- 基本类型 -->
 		Long ${attributeInfo.dbName} = ${entityLowerName}Map.getAsLong("${attributeInfo.dbName}");// ${attributeInfo.remarks}
 		<#elseif attributeInfo.type?lower_case?contains("string")>
@@ -111,7 +114,7 @@ public class ${entityCapName}Service extends BaseService {
 
 	<#-- 数据库不为空判断 -->
 	<#list attributeInfos as attributeInfo>
-		<#if attributeInfo.parmaryKey  || attributeInfo.type?lower_case?contains("create")>
+		<#if attributeInfo.parmaryKey  || attributeInfo.dbName?lower_case?contains("create")>
 		<#-- 如果是主键则跳过 -->
 		<#elseif (attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")) && attributeInfo.nullable>
 		<#-- 基本类型 -->
@@ -147,7 +150,10 @@ public class ${entityCapName}Service extends BaseService {
 		<#elseif attributeInfo.dbName?lower_case?contains("createuserid")>
 		<#-- 创建人 -->
 		${entityLowerName}.set${attributeInfo.dbName?cap_first}(guideAccount.getId());
-		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int") || attributeInfo.type?lower_case?contains("long")>
+		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")>
+		<#-- 基本类型 -->
+		${entityLowerName}.set${attributeInfo.dbName?cap_first}((int)${attributeInfo.dbName});
+		<#elseif attributeInfo.type?lower_case?contains("long")>
 		<#-- 基本类型 -->
 		${entityLowerName}.set${attributeInfo.dbName?cap_first}(${attributeInfo.dbName});
 		<#elseif attributeInfo.type?lower_case?contains("string")>
@@ -169,7 +175,7 @@ public class ${entityCapName}Service extends BaseService {
 	/**
 	 * 根据主键查询${functionName}
 	 */
-	public BaseResponse find${entityLowerName}ById(HttpServletRequest request) {
+	public BaseResponse find${entityCapName}ById(HttpServletRequest request) {
 
 		String id = request.getParameter("id");
 
