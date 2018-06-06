@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date: ${time}
  */
 @RestController
-@RequestMapping("${tableName?replace("_", "/")}.do")
+@RequestMapping("back/${tableName?replace("_", "/")}.do")
 public class ${entityCapName}Controller {
 
 	@Autowired
@@ -30,7 +30,7 @@ public class ${entityCapName}Controller {
 	}
 
 	@RequestMapping(params = "method=find${entityCapName}PageBySearchMap")
-	public BaseResponse find${entityCapName}ById(HttpServletRequest request) {
+	public BaseResponse find${entityCapName}PageBySearchMap(HttpServletRequest request) {
 		return ${entityLowerName}Service.find${entityCapName}PageBySearchMap(request);
 	}
 
