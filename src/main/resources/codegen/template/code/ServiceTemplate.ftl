@@ -3,16 +3,24 @@ package ${packageName}.${moduleName}.service;
 <#assign entityCapName=entityName?cap_first/>
 <#-- 小写类名 -->
 <#assign entityLowerName=entityName?uncap_first/>
+
+import com.zoomdu.controller.base.responseEntity.BaseResponse;
+import com.zoomdu.entity.erp.app.guide.account.GuideAccount;
 import com.zoomdu.exception.ERPExceptionUtil;
 import com.zoomdu.service.base.BaseService;
+import com.zoomdu.util.BaseUtil;
+import com.zoomdu.util.CheckParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +91,7 @@ public class ${entityCapName}Service extends BaseService {
 
 	<#-- 把数据获取出来 -->
 	<#list attributeInfos as attributeInfo>
-		<#if attributeInfo.parmaryKey>
+		<#if attributeInfo.parmaryKey || attributeInfo.type?lower_case?contains("create")>
 		<#-- 如果是主键则跳过 -->
 		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int") || attributeInfo.type?lower_case?contains("long")>
 		<#-- 基本类型 -->
@@ -96,14 +104,14 @@ public class ${entityCapName}Service extends BaseService {
 		Date ${attributeInfo.dbName} = ${entityLowerName}Map.getAsDate("${attributeInfo.dbName}");// ${attributeInfo.remarks}
 		<#elseif attributeInfo.type?lower_case?contains("double")>
 		<#-- double -->
-		Double ${attributeInfo.dbName} = ${entityLowerName}Map.getDouble("${attributeInfo.dbName}");// ${attributeInfo.remarks}
+		Double ${attributeInfo.dbName} = ${entityLowerName}Map.getAsDouble("${attributeInfo.dbName}");// ${attributeInfo.remarks}
 		<#else >
 		</#if>
 	</#list>
 
 	<#-- 数据库不为空判断 -->
 	<#list attributeInfos as attributeInfo>
-		<#if attributeInfo.parmaryKey>
+		<#if attributeInfo.parmaryKey  || attributeInfo.type?lower_case?contains("create")>
 		<#-- 如果是主键则跳过 -->
 		<#elseif (attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")) && attributeInfo.nullable>
 		<#-- 基本类型 -->
@@ -133,6 +141,12 @@ public class ${entityCapName}Service extends BaseService {
 	<#list attributeInfos as attributeInfo>
 		<#if attributeInfo.parmaryKey>
 		<#-- 如果是主键则跳过 -->
+		<#elseif attributeInfo.type?lower_case?csontains("createtime")>
+		<#-- 创建时间 -->
+		${entityLowerName}.set${attributeInfo.dbName?cap_first}(new Date());
+		<#elseif attributeInfo.type?lower_case?csontains("createuserid")>
+		<#-- 创建人 -->
+		${entityLowerName}.set${attributeInfo.dbName?cap_first}(guideAccount.getId());
 		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int") || attributeInfo.type?lower_case?contains("long")>
 		<#-- 基本类型 -->
 		${entityLowerName}.set${attributeInfo.dbName?cap_first}(${attributeInfo.dbName});
