@@ -5,8 +5,15 @@ package ${packageName}.${moduleName}.entity;
 <#assign entityLowerName=entityName?uncap_first/>
 <#-- 主键类型 -->
 <#assign idJavaType><#list columns as column><#if column.parmaryKey>${column.javaType}</#if></#list></#assign>
+<#-- 是否有枚举 -->
+<#assign isEnum>
+	<#list columns as column><#if column.typeName?ends_with("ENUM")>true</#if></#list>
+</#assign>
 
 import lombok.Data;
+<#if isEnum?contains("true")>
+import lombok.Getter;
+</#if>
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -46,4 +53,24 @@ public class ${entityCapName} implements Serializable {
 	public static final transient String ${attributeInfo.dbName}_ = "${attributeInfo.dbName}";
 
 </#list>
+
+<#if isEnum?contains("true")>
+<#list columns as column>
+	<#if column.typeName?ends_with("ENUM")>
+	/** ${column.remarks} */
+	@Getter
+	public enum ${column.columnName?cap_first} {
+		One("flag", "msg"),
+
+		private String flag;
+		private String msg;
+
+		${column.columnName?cap_first}(String flag, String msg) {
+			this.flag = flag;
+			this.msg = msg;
+		}
+	}
+	</#if>
+</#list>
+</#if>
 }
