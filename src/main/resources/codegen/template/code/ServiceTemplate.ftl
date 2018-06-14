@@ -4,9 +4,9 @@ package ${packageName}.${moduleName}.service;
 <#-- 小写类名 -->
 <#assign entityLowerName=entityName?uncap_first/>
 
+import com.zoomdu.config.exception.ERPExceptionUtil;
 import com.zoomdu.controller.base.responseEntity.BaseResponse;
 import com.zoomdu.entity.erp.app.guide.account.GuideAccount;
-import com.zoomdu.exception.ERPExceptionUtil;
 import com.zoomdu.service.base.BaseService;
 import com.zoomdu.util.BaseUtil;
 import com.zoomdu.util.CheckParam;
@@ -37,7 +37,7 @@ public class ${entityCapName}Service extends BaseService {
 	@Autowired
 	private ${entityCapName}Dao ${entityLowerName}Dao;
 
-	private Specification<${entityCapName}> build${entityCapName}Specification(Map<String , ?> searchMap) {
+	private Specification<${entityCapName}> build${entityCapName}Specification(Map<String, ?> searchMap) {
 		return (root, query, builder) -> {
 			List<Predicate> predicate = build${entityCapName}PredicateList(searchMap, root, builder);
 			return query.where(predicate.toArray(new Predicate[0])).getRestriction();
@@ -50,7 +50,7 @@ public class ${entityCapName}Service extends BaseService {
 	<#list attributeInfos as attributeInfo>
 		<#if attributeInfo.parmaryKey>
 		<#elseif attributeInfo.type?lower_case?contains("long") || attributeInfo.type?lower_case?contains("string") || attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("date")  || attributeInfo.type?lower_case?contains("int")>
-		Object ${attributeInfo.dbName} = searchMap.get("${attributeInfo.dbName}");// ${attributeInfo.remarks}
+		Object ${attributeInfo.dbName} = searchMap.get(${entityCapName}.${attributeInfo.dbName}_);// ${attributeInfo.remarks}
 		</#if>
 	</#list>
 
@@ -60,15 +60,15 @@ public class ${entityCapName}Service extends BaseService {
 		<#if attributeInfo.parmaryKey>
 		<#elseif attributeInfo.type?lower_case?contains("long") || attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")>
 		if (CheckParam.isInteger(${attributeInfo.dbName})) {
-			predicateList.add(builder.equal(root.get("${attributeInfo.dbName}"), toLong(${attributeInfo.dbName})));
+			predicateList.add(builder.equal(root.get(${entityCapName}.${attributeInfo.dbName}_), toLong(${attributeInfo.dbName})));
 		}
 		<#elseif attributeInfo.type?lower_case?contains("string")>
 		if (!CheckParam.isNull(${attributeInfo.dbName})) {
-			predicateList.add(builder.equal(root.get("${attributeInfo.dbName}"), ${attributeInfo.dbName}.toString()));
+			predicateList.add(builder.equal(root.get(${entityCapName}.${attributeInfo.dbName}_), ${attributeInfo.dbName}.toString()));
 		}
 		<#elseif attributeInfo.type?lower_case?contains("date")>
 		if (${attributeInfo.dbName} != null && CheckParam.isDate(${attributeInfo.dbName}.toString())) {
-			predicateList.add(builder.greaterThanOrEqualTo(root.get("${attributeInfo.dbName}"), BaseUtil.strToDate(${attributeInfo.dbName}.toString())));
+			predicateList.add(builder.greaterThanOrEqualTo(root.get(${entityCapName}.${attributeInfo.dbName}_), BaseUtil.strToDate(${attributeInfo.dbName}.toString())));
 		}
 		<#else >
 		</#if>
@@ -95,19 +95,19 @@ public class ${entityCapName}Service extends BaseService {
 		<#-- 如果是主键则跳过 -->
 		<#elseif attributeInfo.type?lower_case?contains("integer") || attributeInfo.type?lower_case?contains("int")>
 		<#-- 基本类型 -->
-		long ${attributeInfo.dbName} = ${entityLowerName}Map.getAsInt("${attributeInfo.dbName}");// ${attributeInfo.remarks}
+		long ${attributeInfo.dbName} = ${entityLowerName}Map.getAsInt(${entityCapName}.${attributeInfo.dbName}_);// ${attributeInfo.remarks}
 		<#elseif attributeInfo.type?lower_case?contains("long")>
 		<#-- 基本类型 -->
-		Long ${attributeInfo.dbName} = ${entityLowerName}Map.getAsLong("${attributeInfo.dbName}");// ${attributeInfo.remarks}
+		Long ${attributeInfo.dbName} = ${entityLowerName}Map.getAsLong(${entityCapName}.${attributeInfo.dbName}_);// ${attributeInfo.remarks}
 		<#elseif attributeInfo.type?lower_case?contains("string")>
 		<#-- 字符串 -->
-		String ${attributeInfo.dbName} = ${entityLowerName}Map.getAsString("${attributeInfo.dbName}");// ${attributeInfo.remarks}
+		String ${attributeInfo.dbName} = ${entityLowerName}Map.getAsString(${entityCapName}.${attributeInfo.dbName}_);// ${attributeInfo.remarks}
 		<#elseif attributeInfo.type?lower_case?contains("date")>
 		<#-- 日期 -->
-		Date ${attributeInfo.dbName} = ${entityLowerName}Map.getAsDate("${attributeInfo.dbName}");// ${attributeInfo.remarks}
+		Date ${attributeInfo.dbName} = ${entityLowerName}Map.getAsDate(${entityCapName}.${attributeInfo.dbName}_);// ${attributeInfo.remarks}
 		<#elseif attributeInfo.type?lower_case?contains("double")>
 		<#-- double -->
-		Double ${attributeInfo.dbName} = ${entityLowerName}Map.getAsDouble("${attributeInfo.dbName}");// ${attributeInfo.remarks}
+		Double ${attributeInfo.dbName} = ${entityLowerName}Map.getAsDouble(${entityCapName}.${attributeInfo.dbName}_);// ${attributeInfo.remarks}
 		<#else >
 		</#if>
 	</#list>
