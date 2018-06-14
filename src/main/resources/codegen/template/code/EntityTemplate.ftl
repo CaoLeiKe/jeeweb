@@ -41,7 +41,9 @@ public class ${entityCapName} implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	</#if>
-	private <#if attributeInfo.type=='this'>${entityCapName}<#else>${attributeInfo.type}</#if> ${attributeInfo.dbName};// ${attributeInfo.remarks}
+	private <#if attributeInfo.type=='this'>${entityCapName}<#else>${attributeInfo.type}</#if> ${attributeInfo.dbName};
+	/** ${attributeInfo.remarks} */
+	public static final transient String ${attributeInfo.dbName}_ = "${attributeInfo.dbName}";
 
 </#list>
 }
