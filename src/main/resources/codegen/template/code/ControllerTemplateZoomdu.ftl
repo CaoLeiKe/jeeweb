@@ -29,9 +29,9 @@ public class ${entityCapName}Controller {
 		return ${entityLowerName}Service.find${entityCapName}ById(request);
 	}
 
-	@RequestMapping(params = "method=find${entityCapName}PageBySearchMap")
-	public BaseResponse find${entityCapName}PageBySearchMap(HttpServletRequest request) {
-		return ${entityLowerName}Service.find${entityCapName}PageBySearchMap(request);
+	@RequestMapping(params = "method=find${entityCapName}PageBySearchJson")
+	public BaseResponse find${entityCapName}PageBySearchJson(HttpServletRequest request) {
+		return ${entityLowerName}Service.find${entityCapName}PageBySearchJson(request);
 	}
 
 	@RequestMapping(params = "method=save${entityCapName}")

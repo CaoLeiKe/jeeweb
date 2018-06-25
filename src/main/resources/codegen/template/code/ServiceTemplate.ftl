@@ -193,12 +193,12 @@ public class ${entityCapName}Service extends BaseService {
 	/**
 	 * 根据条件分页查询${functionName}
 	 */
-	public BaseResponse find${entityCapName}PageBySearchMap(HttpServletRequest request) {
+	public BaseResponse find${entityCapName}PageBySearchJson(HttpServletRequest request) {
 
-		String searchMapStr = request.getParameter("searchMap");
+		String searchJson = request.getParameter("searchJson");
 		String pageNo = request.getParameter("pageNo");
 
-		RequestMap<String, Object> searchMap = fromJsonToMap(searchMapStr);
+		RequestMap<String, Object> searchMap = fromJsonToMap(searchJson);
 		Page<${entityCapName}> page = ${entityLowerName}Dao.findAll(build${entityCapName}Specification(searchMap), buildPageRequest(toInteger(pageNo), Sort.Direction.DESC, "id"));
 
 		return BaseResponse.success().setData(page).build();
